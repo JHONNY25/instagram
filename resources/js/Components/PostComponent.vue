@@ -43,7 +43,7 @@
                         </a>
                     </div>
                     <p class="font-bold" :class="{'ml-12' : false}">
-                        <a class="cursor-pointer">Juanito:</a> 
+                        <a class="cursor-pointer">Juanito:</a>
                         <span class="text-gray-700 font-medium">
                             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.
                         </span>
@@ -51,12 +51,12 @@
                 </div>
                 <a class="text-gray-400 text-sm cursor-pointer font-semibold">ver los 200 comentarios</a>
             </div>
-            
+
         </div>
 
         <div class="px-6 pt-4 pb-3">
             <form method="POST" class="flex items-start">
-                <textarea class="w-full outline-none appearance-none" aria-label="Agrega un comentario..." placeholder="Agrega un comentario..."  autocomplete="off" autocorrect="off" style="height: 36px;"></textarea>
+                <textarea class="w-full resize-none outline-none appearance-none" aria-label="Agrega un comentario..." placeholder="Agrega un comentario..."  autocomplete="off" autocorrect="off" style="height: 36px;"></textarea>
                 <button class="mb-2 focus:outline-none border-none bg-transparent text-blue-600">Publicar</button>
             </form>
         </div>
