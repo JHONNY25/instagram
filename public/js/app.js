@@ -25067,7 +25067,7 @@ var staticRenderFns = [
         { staticClass: "flex items-start", attrs: { method: "POST" } },
         [
           _c("textarea", {
-            staticClass: "w-full outline-none appearance-none",
+            staticClass: "w-full resize-none outline-none appearance-none",
             staticStyle: { height: "36px" },
             attrs: {
               "aria-label": "Agrega un comentario...",
