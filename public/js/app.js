@@ -3103,6 +3103,35 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -27281,10 +27310,153 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
+            _c("div", { staticClass: "flex items-center" }, [
+              _c(
+                "div",
+                { staticClass: "relative rounded border border-gray-300" },
+                [
+                  _c(
+                    "span",
+                    {
+                      staticClass:
+                        "absolute inset-y-0 left-0 flex items-center pl-2"
+                    },
+                    [
+                      _c(
+                        "button",
+                        {
+                          staticClass:
+                            "p-1 outline-none focus:outline-none focus:shadow-outline",
+                          attrs: { type: "submit" }
+                        },
+                        [
+                          _c(
+                            "svg",
+                            {
+                              staticClass: "w-5 h-5",
+                              attrs: {
+                                fill: "none",
+                                stroke: "currentColor",
+                                "stroke-linecap": "round",
+                                "stroke-linejoin": "round",
+                                "stroke-width": "2",
+                                viewBox: "0 0 24 24"
+                              }
+                            },
+                            [
+                              _c("path", {
+                                staticClass: "text-gray-400",
+                                attrs: {
+                                  d:
+                                    "M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                                }
+                              })
+                            ]
+                          )
+                        ]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    staticClass:
+                      "py-2 pl-10 block w-full rounded-lg focus:outline-none bg-white text-gray-900",
+                    attrs: {
+                      "aria-placeholder": "Busca tus amigos o contacta nuevos",
+                      placeholder: "Buscar",
+                      type: "search",
+                      required: ""
+                    }
+                  })
+                ]
+              )
+            ]),
+            _vm._v(" "),
             _c(
               "div",
               { staticClass: "hidden sm:flex sm:items-center sm:ml-6" },
               [
+                _c("div", { staticClass: "mr-3" }, [
+                  _c(
+                    "svg",
+                    {
+                      staticClass: "w-6 h-6 cursor-pointer",
+                      attrs: {
+                        xmlns: "http://www.w3.org/2000/svg",
+                        fill: "none",
+                        viewBox: "0 0 24 24",
+                        stroke: "currentColor"
+                      }
+                    },
+                    [
+                      _c("path", {
+                        staticClass: "text-gray-600",
+                        attrs: {
+                          "stroke-linecap": "round",
+                          "stroke-linejoin": "round",
+                          "stroke-width": "1.5",
+                          d:
+                            "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                        }
+                      })
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "mr-3" }, [
+                  _c(
+                    "svg",
+                    {
+                      staticClass: "w-6 h-6 cursor-pointer",
+                      attrs: {
+                        xmlns: "http://www.w3.org/2000/svg",
+                        fill: "none",
+                        viewBox: "0 0 24 24",
+                        stroke: "currentColor"
+                      }
+                    },
+                    [
+                      _c("path", {
+                        staticClass: "text-gray-600",
+                        attrs: {
+                          "stroke-linecap": "round",
+                          "stroke-linejoin": "round",
+                          "stroke-width": "1.5",
+                          d:
+                            "M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                        }
+                      })
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "mr-3" }, [
+                  _c(
+                    "svg",
+                    {
+                      staticClass: "w-6 h-6 cursor-pointer",
+                      attrs: {
+                        xmlns: "http://www.w3.org/2000/svg",
+                        fill: "none",
+                        viewBox: "0 0 24 24",
+                        stroke: "currentColor"
+                      }
+                    },
+                    [
+                      _c("path", {
+                        staticClass: "text-gray-600",
+                        attrs: {
+                          "stroke-linecap": "round",
+                          "stroke-linejoin": "round",
+                          "stroke-width": "1.5",
+                          d:
+                            "M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                        }
+                      })
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
                 _c(
                   "div",
                   { staticClass: "ml-3 relative" },
