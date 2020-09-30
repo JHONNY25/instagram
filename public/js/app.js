@@ -3103,6 +3103,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -27278,6 +27290,64 @@ var render = function() {
                   ],
                   1
                 )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "flex items-center" }, [
+              _c("div", { staticClass: "relative" }, [
+                _c(
+                  "span",
+                  {
+                    staticClass:
+                      "absolute inset-y-0 left-0 flex items-center pl-2"
+                  },
+                  [
+                    _c(
+                      "button",
+                      {
+                        staticClass:
+                          "p-1 outline-none focus:outline-none focus:shadow-outline",
+                        attrs: { type: "submit" }
+                      },
+                      [
+                        _c(
+                          "svg",
+                          {
+                            staticClass: "w-5 h-5",
+                            attrs: {
+                              fill: "none",
+                              stroke: "currentColor",
+                              "stroke-linecap": "round",
+                              "stroke-linejoin": "round",
+                              "stroke-width": "2",
+                              viewBox: "0 0 24 24"
+                            }
+                          },
+                          [
+                            _c("path", {
+                              attrs: {
+                                d: "M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                              }
+                            })
+                          ]
+                        )
+                      ]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c("input", {
+                  staticClass:
+                    "py-2 pl-10 block w-full rounded-lg focus:outline-none bg-white text-gray-900",
+                  attrs: {
+                    "aria-placeholder": "Busca tus amigos o contacta nuevos",
+                    placeholder: "Buscar",
+                    type: "search",
+                    name: "search",
+                    required: "",
+                    autocomplete: "search"
+                  }
+                })
               ])
             ]),
             _vm._v(" "),
