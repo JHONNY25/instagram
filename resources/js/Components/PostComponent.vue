@@ -2,11 +2,11 @@
     <div class="bg-white max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl rounded overflow-hidden shadow-none mb-10">
         <header class="flex flex-start">
             <div>
-                <a class="cursor-pointer m-4 flex items-center text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out">
+                <a :href="'/'+nickName" class="cursor-pointer m-4 flex items-center text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out">
                     <img :src="urlImage" class="h-9 w-9 rounded-full object-cover"
                     alt="Jusnito" />
                     <div>
-                        <span class="block ml-2 font-bold">{{ userName }}</span>
+                        <span class="block ml-2 font-bold">{{ nickName }}</span>
                         <span class="block ml-2 text-xs text-gray-600">{{ publicationTime }}</span>
                     </div>
                 </a>
@@ -18,7 +18,7 @@
 
         <div class="px-6 pt-4">
             <div class="mb-2">
-                <div class="flex items-center"> 
+                <div class="flex items-center">
                     <span class="mr-3 inline-flex items-center cursor-pointer">
                         <svg class="fill-heart text-gray-700 inline-block h-7 w-7 " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
@@ -33,7 +33,7 @@
                 <span class="text-gray-600 text-sm font-bold">{{ likes }} Me gusta</span>
             </div>
             <div class="">
-                <comment-post :showUserImage="showUserImage" :comment="comment" :userName="userName" :urlImage="urlImage"></comment-post>
+                <comment-post :showUserImage="showUserImage" :comment="comment" :nickName="nickName" :urlImage="urlImage"></comment-post>
                 <a class="text-gray-400 text-sm cursor-pointer font-semibold" @click="showModal">ver los {{commentsnum}} comentarios</a>
             </div>
 
@@ -50,14 +50,14 @@
 
 <script>
     import CommentPost from './CommentPost'
-    
+
     export default {
         data(){
             return {
                 showUserImage: false
             }
         },
-        props: ['userName','likes','commentsnum','comment','urlImage','publicationTime'],
+        props: ['nickName','likes','commentsnum','comment','urlImage','publicationTime'],
         components:{
             CommentPost
         },
