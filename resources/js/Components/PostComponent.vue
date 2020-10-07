@@ -6,7 +6,7 @@
                     <img :src="urlImage" class="h-9 w-9 rounded-full object-cover"
                     alt="Jusnito" />
                     <div>
-                        <span class="block ml-2 font-bold">{{ nickName }}</span>
+                        <h2 class="block ml-2 font-bold">{{ nickName }}</h2>
                         <span class="block ml-2 text-xs text-gray-600">{{ publicationTime }}</span>
                     </div>
                 </a>
