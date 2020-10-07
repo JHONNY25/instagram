@@ -1,6 +1,6 @@
 <template>
-    <div class="min-h-screen bg-gray-100">
-        <nav class="bg-white border-b border-gray-100">
+    <div class="min-h-screen" style="background-color: #fafafa">
+        <nav class="bg-white border-b border-gray-300">
             <!-- Primary Navigation Menu -->
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between h-16">
@@ -76,7 +76,7 @@
                                         </div>
 
                                         <!-- Team Settings -->
-                                        <jet-dropdown-link :href="'/teams/' + $page.user.current_team.id">
+                                        <jet-dropdown-link :href="'/teams/' + $page.user.current_team_id">
                                             Team Settings
                                         </jet-dropdown-link>
 
@@ -169,7 +169,7 @@
                             </div>
 
                             <!-- Team Settings -->
-                            <jet-responsive-nav-link :href="'/teams/' + $page.user.current_team.id" :active="$page.currentRouteName == 'teams.show'">
+                            <jet-responsive-nav-link :href="'/teams/' + $page.user.current_team_id" :active="$page.currentRouteName == 'teams.show'">
                                 Team Settings
                             </jet-responsive-nav-link>
 

@@ -3552,6 +3552,62 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -25865,7 +25921,7 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("div", [
-                _c("span", { staticClass: "block ml-2 font-bold" }, [
+                _c("h2", { staticClass: "block ml-2 font-bold" }, [
                   _vm._v(_vm._s(_vm.nickName))
                 ]),
                 _vm._v(" "),
@@ -27320,9 +27376,12 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "min-h-screen bg-gray-100" },
+    {
+      staticClass: "min-h-screen",
+      staticStyle: { "background-color": "#fafafa" }
+    },
     [
-      _c("nav", { staticClass: "bg-white border-b border-gray-100" }, [
+      _c("nav", { staticClass: "bg-white border-b border-gray-300" }, [
         _c("div", { staticClass: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" }, [
           _c("div", { staticClass: "flex justify-between h-16" }, [
             _c("div", { staticClass: "flex" }, [
@@ -27583,7 +27642,7 @@ var render = function() {
                                         attrs: {
                                           href:
                                             "/teams/" +
-                                            _vm.$page.user.current_team.id
+                                            _vm.$page.user.current_team_id
                                         }
                                       },
                                       [
@@ -27911,7 +27970,7 @@ var render = function() {
                           "jet-responsive-nav-link",
                           {
                             attrs: {
-                              href: "/teams/" + _vm.$page.user.current_team.id,
+                              href: "/teams/" + _vm.$page.user.current_team_id,
                               active: _vm.$page.currentRouteName == "teams.show"
                             }
                           },
@@ -28775,8 +28834,150 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("app-layout", [
-    _c("div", [
-      _vm._v("\n        holaaaaaa " + _vm._s(_vm.user.nick_name) + "\n    ")
+    _c("div", { staticClass: "w-10/12" }, [
+      _c("div", { staticClass: "flex justify-center pb-10" }, [
+        _c("div", { staticClass: "flex w-9/12 justify-content-around" }, [
+          _c("img", {
+            staticClass: "h-40 w-40 rounded-full object-cover",
+            attrs: {
+              src:
+                "https://instagram.fsjd1-1.fna.fbcdn.net/v/t51.2885-19/s150x150/117756684_324341175604256_3627028918051777584_n.jpg?_nc_ht=instagram.fsjd1-1.fna.fbcdn.net&_nc_ohc=D_s2gyyHqLMAX9Vf2md&oh=9613db0350b7734e521da0918c56f824&oe=5F8EF6E2",
+              alt: "Jusnito"
+            }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "ml-10" }, [
+            _c("div", { staticClass: "flex items-center" }, [
+              _c(
+                "h2",
+                { staticClass: "block text-3xl leading-relaxed font-light" },
+                [_vm._v(" Juanito")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass:
+                    "h-7 px-3 ml-3 focus:outline-none focus:border-gray-400 text-center rounded border border-gray-400 focus:bg-gray-200 bg-transparent text-gray-500 font-semibold"
+                },
+                [_vm._v("Editar perfil")]
+              )
+            ]),
+            _vm._v(" "),
+            _c(
+              "ul",
+              { staticClass: "flex justify-content-around items-center" },
+              [
+                _c("li", [
+                  _c("span", { staticClass: "block text-base flex" }, [
+                    _c("span", { staticClass: "font-bold mr-2" }, [
+                      _vm._v("20 ")
+                    ]),
+                    _vm._v(" Publicaciones")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("li", [
+                  _c(
+                    "span",
+                    { staticClass: "cursor-pointer block text-base flex ml-5" },
+                    [
+                      _c("span", { staticClass: "font-bold mr-2" }, [
+                        _vm._v("40 ")
+                      ]),
+                      _vm._v(" Seguidores")
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("li", [
+                  _c(
+                    "span",
+                    { staticClass: "cursor-pointer block text-base flex ml-5" },
+                    [
+                      _c("span", { staticClass: "font-bold mr-2" }, [
+                        _vm._v("230 ")
+                      ]),
+                      _vm._v(" Seguidos")
+                    ]
+                  )
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c("div", {}, [
+              _c("h1", { staticClass: "text-base font-bold font-light" }, [
+                _vm._v("Juanito Hernandez")
+              ]),
+              _vm._v(" "),
+              _c("span", { staticClass: "text-base" }, [
+                _vm._v("Soy desarrollador web y megusta el BMX")
+              ])
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "border-b border-gray-300" }),
+      _vm._v(" "),
+      _c("article", { staticClass: "mt-5 grid grid-cols-3 gap-10" }, [
+        _c("div", { staticStyle: { width: "300px", height: "300px" } }, [
+          _c("img", {
+            staticClass: "w-full h-full object-cover",
+            attrs: {
+              src:
+                "https://cdn.pixabay.com/photo/2020/10/01/09/35/bee-5618012_960_720.jpg",
+              alt: "Jusnito"
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticStyle: { width: "300px", height: "300px" } }, [
+          _c("img", {
+            staticClass: "w-full h-full object-cover",
+            attrs: {
+              src:
+                "https://cdn.pixabay.com/photo/2020/10/03/11/08/girl-5623231_960_720.jpg",
+              alt: "Jusnito"
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticStyle: { width: "300px", height: "300px" } }, [
+          _c("img", {
+            staticClass: "w-full h-full object-cover",
+            attrs: {
+              src:
+                "https://cdn.pixabay.com/photo/2020/10/03/17/44/mountain-5624148_960_720.jpg",
+              alt: "Jusnito"
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticStyle: { width: "300px", height: "300px" } }, [
+          _c("img", {
+            staticClass: "w-full h-full object-cover",
+            attrs: {
+              src:
+                "https://cdn.pixabay.com/photo/2020/09/17/05/12/river-5578051_960_720.jpg",
+              alt: "Jusnito"
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticStyle: { width: "300px", height: "300px" } }, [
+          _c("img", {
+            staticClass: "w-full h-full object-cover",
+            attrs: {
+              src:
+                "https://cdn.pixabay.com/photo/2020/09/23/02/01/microphone-5594702_960_720.jpg",
+              alt: "Jusnito"
+            }
+          })
+        ])
+      ])
     ])
   ])
 }
