@@ -21,7 +21,7 @@
                                     <path class="text-gray-400" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                                 </svg>
                             </span>
-                            <input aria-placeholder="Busca tus amigos o contacta nuevos" placeholder="Buscar"
+                            <input v-model="search" aria-placeholder="Busca tus amigos o contacta nuevos" placeholder="Buscar"
                             class="h-7 py-2 pr-2 pl-10 block w-full rounded-lg focus:outline-none text-gray-900" type="search" required style="background-color: #fafafa"/>
                         </div>
                     </div>
@@ -246,6 +246,10 @@
         data() {
             return {
                 showingNavigationDropdown: false,
+                search: '',
+                users:[],
+                loading: true,
+                errored: false
             }
         },
 
@@ -264,10 +268,20 @@
                 })
             },
         },
-
         computed: {
             path() {
                 return window.location.pathname
+            },
+            searchUsers(){
+                axios.get('/users-search/'+this.search)
+                    .then(response => {
+                        this.users = response.data
+                    })
+                    .catch(error => {
+                        console.log(error)
+                        this.errored = true
+                    })
+                    .finally(() => this.loading = false)
             }
         }
     }
