@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Comments;
 
 class Posts extends Model
 {
@@ -21,5 +22,9 @@ class Posts extends Model
 
     public function likes(){
         $this->hasMany(Likes::class);
+    }
+
+    public function comments(){
+        $this->hasMany(Comments::class);
     }
 }

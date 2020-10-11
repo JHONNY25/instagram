@@ -9,7 +9,6 @@ import PortalVue from 'portal-vue';
 Vue.use(InertiaApp);
 Vue.use(InertiaForm);
 Vue.use(PortalVue);
-
 const app = document.getElementById('app');
 
 new Vue({

@@ -15,7 +15,9 @@ class ProfileController extends Controller
     }
 
     public function index($nick_name){
-        $user = $this->user->where('nick_name',$nick_name)->first();
+        $user = $this->user->with([
+            'posts:id,image_path'
+        ])->where('nick_name',$nick_name)->first();
 
         return Inertia::render('UserProfile/Index', [
             'user' => $user,
