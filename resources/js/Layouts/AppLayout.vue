@@ -8,7 +8,7 @@
                         <!-- Logo -->
                         <div class="flex-shrink-0 flex items-center">
                             <a href="/dashboard">
-                                <jet-application-mark class="block h-9 w-auto" />
+                                <img src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" class="h-7 w-auto"/>
                             </a>
                         </div>
 
@@ -16,24 +16,24 @@
 
                     <div class="flex items-center">
                         <div class="relative rounded border border-gray-300">
-                            <span class="absolute inset-y-0 left-0 flex items-center pl-2">
-                                <button type="submit" class="p-1 outline-none focus:outline-none focus:shadow-outline">
-                                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-5 h-5">
-                                        <path class="text-gray-400" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                                    </svg>
-                                </button>
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-1">
+                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-5 h-5">
+                                    <path class="text-gray-400" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
                             </span>
                             <input aria-placeholder="Busca tus amigos o contacta nuevos" placeholder="Buscar"
-                            class="py-2 pl-10 block w-full rounded-lg focus:outline-none bg-white text-gray-900" type="search" required/>
+                            class="h-7 py-2 pr-2 pl-10 block w-full rounded-lg focus:outline-none text-gray-900" type="search" required style="background-color: #fafafa"/>
                         </div>
                     </div>
 
                     <!-- Settings Dropdown -->
                     <div class="hidden sm:flex sm:items-center sm:ml-6">
                         <div class="mr-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6 cursor-pointer">
-                                <path class="text-gray-600" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                            </svg>
+                            <a href="/dashboard">    
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6 cursor-pointer">
+                                    <path class="text-gray-600" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                                </svg>
+                            </a>
                         </div>
                         <div class="mr-3">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6 cursor-pointer">
@@ -56,11 +56,15 @@
                                 <template #content>
                                     <!-- Account Management -->
                                     <div class="block px-4 py-2 text-xs text-gray-400">
-                                        Manage Account
+                                        Cuenta
                                     </div>
 
+                                    <jet-dropdown-link :href="'/' + $page.user.nick_name">
+                                        Perfil 
+                                    </jet-dropdown-link>
+
                                     <jet-dropdown-link href="/user/profile">
-                                        Profile
+                                        Configuración
                                     </jet-dropdown-link>
 
                                     <jet-dropdown-link href="/user/api-tokens" v-if="$page.jetstream.hasApiFeatures">
@@ -146,8 +150,12 @@
 
                     <div class="mt-3 space-y-1">
                         <jet-responsive-nav-link href="/user/profile" :active="$page.currentRouteName == 'profile.show'">
-                            Profile
+                            Perfil
                         </jet-responsive-nav-link>
+
+                        <jet-dropdown-link href="/user/profile">
+                            Configuración
+                        </jet-dropdown-link>
 
                         <jet-responsive-nav-link href="/user/api-tokens" :active="$page.currentRouteName == 'api-tokens.index'" v-if="$page.jetstream.hasApiFeatures">
                             API Tokens
