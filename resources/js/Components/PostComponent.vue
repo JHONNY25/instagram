@@ -1,8 +1,8 @@
 <template>
-    <div class="bg-white max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl rounded overflow-hidden shadow-none mb-10">
+    <div class="bg-white max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl rounded overflow-hidden shadow-none">
         <header class="flex flex-start">
             <div>
-                <a :href="'/'+nickName" class="cursor-pointer m-4 flex items-center text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out">
+                <a :href="'/'+nickName" class="cursor-pointer m-4 flex items-center text-sm outline-none focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out">
                     <img :src="urlImage" class="h-9 w-9 rounded-full object-cover"
                     alt="Jusnito" />
                     <div>

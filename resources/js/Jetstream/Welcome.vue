@@ -1,5 +1,5 @@
 <template>
-    <div class="overflow-hidden shadow-none sm:rounded-lg max-w-2xl">
+    <div class="overflow-hidden shadow-none sm:rounded-lg max-w-2xl border border-gray-300 mb-10">
         <post-component @show="changeStateShow" :nickName="nickName" :likes="likes" :commentsnum="comments" :comment="comment" :urlImage="urlImage" :publicationTime="publicationTime"></post-component>
 
         <modal :show="show">
