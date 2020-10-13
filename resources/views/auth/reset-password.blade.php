@@ -1,7 +1,7 @@
 <x-guest-layout>
     <x-authentication-card>
         <x-slot name="logo">
-            <x-jet-authentication-card-logo />
+            <img src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" class="h-9 w-auto"/>
         </x-slot>
 
         <x-jet-validation-errors class="mb-4" />
