@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\Comments;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Comments;
 
 class Posts extends Model
 {
@@ -17,14 +17,14 @@ class Posts extends Model
     ];
 
     public function user(){
-        $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function likes(){
-        $this->hasMany(Likes::class);
+        return $this->hasMany(Likes::class);
     }
 
     public function comments(){
-        $this->hasMany(Comments::class);
+        return $this->hasMany(Comments::class);
     }
 }

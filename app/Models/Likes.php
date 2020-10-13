@@ -16,10 +16,10 @@ class Likes extends Model
     ];
 
     public function user(){
-        $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function posts(){
-        $this->belongsTo(Posts::class);
+        return $this->belongsTo(Posts::class);
     }
 }
