@@ -3173,54 +3173,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -3242,7 +3194,8 @@ __webpack_require__.r(__webpack_exports__);
       search: '',
       users: [],
       loading: true,
-      errored: false
+      errored: false,
+      accountexists: true
     };
   },
   methods: {
@@ -3266,14 +3219,28 @@ __webpack_require__.r(__webpack_exports__);
     searchUsers: function searchUsers() {
       var _this = this;
 
-      axios.get('/users-search/' + this.search).then(function (response) {
-        _this.users = response.data;
-      })["catch"](function (error) {
-        console.log(error);
-        _this.errored = true;
-      })["finally"](function () {
-        return _this.loading = false;
-      });
+      this.accountexists = true;
+
+      if (this.search !== "") {
+        axios.get('/users-search/' + this.search).then(function (response) {
+          if (response.data.length > 0 && Array.isArray(response.data)) {
+            _this.accountexists = true;
+            _this.users = response.data;
+          } else {
+            _this.accountexists = false;
+            _this.users = [];
+          }
+        })["catch"](function (error) {
+          console.log(error);
+          _this.errored = true;
+          _this.accountexists = true;
+        })["finally"](function () {
+          return _this.loading = false;
+        });
+      } else {
+        this.users = [];
+        this.accountexists = true;
+      }
     }
   }
 });
@@ -27627,278 +27594,83 @@ var render = function() {
                       key: "content",
                       fn: function() {
                         return [
-                          _c(
-                            "div",
-                            {
-                              staticClass:
-                                "block hover:bg-gray-100 text-xs text-gray-400 flex items-center py-2 px-3"
-                            },
-                            [
-                              _c("img", {
-                                staticClass:
-                                  "w-9 h-9 object-cover rounded-full",
-                                attrs: {
-                                  src:
-                                    "https://instagram.fsjd1-1.fna.fbcdn.net/v/t51.2885-19/s150x150/117756684_324341175604256_3627028918051777584_n.jpg?_nc_ht=instagram.fsjd1-1.fna.fbcdn.net&_nc_ohc=D_s2gyyHqLMAX9Vf2md&oh=9613db0350b7734e521da0918c56f824&oe=5F8EF6E2",
-                                  alt: "Juanito"
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "ml-2" }, [
-                                _c(
-                                  "h1",
+                          _vm._l(_vm.users, function(user, index) {
+                            return _vm.users.length > 0
+                              ? _c(
+                                  "a",
                                   {
+                                    key: index,
                                     staticClass:
-                                      "block leading-relaxed font-bold text-gray-700 text-sm"
+                                      "block hover:bg-gray-100 text-xs text-gray-400 flex items-center py-2 px-3",
+                                    attrs: { href: "/" + user.nick_name }
                                   },
-                                  [_vm._v(" JRH")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "h2",
-                                  {
-                                    staticClass:
-                                      "text-sm font-light text-gray-400"
-                                  },
-                                  [_vm._v("Juanito martinez")]
+                                  [
+                                    _c("img", {
+                                      staticClass:
+                                        "w-9 h-9 object-cover rounded-full",
+                                      attrs: {
+                                        src: user.profile_photo_url,
+                                        alt: user.name
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "ml-2" }, [
+                                      _c(
+                                        "h1",
+                                        {
+                                          staticClass:
+                                            "block leading-relaxed font-bold text-gray-700 text-sm"
+                                        },
+                                        [_vm._v(" " + _vm._s(user.nick_name))]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "h2",
+                                        {
+                                          staticClass:
+                                            "text-sm font-light text-gray-400"
+                                        },
+                                        [_vm._v(_vm._s(user.name))]
+                                      )
+                                    ])
+                                  ]
                                 )
-                              ])
-                            ]
-                          ),
+                              : _vm._e()
+                          }),
                           _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass:
-                                "block hover:bg-gray-100 text-xs text-gray-400 flex items-center py-2 px-3"
-                            },
-                            [
-                              _c("img", {
-                                staticClass:
-                                  "w-9 h-9 object-cover rounded-full",
-                                attrs: {
-                                  src:
-                                    "https://instagram.fsjd1-1.fna.fbcdn.net/v/t51.2885-19/s150x150/117756684_324341175604256_3627028918051777584_n.jpg?_nc_ht=instagram.fsjd1-1.fna.fbcdn.net&_nc_ohc=D_s2gyyHqLMAX9Vf2md&oh=9613db0350b7734e521da0918c56f824&oe=5F8EF6E2",
-                                  alt: "Juanito"
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "ml-2" }, [
-                                _c(
-                                  "h1",
-                                  {
-                                    staticClass:
-                                      "block leading-relaxed font-bold text-gray-700 text-sm"
-                                  },
-                                  [_vm._v(" JRH")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "h2",
-                                  {
-                                    staticClass:
-                                      "text-sm font-light text-gray-400"
-                                  },
-                                  [_vm._v("Juanito martinez")]
-                                )
-                              ])
-                            ]
-                          ),
+                          _vm.search == ""
+                            ? _c(
+                                "div",
+                                { staticClass: "flex items-center py-2 px-3" },
+                                [
+                                  _c(
+                                    "h2",
+                                    {
+                                      staticClass:
+                                        "text-sm font-light text-gray-400"
+                                    },
+                                    [_vm._v("Busca a tus amigos...")]
+                                  )
+                                ]
+                              )
+                            : _vm._e(),
                           _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass:
-                                "block hover:bg-gray-100 text-xs text-gray-400 flex items-center py-2 px-3"
-                            },
-                            [
-                              _c("img", {
-                                staticClass:
-                                  "w-9 h-9 object-cover rounded-full",
-                                attrs: {
-                                  src:
-                                    "https://instagram.fsjd1-1.fna.fbcdn.net/v/t51.2885-19/s150x150/117756684_324341175604256_3627028918051777584_n.jpg?_nc_ht=instagram.fsjd1-1.fna.fbcdn.net&_nc_ohc=D_s2gyyHqLMAX9Vf2md&oh=9613db0350b7734e521da0918c56f824&oe=5F8EF6E2",
-                                  alt: "Juanito"
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "ml-2" }, [
-                                _c(
-                                  "h1",
-                                  {
-                                    staticClass:
-                                      "block leading-relaxed font-bold text-gray-700 text-sm"
-                                  },
-                                  [_vm._v(" JRH")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "h2",
-                                  {
-                                    staticClass:
-                                      "text-sm font-light text-gray-400"
-                                  },
-                                  [_vm._v("Juanito martinez")]
-                                )
-                              ])
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass:
-                                "block hover:bg-gray-100 text-xs text-gray-400 flex items-center py-2 px-3"
-                            },
-                            [
-                              _c("img", {
-                                staticClass:
-                                  "w-9 h-9 object-cover rounded-full",
-                                attrs: {
-                                  src:
-                                    "https://instagram.fsjd1-1.fna.fbcdn.net/v/t51.2885-19/s150x150/117756684_324341175604256_3627028918051777584_n.jpg?_nc_ht=instagram.fsjd1-1.fna.fbcdn.net&_nc_ohc=D_s2gyyHqLMAX9Vf2md&oh=9613db0350b7734e521da0918c56f824&oe=5F8EF6E2",
-                                  alt: "Juanito"
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "ml-2" }, [
-                                _c(
-                                  "h1",
-                                  {
-                                    staticClass:
-                                      "block leading-relaxed font-bold text-gray-700 text-sm"
-                                  },
-                                  [_vm._v(" JRH")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "h2",
-                                  {
-                                    staticClass:
-                                      "text-sm font-light text-gray-400"
-                                  },
-                                  [_vm._v("Juanito martinez")]
-                                )
-                              ])
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass:
-                                "block hover:bg-gray-100 text-xs text-gray-400 flex items-center py-2 px-3"
-                            },
-                            [
-                              _c("img", {
-                                staticClass:
-                                  "w-9 h-9 object-cover rounded-full",
-                                attrs: {
-                                  src:
-                                    "https://instagram.fsjd1-1.fna.fbcdn.net/v/t51.2885-19/s150x150/117756684_324341175604256_3627028918051777584_n.jpg?_nc_ht=instagram.fsjd1-1.fna.fbcdn.net&_nc_ohc=D_s2gyyHqLMAX9Vf2md&oh=9613db0350b7734e521da0918c56f824&oe=5F8EF6E2",
-                                  alt: "Juanito"
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "ml-2" }, [
-                                _c(
-                                  "h1",
-                                  {
-                                    staticClass:
-                                      "block leading-relaxed font-bold text-gray-700 text-sm"
-                                  },
-                                  [_vm._v(" JRH")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "h2",
-                                  {
-                                    staticClass:
-                                      "text-sm font-light text-gray-400"
-                                  },
-                                  [_vm._v("Juanito martinez")]
-                                )
-                              ])
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass:
-                                "block hover:bg-gray-100 text-xs text-gray-400 flex items-center py-2 px-3"
-                            },
-                            [
-                              _c("img", {
-                                staticClass:
-                                  "w-9 h-9 object-cover rounded-full",
-                                attrs: {
-                                  src:
-                                    "https://instagram.fsjd1-1.fna.fbcdn.net/v/t51.2885-19/s150x150/117756684_324341175604256_3627028918051777584_n.jpg?_nc_ht=instagram.fsjd1-1.fna.fbcdn.net&_nc_ohc=D_s2gyyHqLMAX9Vf2md&oh=9613db0350b7734e521da0918c56f824&oe=5F8EF6E2",
-                                  alt: "Juanito"
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "ml-2" }, [
-                                _c(
-                                  "h1",
-                                  {
-                                    staticClass:
-                                      "block leading-relaxed font-bold text-gray-700 text-sm"
-                                  },
-                                  [_vm._v(" JRH")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "h2",
-                                  {
-                                    staticClass:
-                                      "text-sm font-light text-gray-400"
-                                  },
-                                  [_vm._v("Juanito martinez")]
-                                )
-                              ])
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass:
-                                "block hover:bg-gray-100 text-xs text-gray-400 flex items-center py-2 px-3"
-                            },
-                            [
-                              _c("img", {
-                                staticClass:
-                                  "w-9 h-9 object-cover rounded-full",
-                                attrs: {
-                                  src:
-                                    "https://instagram.fsjd1-1.fna.fbcdn.net/v/t51.2885-19/s150x150/117756684_324341175604256_3627028918051777584_n.jpg?_nc_ht=instagram.fsjd1-1.fna.fbcdn.net&_nc_ohc=D_s2gyyHqLMAX9Vf2md&oh=9613db0350b7734e521da0918c56f824&oe=5F8EF6E2",
-                                  alt: "Juanito"
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "ml-2" }, [
-                                _c(
-                                  "h1",
-                                  {
-                                    staticClass:
-                                      "block leading-relaxed font-bold text-gray-700 text-sm"
-                                  },
-                                  [_vm._v(" JRH")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "h2",
-                                  {
-                                    staticClass:
-                                      "text-sm font-light text-gray-400"
-                                  },
-                                  [_vm._v("Juanito martinez")]
-                                )
-                              ])
-                            ]
-                          )
+                          !_vm.accountexists
+                            ? _c(
+                                "div",
+                                { staticClass: "flex items-center py-2 px-3" },
+                                [
+                                  _c(
+                                    "h2",
+                                    {
+                                      staticClass:
+                                        "text-sm font-light text-gray-400"
+                                    },
+                                    [_vm._v("No existe una cuenta")]
+                                  )
+                                ]
+                              )
+                            : _vm._e()
                         ]
                       },
                       proxy: true
