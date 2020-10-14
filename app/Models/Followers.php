@@ -15,11 +15,11 @@ class Followers extends Model
     ];
 
     public function user(){
-        $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function follower(){
-        $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 }
 

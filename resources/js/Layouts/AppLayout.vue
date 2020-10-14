@@ -14,22 +14,44 @@
 
                     </div>
 
-                    <div class="flex items-center">
-                        <div class="relative rounded border border-gray-300">
-                            <span class="absolute inset-y-0 left-0 flex items-center pl-1">
-                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-5 h-5">
-                                    <path class="text-gray-400" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                                </svg>
-                            </span>
-                            <input v-model="search" aria-placeholder="Busca tus amigos o contacta nuevos" placeholder="Buscar"
-                            class="h-7 py-2 pr-2 pl-10 block w-full rounded-lg focus:outline-none text-gray-900" type="search" required style="background-color: #fafafa"/>
-                        </div>
+                    <div class="flex items-center relative">
+                    <dropdown align="center" width="100" overflow="overflow-y-auto" maxheight="300">
+                            <template #trigger>
+                                <div class="relative rounded border border-gray-300">
+                                    <span class="absolute inset-y-0 left-0 flex items-center pl-1">
+                                        <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-5 h-5">
+                                            <path class="text-gray-400" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                        </svg>
+                                    </span>
+                                    <input v-model="search" aria-placeholder="Busca tus amigos o contacta nuevos" placeholder="Buscar"
+                                    class="h-7 py-2 pr-2 pl-10 block w-full rounded-lg focus:outline-none text-gray-900" type="search" required style="background-color: #fafafa"/>
+                                </div>
+                            </template>
+
+                            <template #content>
+                                <a v-if="users.length > 0" v-for="(user,index) in users" :key="index" :href="'/'+user.nick_name" class="block hover:bg-gray-100 text-xs text-gray-400 flex items-center py-2 px-3">
+                                    <img :src="user.profile_photo_url"
+                                        class="w-9 h-9 object-cover rounded-full"
+                                        :alt="user.name" />
+                                    <div class="ml-2">
+                                        <h1 class="block leading-relaxed font-bold text-gray-700 text-sm"> {{ user.nick_name }}</h1>
+                                        <h2 class="text-sm font-light text-gray-400">{{ user.name }}</h2>
+                                    </div>
+                                </a>
+                                <div v-if="search == ''" class="flex items-center py-2 px-3">
+                                    <h2 class="text-sm font-light text-gray-400">Busca a tus amigos...</h2>
+                                </div>
+                                <div v-if="!accountexists" class="flex items-center py-2 px-3">
+                                    <h2 class="text-sm font-light text-gray-400">No existe una cuenta</h2>
+                                </div>
+                            </template>
+                        </dropdown>
                     </div>
 
                     <!-- Settings Dropdown -->
                     <div class="hidden sm:flex sm:items-center sm:ml-6">
                         <div class="mr-3">
-                            <a href="/dashboard">    
+                            <a href="/dashboard">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6 cursor-pointer">
                                     <path class="text-gray-600" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                                 </svg>
@@ -46,7 +68,7 @@
                             </svg>
                         </div>
                         <div class="ml-3 relative">
-                            <jet-dropdown align="right" width="48">
+                            <dropdown align="right" width="48">
                                 <template #trigger>
                                     <button class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out">
                                         <img class="h-8 w-8 rounded-full object-cover" :src="$page.user.profile_photo_url" :alt="$page.user.name" />
@@ -60,7 +82,7 @@
                                     </div>
 
                                     <jet-dropdown-link :href="'/' + $page.user.nick_name">
-                                        Perfil 
+                                        Perfil
                                     </jet-dropdown-link>
 
                                     <jet-dropdown-link href="/user/profile">
@@ -116,7 +138,7 @@
                                         </jet-dropdown-link>
                                     </form>
                                 </template>
-                            </jet-dropdown>
+                            </dropdown>
                         </div>
                     </div>
 
@@ -228,7 +250,7 @@
 <script>
     import JetApplicationLogo from './../Jetstream/ApplicationLogo'
     import JetApplicationMark from './../Jetstream/ApplicationMark'
-    import JetDropdown from './../Jetstream/Dropdown'
+    import Dropdown from './../Components/Dropdown'
     import JetDropdownLink from './../Jetstream/DropdownLink'
     import JetNavLink from './../Jetstream/NavLink'
     import JetResponsiveNavLink from './../Jetstream/ResponsiveNavLink'
@@ -237,7 +259,7 @@
         components: {
             JetApplicationLogo,
             JetApplicationMark,
-            JetDropdown,
+            Dropdown,
             JetDropdownLink,
             JetNavLink,
             JetResponsiveNavLink,
@@ -249,7 +271,8 @@
                 search: '',
                 users:[],
                 loading: true,
-                errored: false
+                errored: false,
+                accountexists: true
             }
         },
 
@@ -273,15 +296,30 @@
                 return window.location.pathname
             },
             searchUsers(){
-                axios.get('/users-search/'+this.search)
-                    .then(response => {
-                        this.users = response.data
-                    })
-                    .catch(error => {
-                        console.log(error)
-                        this.errored = true
-                    })
-                    .finally(() => this.loading = false)
+                this.accountexists = true
+                if(this.search !== ""){
+                    
+                    axios.get('/users-search/'+this.search)
+                        .then(response => {
+                            if(response.data.length > 0 && Array.isArray(response.data)){
+                                this.accountexists = true
+                                this.users = response.data
+                            }else{
+                                this.accountexists = false
+                                this.users = []
+                            }
+                        })
+                        .catch(error => {
+                            console.log(error)
+                            this.errored = true
+                            this.accountexists = true
+                        })
+                        .finally(() => this.loading = false)
+                    
+                }else{
+                    this.users = []
+                    this.accountexists = true
+                }
             }
         }
     }
