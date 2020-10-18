@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
@@ -28,4 +29,5 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::get('/{nick_name}', [ProfileController::class,'index'])->name('nick_name');
     Route::get('/users-search/{nick_name}', [SearchController::class,'search'])->name('users-search');
+    Route::post('/create-post', [PostController::class,'create'])->name('create-post');
 });
