@@ -63,7 +63,7 @@
         },
         methods: {
             showModal(){
-                this.$emit('show',true)
+                this.$emit('show')
             }
         }
     }
