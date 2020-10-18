@@ -15,8 +15,6 @@ class SearchController extends Controller
     }
 
     public function search($nick_name){
-        
         return $this->user->select('id','nick_name','name','profile_photo_path')->where('nick_name','like','%'.$nick_name.'%')->get();
-        
     }
 }
