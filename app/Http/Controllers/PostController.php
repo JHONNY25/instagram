@@ -15,6 +15,10 @@ class PostController extends Controller
         $this->post = $post;
     }
 
+    public function all(){
+        return $this->post->getPosts();
+    }
+
     public function create(Request $request){
         try {
             DB::beginTransaction();
