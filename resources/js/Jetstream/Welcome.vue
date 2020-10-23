@@ -12,17 +12,20 @@
             <modal :show="showPost" @close="changeStateShowPost">
                 <div class="p-5">
                     <div class="border rounded border-gray-300 p-5">
-                        <textarea class="w-full h-16 resize-none outline-none p-2 rounded focus:boutline-none appearance-none" name="posttext" cols="30" rows="10" placeholder="En que estas pensando ...?"></textarea>
+                        <textarea v-model="textpost" id="posttext" class="w-full h-16 resize-none outline-none p-2 rounded focus:boutline-none appearance-none" name="posttext" cols="30" rows="10" placeholder="En que estas pensando ...?"></textarea>
+                        <div id="preview" class="my-5">
+                            <img v-if="url" :src="url" style="max-width: 100%; max-height: 400px; margin: 0 auto;"/>
+                        </div>
                         <div class="flex justify-end">
                             <button @click="dispatchInputFile" class="outline-none focus:outline-none mr-3 inline-flex items-center cursor-pointer bg-blue-500 p-2 rounded-full" >
                                 <svg class="text-white inline-block h-7 w-7 " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                 </svg>
                             </button>
-                            <input id="image" type="file" name="image" accept="image/gif,image/jpeg,image/jpg,image/png" style="display: none"/>
-                        </div >
+                            <input @change="fileChange" id="image" type="file" name="image" accept="image/gif,image/jpeg,image/jpg,image/png" style="display: none"/>
+                        </div>
                     </div>
-                    <button class="flex justify-center w-full outline-none focus:outline-none my-3 text-center bg-blue-500 rounded text-white py-2" >Publicar</button>
+                    <button type="submit" class="flex justify-center w-full outline-none focus:outline-none my-3 text-center bg-blue-500 rounded text-white py-2" @click="createPost">Publicar</button>
                 </div>
             </modal>
         </div>
@@ -41,11 +44,14 @@
                 nickName: 'JRH',
                 likes: '2300',
                 comments: 24,
-                urlImage: 'https://instagram.fsjd1-1.fna.fbcdn.net/v/t51.2885-19/s150x150/117756684_324341175604256_3627028918051777584_n.jpg?_nc_ht=instagram.fsjd1-1.fna.fbcdn.net&_nc_ohc=D_s2gyyHqLMAX9Vf2md&oh=9613db0350b7734e521da0918c56f824&oe=5F8EF6E2',
+                urlImage: 'https://cdn.pixabay.com/photo/2020/10/19/09/44/woman-5667299_960_720.jpg',
                 publicationTime: '5 horas',
                 comment: 'Un par de jugadas que se dieron en la cancha xd',
                 show: false,
                 showPost: false,
+                imagepost: null,
+                textpost: null,
+                url: null,
             }
         },
         components: {
@@ -54,8 +60,13 @@
             Modal,
         },
         methods:{
+            fileChange(e){
+                const file = e.target.files[0]
+                this.imagepost = file
+                this.url = URL.createObjectURL(file)
+            },
             async getPost(){
-
+                
             },
             changeStateShow(){
                 this.show = !this.show
@@ -66,8 +77,20 @@
             dispatchInputFile(){
                 document.getElementById('image').click()
             },
-            createPost(){
+            async createPost(){
+                const formData = new FormData()
+                formData.append("image", this.imagepost)
+                formData.append('textpost', this.textpost)
                 
+                await axios.post('/create-post', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }).then(response => {
+                    //this.getPost()
+                })
+                .catch(error => console.log(error))
+                .finally(() => this.showPost = false)
             }
         },
         created(){
