@@ -33,17 +33,24 @@ class Posts extends Model
 
     public static function createPost(Request $request){
         $file = $request->file('image');
-        $contents = file_get_contents($file);
         $name = $file->getClientOriginalName();
 
-        if(Storage::disk('s3')->exists($name)){
-            Storage::disk('s3')->put($file, $contents);
+        if(!Storage::disk('public')->exists($name)){
+            Storage::disk('public')->put($name, $file);
         }
 
         return (new static)::create([
             'image_path' => $name,
-            'description' => $request->posttext,
+            'description' => $request->textpost,
             'user_id' => Auth::id(),
         ]);
+    }
+
+    public static function getPosts(){
+        return (new static)::with([
+            'user',
+            'likes',
+            'comments'
+        ])->get();
     }
 }
