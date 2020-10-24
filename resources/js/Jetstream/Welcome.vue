@@ -66,7 +66,11 @@
                 this.url = URL.createObjectURL(file)
             },
             async getPost(){
-                
+                await axios.post('/get-posts')
+                .then(response => {
+                    this.posts = response.data
+                })
+                .catch(error => console.log(error))
             },
             changeStateShow(){
                 this.show = !this.show
@@ -87,14 +91,14 @@
                         'Content-Type': 'multipart/form-data'
                     }
                 }).then(response => {
-                    //this.getPost()
+                    this.posts.push(response.data)
                 })
                 .catch(error => console.log(error))
                 .finally(() => this.showPost = false)
             }
         },
         created(){
-            //this.getPost()
+            this.getPost()
         }
     }
 </script>
