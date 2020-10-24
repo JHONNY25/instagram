@@ -19,16 +19,26 @@ class Posts extends Model
         'user_id',
     ];
 
+    protected $appends = ['countcomments','countlikes'];
+
+    public function getCountCommentsAttribute(){
+        return $this->comments->count();
+    }
+
+    public function getCountLikesAttribute(){
+        return $this->likes->count();
+    }
+
     public function user(){
         return $this->belongsTo(User::class);
     }
 
     public function likes(){
-        return $this->hasMany(Likes::class);
+        return $this->hasMany(Likes::class,'post_id');
     }
 
     public function comments(){
-        return $this->hasMany(Comments::class);
+        return $this->hasMany(Comments::class,'post_id');
     }
 
     public static function createPost(Request $request){
@@ -39,11 +49,17 @@ class Posts extends Model
             Storage::disk('public')->put($name, $file);
         }
 
-        return (new static)::create([
+        $post = (new static)::create([
             'image_path' => $name,
             'description' => $request->textpost,
             'user_id' => Auth::id(),
         ]);
+
+        return (new static)::with([
+            'user',
+            'likes',
+            'comments'
+        ])->find($post->id);
     }
 
     public static function getPosts(){
