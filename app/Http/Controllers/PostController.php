@@ -15,6 +15,10 @@ class PostController extends Controller
         $this->post = $post;
     }
 
+    public function all(){
+        return $this->post->getPosts();
+    }
+
     public function create(Request $request){
         try {
             DB::beginTransaction();
@@ -23,9 +27,11 @@ class PostController extends Controller
                 return redirect()->route('login');
             }
 
-            $this->post->createPost($request);
+            $post = $this->post->createPost($request);
 
             DB::commit();
+
+            return $post;
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json($e->getMessage(),500);

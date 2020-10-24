@@ -19,31 +19,58 @@ class Posts extends Model
         'user_id',
     ];
 
+    protected $appends = ['countcomments','countlikes'];
+
+    public function getCountCommentsAttribute(){
+        return $this->comments->count();
+    }
+
+    public function getCountLikesAttribute(){
+        return $this->likes->count();
+    }
+
     public function user(){
         return $this->belongsTo(User::class);
     }
 
     public function likes(){
-        return $this->hasMany(Likes::class);
+        return $this->hasMany(Likes::class,'post_id');
     }
 
     public function comments(){
-        return $this->hasMany(Comments::class);
+        return $this->hasMany(Comments::class,'post_id');
     }
 
     public static function createPost(Request $request){
         $file = $request->file('image');
-        $contents = file_get_contents($file);
         $name = $file->getClientOriginalName();
+        $url = null;
 
-        if(Storage::disk('s3')->exists($name)){
-            Storage::disk('s3')->put($file, $contents);
+        if(!Storage::disk('public')->exists($name)){
+            Storage::disk('public')->put($name, $file);
+            $url = Storage::url($name);
         }
+        
+        $url = Storage::url($name);
 
-        return (new static)::create([
-            'image_path' => $name,
-            'description' => $request->posttext,
+        $post = (new static)::create([
+            'image_path' => $url,
+            'description' => $request->textpost,
             'user_id' => Auth::id(),
         ]);
+
+        return (new static)::with([
+            'user',
+            'likes',
+            'comments'
+        ])->find($post->id);
+    }
+
+    public static function getPosts(){
+        return (new static)::with([
+            'user',
+            'likes',
+            'comments'
+        ])->orderBy('created_at', 'desc')->get();
     }
 }

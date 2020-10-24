@@ -2885,6 +2885,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 
 
 
@@ -2895,11 +2898,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       nickName: 'JRH',
       likes: '2300',
       comments: 24,
-      urlImage: 'https://instagram.fsjd1-1.fna.fbcdn.net/v/t51.2885-19/s150x150/117756684_324341175604256_3627028918051777584_n.jpg?_nc_ht=instagram.fsjd1-1.fna.fbcdn.net&_nc_ohc=D_s2gyyHqLMAX9Vf2md&oh=9613db0350b7734e521da0918c56f824&oe=5F8EF6E2',
+      urlImage: 'https://cdn.pixabay.com/photo/2020/10/19/09/44/woman-5667299_960_720.jpg',
       publicationTime: '5 horas',
       comment: 'Un par de jugadas que se dieron en la cancha xd',
       show: false,
-      showPost: false
+      showPost: false,
+      imagepost: null,
+      textpost: null,
+      url: null
     };
   },
   components: {
@@ -2908,12 +2914,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     Modal: _Jetstream_Modal__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   methods: {
+    fileChange: function fileChange(e) {
+      var file = e.target.files[0];
+      this.imagepost = file;
+      this.url = URL.createObjectURL(file);
+    },
     getPost: function getPost() {
+      var _this = this;
+
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                _context.next = 2;
+                return axios.post('/get-posts').then(function (response) {
+                  _this.posts = response.data;
+                })["catch"](function (error) {
+                  return console.log(error);
+                });
+
+              case 2:
               case "end":
                 return _context.stop();
             }
@@ -2929,9 +2950,43 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     dispatchInputFile: function dispatchInputFile() {
       document.getElementById('image').click();
+    },
+    createPost: function createPost() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var formData;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                formData = new FormData();
+                formData.append("image", _this2.imagepost);
+                formData.append('textpost', _this2.textpost);
+                _context2.next = 5;
+                return axios.post('/create-post', formData, {
+                  headers: {
+                    'Content-Type': 'multipart/form-data'
+                  }
+                }).then(function (response) {
+                  _this2.posts.push(response.data);
+                })["catch"](function (error) {
+                  return console.log(error);
+                })["finally"](function () {
+                  return _this2.showPost = false;
+                });
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
     }
   },
-  created: function created() {//this.getPost()
+  created: function created() {
+    this.getPost();
   }
 });
 
@@ -26147,7 +26202,7 @@ var render = function() {
     "div",
     {
       staticClass:
-        "bg-white max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl rounded overflow-hidden shadow-none"
+        "bg-white max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl rounded overflow-hidden shadow-none mb-10 sm:rounded-lg max-w-2xl border border-gray-300"
     },
     [
       _c("header", { staticClass: "flex flex-start" }, [
@@ -27467,128 +27522,162 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c(
-      "button",
-      {
-        staticClass:
-          "flex justify-center w-full mb-5 text-center bg-blue-500 rounded text-white py-2",
-        on: { click: _vm.changeStateShowPost }
-      },
-      [_vm._v("Agregar publicación")]
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass:
-          "overflow-hidden shadow-none sm:rounded-lg max-w-2xl border border-gray-300 mb-10"
-      },
-      [
-        _c("post-component", {
-          attrs: {
-            nickName: _vm.nickName,
-            likes: _vm.likes,
-            commentsnum: _vm.comments,
-            comment: _vm.comment,
-            urlImage: _vm.urlImage,
-            publicationTime: _vm.publicationTime
-          },
-          on: { show: _vm.changeStateShow }
-        }),
-        _vm._v(" "),
-        _c(
-          "modal",
-          { attrs: { show: _vm.show }, on: { close: _vm.changeStateShow } },
-          [
-            _c("div", { staticClass: "p-10" }, [
-              _vm._v("que pasaaaaaa padreeee")
+  return _c(
+    "div",
+    {
+      staticClass: "max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl"
+    },
+    [
+      _c(
+        "button",
+        {
+          staticClass:
+            "flex justify-center w-full mb-5 text-center bg-blue-500 rounded text-white py-2",
+          on: { click: _vm.changeStateShowPost }
+        },
+        [_vm._v("Agregar publicación")]
+      ),
+      _vm._v(" "),
+      _vm._l(_vm.posts, function(post, index) {
+        return _vm.posts.length > 0
+          ? _c("post-component", {
+              key: index,
+              attrs: {
+                nickName: post.user.nick_name,
+                likes: post.countlikes,
+                commentsnum: post.countcomments,
+                comment: post.description,
+                urlImage: post.user.profile_photo_url,
+                publicationTime: _vm.publicationTime
+              },
+              on: { show: _vm.changeStateShow }
+            })
+          : _c("div", { staticClass: "text-3xl" }, [
+              _vm._v("No hay publicaciones")
             ])
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "modal",
-          {
-            attrs: { show: _vm.showPost },
-            on: { close: _vm.changeStateShowPost }
-          },
-          [
-            _c("div", { staticClass: "p-5" }, [
-              _c("div", { staticClass: "border rounded border-gray-300 p-5" }, [
-                _c("textarea", {
-                  staticClass:
-                    "w-full h-16 resize-none outline-none p-2 rounded focus:boutline-none appearance-none",
-                  attrs: {
-                    name: "posttext",
-                    cols: "30",
-                    rows: "10",
-                    placeholder: "En que estas pensando ...?"
+      }),
+      _vm._v(" "),
+      _c(
+        "modal",
+        { attrs: { show: _vm.show }, on: { close: _vm.changeStateShow } },
+        [_c("div", { staticClass: "p-10" }, [_vm._v("que pasaaaaaa padreeee")])]
+      ),
+      _vm._v(" "),
+      _c(
+        "modal",
+        {
+          attrs: { show: _vm.showPost },
+          on: { close: _vm.changeStateShowPost }
+        },
+        [
+          _c("div", { staticClass: "p-5" }, [
+            _c("div", { staticClass: "border rounded border-gray-300 p-5" }, [
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.textpost,
+                    expression: "textpost"
                   }
-                }),
-                _vm._v(" "),
-                _c("div", { staticClass: "flex justify-end" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass:
-                        "outline-none focus:outline-none mr-3 inline-flex items-center cursor-pointer bg-blue-500 p-2 rounded-full",
-                      on: { click: _vm.dispatchInputFile }
-                    },
-                    [
-                      _c(
-                        "svg",
-                        {
-                          staticClass: "text-white inline-block h-7 w-7 ",
-                          attrs: {
-                            xmlns: "http://www.w3.org/2000/svg",
-                            fill: "none",
-                            viewBox: "0 0 24 24",
-                            stroke: "currentColor"
-                          }
-                        },
-                        [
-                          _c("path", {
-                            attrs: {
-                              "stroke-linecap": "round",
-                              "stroke-linejoin": "round",
-                              "stroke-width": "2",
-                              d:
-                                "M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                            }
-                          })
-                        ]
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("input", {
-                    staticStyle: { display: "none" },
-                    attrs: {
-                      id: "image",
-                      type: "file",
-                      name: "image",
-                      accept: "image/gif,image/jpeg,image/jpg,image/png"
+                ],
+                staticClass:
+                  "w-full h-16 resize-none outline-none p-2 rounded focus:boutline-none appearance-none",
+                attrs: {
+                  id: "posttext",
+                  name: "posttext",
+                  cols: "30",
+                  rows: "10",
+                  placeholder: "En que estas pensando ...?"
+                },
+                domProps: { value: _vm.textpost },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
                     }
-                  })
-                ])
+                    _vm.textpost = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("div", { staticClass: "my-5", attrs: { id: "preview" } }, [
+                _vm.url
+                  ? _c("img", {
+                      staticStyle: {
+                        "max-width": "100%",
+                        "max-height": "400px",
+                        margin: "0 auto"
+                      },
+                      attrs: { src: _vm.url }
+                    })
+                  : _vm._e()
               ]),
               _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass:
-                    "flex justify-center w-full outline-none focus:outline-none my-3 text-center bg-blue-500 rounded text-white py-2"
-                },
-                [_vm._v("Publicar")]
-              )
-            ])
-          ]
-        )
-      ],
-      1
-    )
-  ])
+              _c("div", { staticClass: "flex justify-end" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "outline-none focus:outline-none mr-3 inline-flex items-center cursor-pointer bg-blue-500 p-2 rounded-full",
+                    on: { click: _vm.dispatchInputFile }
+                  },
+                  [
+                    _c(
+                      "svg",
+                      {
+                        staticClass: "text-white inline-block h-7 w-7 ",
+                        attrs: {
+                          xmlns: "http://www.w3.org/2000/svg",
+                          fill: "none",
+                          viewBox: "0 0 24 24",
+                          stroke: "currentColor"
+                        }
+                      },
+                      [
+                        _c("path", {
+                          attrs: {
+                            "stroke-linecap": "round",
+                            "stroke-linejoin": "round",
+                            "stroke-width": "2",
+                            d:
+                              "M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                          }
+                        })
+                      ]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c("input", {
+                  staticStyle: { display: "none" },
+                  attrs: {
+                    id: "image",
+                    type: "file",
+                    name: "image",
+                    accept: "image/gif,image/jpeg,image/jpg,image/png"
+                  },
+                  on: { change: _vm.fileChange }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass:
+                  "flex justify-center w-full outline-none focus:outline-none my-3 text-center bg-blue-500 rounded text-white py-2",
+                attrs: { type: "submit" },
+                on: { click: _vm.createPost }
+              },
+              [_vm._v("Publicar")]
+            )
+          ])
+        ]
+      )
+    ],
+    2
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -28452,14 +28541,18 @@ var render = function() {
       _vm._v(" "),
       _c("main", [
         _c("div", { staticClass: "py-12" }, [
-          _c("div", { staticClass: "max-w-7xl mx-auto sm:px-6 lg:px-8" }, [
-            _c(
-              "div",
-              { staticClass: "max-w-full flex justify-center" },
-              [_vm._t("default")],
-              2
-            )
-          ])
+          _c(
+            "div",
+            { staticClass: "max-w-7xl min-w-7xl mx-auto sm:px-6 lg:px-8" },
+            [
+              _c(
+                "div",
+                { staticClass: "max-w-full flex justify-center" },
+                [_vm._t("default")],
+                2
+              )
+            ]
+          )
         ])
       ]),
       _vm._v(" "),
