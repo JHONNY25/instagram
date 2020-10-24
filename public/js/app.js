@@ -2920,11 +2920,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.url = URL.createObjectURL(file);
     },
     getPost: function getPost() {
+      var _this = this;
+
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                _context.next = 2;
+                return axios.post('/get-posts').then(function (response) {
+                  _this.posts = response.data;
+                })["catch"](function (error) {
+                  return console.log(error);
+                });
+
+              case 2:
               case "end":
                 return _context.stop();
             }
@@ -2942,7 +2952,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       document.getElementById('image').click();
     },
     createPost: function createPost() {
-      var _this = this;
+      var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
         var formData;
@@ -2951,18 +2961,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 formData = new FormData();
-                formData.append("image", _this.imagepost);
-                formData.append('textpost', _this.textpost);
+                formData.append("image", _this2.imagepost);
+                formData.append('textpost', _this2.textpost);
                 _context2.next = 5;
                 return axios.post('/create-post', formData, {
                   headers: {
                     'Content-Type': 'multipart/form-data'
                   }
-                }).then(function (response) {//this.getPost()
+                }).then(function (response) {
+                  _this2.posts.push(response.data);
                 })["catch"](function (error) {
                   return console.log(error);
                 })["finally"](function () {
-                  return _this.showPost = false;
+                  return _this2.showPost = false;
                 });
 
               case 5:
@@ -2974,7 +2985,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     }
   },
-  created: function created() {//this.getPost()
+  created: function created() {
+    this.getPost();
   }
 });
 
