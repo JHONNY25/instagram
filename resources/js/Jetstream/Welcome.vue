@@ -1,11 +1,12 @@
 <template>
-    <div>
+    <div class="max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl">
         <button class="flex justify-center w-full mb-5 text-center bg-blue-500 rounded text-white py-2" @click="changeStateShowPost">Agregar publicación</button>
 
-        <div class="overflow-hidden shadow-none sm:rounded-lg max-w-2xl border border-gray-300 mb-10">
-            <post-component @show="changeStateShow" :nickName="nickName" :likes="likes" :commentsnum="comments" :comment="comment" :urlImage="urlImage" :publicationTime="publicationTime"></post-component>
+        <post-component v-if="posts.length > 0" v-for="(post,index) in posts" :key="index" @show="changeStateShow" :nickName="post.user.nick_name" :likes="post.countlikes" :commentsnum="post.countcomments" :comment="post.description" :urlImage="post.user.profile_photo_url" :publicationTime="publicationTime"></post-component>
 
-            <modal :show="show" @close="changeStateShow">
+        <div v-else class="text-3xl">No hay publicaciones</div>
+
+        <modal :show="show" @close="changeStateShow">
                 <div class="p-10">que pasaaaaaa padreeee</div>
             </modal>
 
@@ -28,7 +29,6 @@
                     <button type="submit" class="flex justify-center w-full outline-none focus:outline-none my-3 text-center bg-blue-500 rounded text-white py-2" @click="createPost">Publicar</button>
                 </div>
             </modal>
-        </div>
     </div>
 </template>
 
