@@ -44,13 +44,17 @@ class Posts extends Model
     public static function createPost(Request $request){
         $file = $request->file('image');
         $name = $file->getClientOriginalName();
+        $url = null;
 
         if(!Storage::disk('public')->exists($name)){
             Storage::disk('public')->put($name, $file);
+            $url = Storage::url($name);
         }
+        
+        $url = Storage::url($name);
 
         $post = (new static)::create([
-            'image_path' => $name,
+            'image_path' => $url,
             'description' => $request->textpost,
             'user_id' => Auth::id(),
         ]);
@@ -67,6 +71,6 @@ class Posts extends Model
             'user',
             'likes',
             'comments'
-        ])->get();
+        ])->orderBy('created_at', 'desc')->get();
     }
 }
