@@ -29,8 +29,8 @@
             <br>
             <div class="">
                 <h1 class="text-base font-bold font-light">{{ name }}</h1>
-                <span class="text-base">{{ presentation }}</span>
-                <a :href="website" class="block text-base text-blue-500 mt-2" target="_blank">{{ website }}</a>
+                <span v-if="presentation !== null" class="text-base">{{ presentation }}</span>
+                <a v-if="website !== null" :href="website" class="block text-base text-blue-500 mt-2" target="_blank">{{ website }}</a>
             </div>
         </div>
     </div>

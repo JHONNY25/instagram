@@ -31924,11 +31924,11 @@ var render = function() {
             staticClass: "flex w-9/12 justify-content-around",
             attrs: {
               urlprofileconfig: _vm.hrefprofile,
-              imageurl: _vm.userimage,
-              name: _vm.name,
-              nickname: _vm.nickname,
-              website: _vm.website,
-              presentation: _vm.presentation
+              imageurl: _vm.user.profile_photo_url,
+              name: _vm.user.name,
+              nickname: _vm.user.nick_name,
+              website: _vm.user.web_site,
+              presentation: _vm.user.presentation
             }
           })
         ],
@@ -32045,18 +32045,22 @@ var render = function() {
           _vm._v(_vm._s(_vm.name))
         ]),
         _vm._v(" "),
-        _c("span", { staticClass: "text-base" }, [
-          _vm._v(_vm._s(_vm.presentation))
-        ]),
+        _vm.presentation !== null
+          ? _c("span", { staticClass: "text-base" }, [
+              _vm._v(_vm._s(_vm.presentation))
+            ])
+          : _vm._e(),
         _vm._v(" "),
-        _c(
-          "a",
-          {
-            staticClass: "block text-base text-blue-500 mt-2",
-            attrs: { href: _vm.website, target: "_blank" }
-          },
-          [_vm._v(_vm._s(_vm.website))]
-        )
+        _vm.website !== null
+          ? _c(
+              "a",
+              {
+                staticClass: "block text-base text-blue-500 mt-2",
+                attrs: { href: _vm.website, target: "_blank" }
+              },
+              [_vm._v(_vm._s(_vm.website))]
+            )
+          : _vm._e()
       ])
     ])
   ])
