@@ -29,7 +29,7 @@
                             </template>
 
                             <template #content>
-                                <a v-if="users.length > 0" v-for="(user,index) in users" :key="index" :href="'/'+user.nick_name" class="block hover:bg-gray-100 text-xs text-gray-400 flex items-center py-2 px-3">
+                                <a v-if="users.length > 0" v-for="(user,index) in users" :key="index" :href="'/profile/'+user.nick_name" class="block hover:bg-gray-100 text-xs text-gray-400 flex items-center py-2 px-3">
                                     <img :src="user.profile_photo_url"
                                         class="w-9 h-9 object-cover rounded-full"
                                         :alt="user.name" />
