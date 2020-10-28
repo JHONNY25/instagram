@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SearchController;
+use App\Models\Chat;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,8 +29,10 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         return Inertia\Inertia::render('Dashboard');
     });
 
-    Route::get('/{nick_name}', [ProfileController::class,'index'])->name('nick_name');
+    Route::get('/profile/{nick_name}', [ProfileController::class,'index'])->name('nick_name');
     Route::get('/users-search/{nick_name}', [SearchController::class,'search'])->name('users-search');
     Route::post('/create-post', [PostController::class,'create'])->name('create-post');
     Route::post('/get-posts', [PostController::class,'all'])->name('get-posts');
+    
+    Route::get('/user-chats', [ChatController::class,'index'])->name('get-chats');
 });

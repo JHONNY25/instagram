@@ -2,7 +2,7 @@
     <div class="bg-white max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl rounded overflow-hidden shadow-none mb-10 sm:rounded-lg max-w-2xl border border-gray-300">
         <header class="flex flex-start">
             <div>
-                <a :href="'/'+nickName" class="cursor-pointer m-4 flex items-center text-sm outline-none focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out">
+                <a :href="'/profile/'+nickName" class="cursor-pointer m-4 flex items-center text-sm outline-none focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out">
                     <img :src="urlImage" class="h-9 w-9 rounded-full object-cover"
                     alt="Jusnito" />
                     <div>
