@@ -35,4 +35,5 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('/get-posts', [PostController::class,'all'])->name('get-posts');
     
     Route::get('/user-chats', [ChatController::class,'index'])->name('get-chats');
+    Route::get('/user-chats/{nick_name}', [ChatController::class,'getChat'])->name('get-chat-user');
 });

@@ -2175,6 +2175,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
@@ -3288,6 +3289,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -3717,14 +3720,100 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      chat: []
+    };
+  },
   components: {
     AppLayout: _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__["default"],
     UsersChats: _Components_UsersChats__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
-  props: ['user']
+  props: ['user'],
+  methods: {
+    getChat: function getChat() {
+      this.chat.push({
+        user: 'sadasd'
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -32576,64 +32665,61 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c(
+    "ul",
+    { staticClass: "overflow-auto", staticStyle: { height: "500px" } },
+    [
+      _c("li", [
+        _c(
+          "a",
+          {
+            staticClass:
+              "hover:bg-gray-100 border-b border-gray-300 px-3 py-2 cursor-pointer flex items-center text-sm focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out",
+            on: {
+              click: function($event) {
+                return _vm.$emit("getchat")
+              }
+            }
+          },
+          [
+            _c("img", {
+              staticClass: "h-10 w-10 rounded-full object-cover",
+              attrs: {
+                src:
+                  "https://images.pexels.com/photos/5286173/pexels-photo-5286173.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
+                alt: "Juanito"
+              }
+            }),
+            _vm._v(" "),
+            _vm._m(0)
+          ]
+        )
+      ])
+    ]
+  )
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "ul",
-      { staticClass: "overflow-auto", staticStyle: { height: "500px" } },
-      [
-        _c("li", [
-          _c(
-            "a",
-            {
-              staticClass:
-                "hover:bg-gray-100 border-b border-gray-300 px-3 py-2 cursor-pointer flex items-center text-sm focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out",
-              attrs: { href: "" }
-            },
-            [
-              _c("img", {
-                staticClass: "h-10 w-10 rounded-full object-cover",
-                attrs: {
-                  src:
-                    "https://images.pexels.com/photos/5286173/pexels-photo-5286173.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
-                  alt: "Juanito"
-                }
-              }),
-              _vm._v(" "),
-              _c("div", { staticClass: "w-full pb-2" }, [
-                _c("div", { staticClass: "flex justify-between" }, [
-                  _c(
-                    "span",
-                    {
-                      staticClass:
-                        "block ml-2 font-semibold text-base text-gray-600 "
-                    },
-                    [_vm._v("Juanito")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "span",
-                    { staticClass: "block ml-2 text-sm text-gray-600" },
-                    [_vm._v(" 5 hrs")]
-                  )
-                ]),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  { staticClass: "block ml-2 text-sm text-gray-600" },
-                  [_vm._v("Ultimo mensaje")]
-                )
-              ])
-            ]
-          )
+    return _c("div", { staticClass: "w-full pb-2" }, [
+      _c("div", { staticClass: "flex justify-between" }, [
+        _c(
+          "span",
+          { staticClass: "block ml-2 font-semibold text-base text-gray-600 " },
+          [_vm._v("Juanito")]
+        ),
+        _vm._v(" "),
+        _c("span", { staticClass: "block ml-2 text-sm text-gray-600" }, [
+          _vm._v(" 5 hrs")
         ])
-      ]
-    )
+      ]),
+      _vm._v(" "),
+      _c("span", { staticClass: "block ml-2 text-sm text-gray-600" }, [
+        _vm._v("Ultimo mensaje")
+      ])
+    ])
   }
 ]
 render._withStripped = true
@@ -34214,30 +34300,31 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "mr-3" }, [
-                  _c(
-                    "svg",
-                    {
-                      staticClass: "w-6 h-6 cursor-pointer",
-                      attrs: {
-                        xmlns: "http://www.w3.org/2000/svg",
-                        fill: "none",
-                        viewBox: "0 0 24 24",
-                        stroke: "currentColor"
-                      }
-                    },
-                    [
-                      _c("path", {
-                        staticClass: "text-gray-600",
+                  _c("a", { attrs: { href: "/user-chats" } }, [
+                    _c(
+                      "svg",
+                      {
+                        staticClass: "w-6 h-6 cursor-pointer",
                         attrs: {
-                          "stroke-linecap": "round",
-                          "stroke-linejoin": "round",
-                          "stroke-width": "1.5",
-                          d:
-                            "M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                          xmlns: "http://www.w3.org/2000/svg",
+                          fill: "none",
+                          viewBox: "0 0 24 24",
+                          stroke: "currentColor"
                         }
-                      })
-                    ]
-                  )
+                      },
+                      [
+                        _c("path", {
+                          staticClass: "text-gray-600",
+                          attrs: {
+                            "stroke-linecap": "round",
+                            "stroke-linejoin": "round",
+                            "stroke-width": "2",
+                            d: "M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                          }
+                        })
+                      ]
+                    )
+                  ])
                 ]),
                 _vm._v(" "),
                 _c(
@@ -35566,18 +35653,270 @@ var render = function() {
               _c(
                 "div",
                 [
-                  _c("h2", { staticClass: "ml-2 text-gray-600 text-lg my-2" }, [
-                    _vm._v("Chats")
+                  _c(
+                    "h2",
+                    { staticClass: "ml-2 mb-2 text-gray-600 text-lg my-2" },
+                    [_vm._v("Chats")]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "my-3 mx-3 " }, [
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "relative text-gray-600 focus-within:text-gray-400"
+                      },
+                      [
+                        _c(
+                          "span",
+                          {
+                            staticClass:
+                              "absolute inset-y-0 left-0 flex items-center pl-2"
+                          },
+                          [
+                            _c(
+                              "svg",
+                              {
+                                staticClass: "w-6 h-6 text-gray-500",
+                                attrs: {
+                                  fill: "none",
+                                  stroke: "currentColor",
+                                  "stroke-linecap": "round",
+                                  "stroke-linejoin": "round",
+                                  "stroke-width": "2",
+                                  viewBox: "0 0 24 24"
+                                }
+                              },
+                              [
+                                _c("path", {
+                                  attrs: {
+                                    d:
+                                      "M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                                  }
+                                })
+                              ]
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          staticClass:
+                            "py-2 pl-10 block w-full rounded bg-gray-100 outline-none focus:text-gray-700",
+                          attrs: {
+                            "aria-placeholder":
+                              "Busca tus amigos o contacta nuevos",
+                            placeholder: "Busca tus amigos",
+                            type: "search",
+                            name: "search",
+                            required: "",
+                            autocomplete: "search"
+                          }
+                        })
+                      ]
+                    )
                   ]),
                   _vm._v(" "),
-                  _c("users-chats")
+                  _c("users-chats", { on: { getchat: _vm.getChat } })
                 ],
                 1
               )
             ]
           ),
           _vm._v(" "),
-          _c("div", { staticClass: "col-span-2 bg-white" })
+          _c("div", { staticClass: "col-span-2 bg-white" }, [
+            _vm.chat.length <= 0
+              ? _c("div", [
+                  _vm._v(
+                    "\n                        logoooo\n                    "
+                  )
+                ])
+              : _c("div", [
+                  _c("div", { staticClass: "w-full" }, [
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "flex items-center border-b border-gray-300 pl-3 py-3"
+                      },
+                      [
+                        _c("img", {
+                          staticClass: "h-10 w-10 rounded-full object-cover",
+                          attrs: {
+                            src:
+                              "https://images.pexels.com/photos/5286173/pexels-photo-5286173.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
+                            alt: "Juanito"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "span",
+                          {
+                            staticClass:
+                              "block ml-2 font-bold text-base text-gray-600"
+                          },
+                          [_vm._v("Juanito")]
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "w-full overflow-y-auto p-10",
+                        staticStyle: { height: "700px" }
+                      },
+                      [
+                        _c("ul", [
+                          _c("li", { staticClass: "clearfix2" }, [
+                            _c(
+                              "div",
+                              { staticClass: "w-full flex justify-end" },
+                              [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "bg-gray-100 rounded px-5 py-2 my-2 text-gray-700 relative",
+                                    staticStyle: { "max-width": "300px" }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                                Probandooo\n                                                "
+                                    ),
+                                    _c("div", {
+                                      staticClass: "absolute w-0 h-0",
+                                      staticStyle: {
+                                        "border-bottom":
+                                          "15px solid transparent",
+                                        right: "-25px",
+                                        "border-left": "15px solid #f4f5f7",
+                                        "border-right":
+                                          "15px solid transparent",
+                                        top: "0"
+                                      }
+                                    })
+                                  ]
+                                )
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("li", { staticClass: "clearfix2" }, [
+                            _c(
+                              "div",
+                              { staticClass: "w-full flex justify-start" },
+                              [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "bg-gray-100 rounded px-5 py-2 my-2 text-gray-700 relative",
+                                    staticStyle: { "max-width": "300px" }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                                Probandooo\n                                                "
+                                    ),
+                                    _c("div", {
+                                      staticClass: "absolute w-0 h-0",
+                                      staticStyle: {
+                                        "border-bottom":
+                                          "15px solid transparent",
+                                        left: "-25px",
+                                        "border-left": "15px solid transparent",
+                                        "border-right": "15px solid #f4f5f7",
+                                        top: "0"
+                                      }
+                                    })
+                                  ]
+                                )
+                              ]
+                            )
+                          ])
+                        ])
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "w-full py-3 px-3 flex items-center justify-between border-t border-gray-300"
+                      },
+                      [
+                        _c(
+                          "button",
+                          { staticClass: "outline-none focus:outline-none" },
+                          [
+                            _c(
+                              "svg",
+                              {
+                                staticClass: "text-gray-400 h-6 w-6",
+                                attrs: {
+                                  xmlns: "http://www.w3.org/2000/svg",
+                                  fill: "none",
+                                  viewBox: "0 0 24 24",
+                                  stroke: "currentColor"
+                                }
+                              },
+                              [
+                                _c("path", {
+                                  attrs: {
+                                    "stroke-linecap": "round",
+                                    "stroke-linejoin": "round",
+                                    "stroke-width": "2",
+                                    d:
+                                      "M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"
+                                  }
+                                })
+                              ]
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          staticClass:
+                            "py-2 mx-3 pl-5 block w-full rounded-full bg-gray-100 outline-none focus:text-gray-700",
+                          attrs: {
+                            "aria-placeholder": "Escribe un mensaje aquí",
+                            placeholder: "Escribe un mensaje aquí",
+                            type: "text",
+                            name: "message",
+                            required: ""
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          { staticClass: "outline-none focus:outline-none" },
+                          [
+                            _c(
+                              "svg",
+                              {
+                                staticClass:
+                                  "text-gray-400 h-7 w-7 origin-center transform rotate-90",
+                                attrs: {
+                                  xmlns: "http://www.w3.org/2000/svg",
+                                  viewBox: "0 0 20 20",
+                                  fill: "currentColor"
+                                }
+                              },
+                              [
+                                _c("path", {
+                                  attrs: {
+                                    d:
+                                      "M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"
+                                  }
+                                })
+                              ]
+                            )
+                          ]
+                        )
+                      ]
+                    )
+                  ])
+                ])
+          ])
         ]
       )
     ])
@@ -53800,8 +54139,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/dist/web/pusher.js");
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
-  key: "",
-  cluster: "mt1",
+  key: "6176ca3de88da98be835",
+  cluster: "us2",
   forceTLS: true
 });
 
