@@ -3794,6 +3794,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3806,7 +3812,7 @@ __webpack_require__.r(__webpack_exports__);
     AppLayout: _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__["default"],
     UsersChats: _Components_UsersChats__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
-  props: ['user'],
+  props: ['chats'],
   methods: {
     getChat: function getChat() {
       this.chat.push({
@@ -35651,270 +35657,322 @@ var render = function() {
             { staticClass: "col-span-1 bg-white border-r border-gray-300" },
             [
               _c(
-                "div",
-                [
-                  _c(
-                    "h2",
-                    { staticClass: "ml-2 mb-2 text-gray-600 text-lg my-2" },
-                    [_vm._v("Chats")]
-                  ),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "my-3 mx-3 " }, [
+                "h2",
+                { staticClass: "ml-2 mb-2 text-gray-600 text-lg my-2" },
+                [_vm._v("Chats")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "my-3 mx-3 " }, [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "relative text-gray-600 focus-within:text-gray-400"
+                  },
+                  [
                     _c(
-                      "div",
+                      "span",
                       {
                         staticClass:
-                          "relative text-gray-600 focus-within:text-gray-400"
+                          "absolute inset-y-0 left-0 flex items-center pl-2"
                       },
                       [
                         _c(
-                          "span",
+                          "svg",
                           {
-                            staticClass:
-                              "absolute inset-y-0 left-0 flex items-center pl-2"
+                            staticClass: "w-6 h-6 text-gray-500",
+                            attrs: {
+                              fill: "none",
+                              stroke: "currentColor",
+                              "stroke-linecap": "round",
+                              "stroke-linejoin": "round",
+                              "stroke-width": "2",
+                              viewBox: "0 0 24 24"
+                            }
                           },
                           [
-                            _c(
-                              "svg",
-                              {
-                                staticClass: "w-6 h-6 text-gray-500",
-                                attrs: {
-                                  fill: "none",
-                                  stroke: "currentColor",
-                                  "stroke-linecap": "round",
-                                  "stroke-linejoin": "round",
-                                  "stroke-width": "2",
-                                  viewBox: "0 0 24 24"
-                                }
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    d:
-                                      "M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                                  }
-                                })
-                              ]
-                            )
+                            _c("path", {
+                              attrs: {
+                                d: "M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                              }
+                            })
                           ]
-                        ),
-                        _vm._v(" "),
-                        _c("input", {
-                          staticClass:
-                            "py-2 pl-10 block w-full rounded bg-gray-100 outline-none focus:text-gray-700",
-                          attrs: {
-                            "aria-placeholder":
-                              "Busca tus amigos o contacta nuevos",
-                            placeholder: "Busca tus amigos",
-                            type: "search",
-                            name: "search",
-                            required: "",
-                            autocomplete: "search"
-                          }
-                        })
+                        )
                       ]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("users-chats", { on: { getchat: _vm.getChat } })
-                ],
-                1
-              )
-            ]
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      staticClass:
+                        "py-2 pl-10 block w-full rounded bg-gray-100 outline-none focus:text-gray-700",
+                      attrs: {
+                        "aria-placeholder":
+                          "Busca tus amigos o contacta nuevos",
+                        placeholder: "Busca tus amigos",
+                        type: "search",
+                        name: "search",
+                        required: "",
+                        autocomplete: "search"
+                      }
+                    })
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _vm.chats.length === 0
+                ? _c(
+                    "span",
+                    {
+                      staticClass:
+                        "block text-center my-2 mx-2 text-sm text-gray-600"
+                    },
+                    [_vm._v("No tienes conversaciones.")]
+                  )
+                : _c("users-chats", { on: { getchat: _vm.getChat } })
+            ],
+            1
           ),
           _vm._v(" "),
           _c("div", { staticClass: "col-span-2 bg-white" }, [
             _vm.chat.length <= 0
-              ? _c("div", [
-                  _vm._v(
-                    "\n                        logoooo\n                    "
-                  )
-                ])
-              : _c("div", [
-                  _c("div", { staticClass: "w-full" }, [
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "flex items-center border-b border-gray-300 pl-3 py-3"
-                      },
-                      [
-                        _c("img", {
-                          staticClass: "h-10 w-10 rounded-full object-cover",
-                          attrs: {
-                            src:
-                              "https://images.pexels.com/photos/5286173/pexels-photo-5286173.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
-                            alt: "Juanito"
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c(
-                          "span",
-                          {
-                            staticClass:
-                              "block ml-2 font-bold text-base text-gray-600"
-                          },
-                          [_vm._v("Juanito")]
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "w-full overflow-y-auto p-10",
-                        staticStyle: { height: "700px" }
-                      },
-                      [
-                        _c("ul", [
-                          _c("li", { staticClass: "clearfix2" }, [
-                            _c(
-                              "div",
-                              { staticClass: "w-full flex justify-end" },
-                              [
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass:
-                                      "bg-gray-100 rounded px-5 py-2 my-2 text-gray-700 relative",
-                                    staticStyle: { "max-width": "300px" }
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n                                                Probandooo\n                                                "
-                                    ),
-                                    _c("div", {
-                                      staticClass: "absolute w-0 h-0",
-                                      staticStyle: {
-                                        "border-bottom":
-                                          "15px solid transparent",
-                                        right: "-25px",
-                                        "border-left": "15px solid #f4f5f7",
-                                        "border-right":
-                                          "15px solid transparent",
-                                        top: "0"
-                                      }
-                                    })
-                                  ]
-                                )
-                              ]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", { staticClass: "clearfix2" }, [
-                            _c(
-                              "div",
-                              { staticClass: "w-full flex justify-start" },
-                              [
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass:
-                                      "bg-gray-100 rounded px-5 py-2 my-2 text-gray-700 relative",
-                                    staticStyle: { "max-width": "300px" }
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n                                                Probandooo\n                                                "
-                                    ),
-                                    _c("div", {
-                                      staticClass: "absolute w-0 h-0",
-                                      staticStyle: {
-                                        "border-bottom":
-                                          "15px solid transparent",
-                                        left: "-25px",
-                                        "border-left": "15px solid transparent",
-                                        "border-right": "15px solid #f4f5f7",
-                                        top: "0"
-                                      }
-                                    })
-                                  ]
-                                )
-                              ]
-                            )
-                          ])
-                        ])
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "w-full py-3 px-3 flex items-center justify-between border-t border-gray-300"
-                      },
-                      [
-                        _c(
-                          "button",
-                          { staticClass: "outline-none focus:outline-none" },
-                          [
-                            _c(
-                              "svg",
-                              {
-                                staticClass: "text-gray-400 h-6 w-6",
-                                attrs: {
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  fill: "none",
-                                  viewBox: "0 0 24 24",
-                                  stroke: "currentColor"
-                                }
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    "stroke-linecap": "round",
-                                    "stroke-linejoin": "round",
-                                    "stroke-width": "2",
-                                    d:
-                                      "M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"
-                                  }
-                                })
-                              ]
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c("input", {
+              ? _c(
+                  "div",
+                  {
+                    staticClass: "w-full flex items-center justify-center",
+                    staticStyle: { height: "75vh" }
+                  },
+                  [
+                    _c("div", { staticClass: "text-center" }, [
+                      _c(
+                        "div",
+                        {
                           staticClass:
-                            "py-2 mx-3 pl-5 block w-full rounded-full bg-gray-100 outline-none focus:text-gray-700",
-                          attrs: {
-                            "aria-placeholder": "Escribe un mensaje aquí",
-                            placeholder: "Escribe un mensaje aquí",
-                            type: "text",
-                            name: "message",
-                            required: ""
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c(
-                          "button",
-                          { staticClass: "outline-none focus:outline-none" },
-                          [
-                            _c(
-                              "svg",
-                              {
-                                staticClass:
-                                  "text-gray-400 h-7 w-7 origin-center transform rotate-90",
+                            "border border-gray-600 rounded-full w-24 h-24 relative",
+                          staticStyle: { margin: "0 auto" }
+                        },
+                        [
+                          _c(
+                            "svg",
+                            {
+                              staticClass:
+                                "absolute text-gray-600 h-12 w-12 origin-center transform rotate-45",
+                              staticStyle: { right: "21px", top: "19px" },
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                fill: "none",
+                                viewBox: "0 0 24 24",
+                                stroke: "currentColor"
+                              }
+                            },
+                            [
+                              _c("path", {
                                 attrs: {
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  viewBox: "0 0 20 20",
-                                  fill: "currentColor"
+                                  "stroke-linecap": "round",
+                                  "stroke-linejoin": "round",
+                                  "stroke-width": "2",
+                                  d: "M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
                                 }
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    d:
-                                      "M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"
-                                  }
-                                })
-                              ]
-                            )
-                          ]
-                        )
-                      ]
-                    )
-                  ])
+                              })
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("h5", { staticClass: "text-gray-600 text-lg my-2" }, [
+                        _vm._v("Tus mensajes")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "span",
+                        { staticClass: "block ml-2 text-sm text-gray-600" },
+                        [
+                          _vm._v(
+                            "Envía fotos y mensajes privados a un amigo o un grupo."
+                          )
+                        ]
+                      )
+                    ])
+                  ]
+                )
+              : _c("div", { staticClass: "w-full" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "flex items-center border-b border-gray-300 pl-3 py-3"
+                    },
+                    [
+                      _c("img", {
+                        staticClass: "h-10 w-10 rounded-full object-cover",
+                        attrs: {
+                          src:
+                            "https://images.pexels.com/photos/5286173/pexels-photo-5286173.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
+                          alt: "Juanito"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "span",
+                        {
+                          staticClass:
+                            "block ml-2 font-bold text-base text-gray-600"
+                        },
+                        [_vm._v("Juanito")]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "w-full overflow-y-auto p-10",
+                      staticStyle: { height: "700px" }
+                    },
+                    [
+                      _c("ul", [
+                        _c("li", { staticClass: "clearfix2" }, [
+                          _c(
+                            "div",
+                            { staticClass: "w-full flex justify-end" },
+                            [
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "bg-gray-100 rounded px-5 py-2 my-2 text-gray-700 relative",
+                                  staticStyle: { "max-width": "300px" }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                            Probandooo\n                                            "
+                                  ),
+                                  _c("div", {
+                                    staticClass: "absolute w-0 h-0",
+                                    staticStyle: {
+                                      "border-bottom": "15px solid transparent",
+                                      right: "-25px",
+                                      "border-left": "15px solid #f4f5f7",
+                                      "border-right": "15px solid transparent",
+                                      top: "0"
+                                    }
+                                  })
+                                ]
+                              )
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", { staticClass: "clearfix2" }, [
+                          _c(
+                            "div",
+                            { staticClass: "w-full flex justify-start" },
+                            [
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "bg-gray-100 rounded px-5 py-2 my-2 text-gray-700 relative",
+                                  staticStyle: { "max-width": "300px" }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                            Probandooo\n                                            "
+                                  ),
+                                  _c("div", {
+                                    staticClass: "absolute w-0 h-0",
+                                    staticStyle: {
+                                      "border-bottom": "15px solid transparent",
+                                      left: "-25px",
+                                      "border-left": "15px solid transparent",
+                                      "border-right": "15px solid #f4f5f7",
+                                      top: "0"
+                                    }
+                                  })
+                                ]
+                              )
+                            ]
+                          )
+                        ])
+                      ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "w-full py-3 px-3 flex items-center justify-between border-t border-gray-300"
+                    },
+                    [
+                      _c(
+                        "button",
+                        { staticClass: "outline-none focus:outline-none" },
+                        [
+                          _c(
+                            "svg",
+                            {
+                              staticClass: "text-gray-400 h-6 w-6",
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                fill: "none",
+                                viewBox: "0 0 24 24",
+                                stroke: "currentColor"
+                              }
+                            },
+                            [
+                              _c("path", {
+                                attrs: {
+                                  "stroke-linecap": "round",
+                                  "stroke-linejoin": "round",
+                                  "stroke-width": "2",
+                                  d:
+                                    "M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"
+                                }
+                              })
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("input", {
+                        staticClass:
+                          "py-2 mx-3 pl-5 block w-full rounded-full bg-gray-100 outline-none focus:text-gray-700",
+                        attrs: {
+                          "aria-placeholder": "Escribe un mensaje aquí",
+                          placeholder: "Escribe un mensaje aquí",
+                          type: "text",
+                          name: "message",
+                          required: ""
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        { staticClass: "outline-none focus:outline-none" },
+                        [
+                          _c(
+                            "svg",
+                            {
+                              staticClass:
+                                "text-gray-400 h-7 w-7 origin-center transform rotate-90",
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                viewBox: "0 0 20 20",
+                                fill: "currentColor"
+                              }
+                            },
+                            [
+                              _c("path", {
+                                attrs: {
+                                  d:
+                                    "M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"
+                                }
+                              })
+                            ]
+                          )
+                        ]
+                      )
+                    ]
+                  )
                 ])
           ])
         ]
@@ -52699,6 +52757,8 @@ var map = {
 	"./API/Index.vue": "./resources/js/Pages/API/Index.vue",
 	"./Chat": "./resources/js/Pages/Chat/index.vue",
 	"./Chat/": "./resources/js/Pages/Chat/index.vue",
+	"./Chat/Chat": "./resources/js/Pages/Chat/Chat.vue",
+	"./Chat/Chat.vue": "./resources/js/Pages/Chat/Chat.vue",
 	"./Chat/index": "./resources/js/Pages/Chat/index.vue",
 	"./Chat/index.vue": "./resources/js/Pages/Chat/index.vue",
 	"./Dashboard": "./resources/js/Pages/Dashboard.vue",
@@ -52892,6 +52952,38 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_template_id_df56dab8___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/Pages/Chat/Chat.vue":
+/*!******************************************!*\
+  !*** ./resources/js/Pages/Chat/Chat.vue ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+var render, staticRenderFns
+var script = {}
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__["default"])(
+  script,
+  render,
+  staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+component.options.__file = "resources/js/Pages/Chat/Chat.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
