@@ -2,21 +2,42 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Inertia\Inertia;
 use App\Models\Chat;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class ChatController extends Controller
 {
+    public $chat;
+    public $user;
+    public $usercurrent;
+
+    public function __construct(User $user, Chat $chat){
+        $this->chat = $chat;
+        $this->user = $user;
+        $this->usercurrent = Auth::id();
+    }
+
     public function index(){
-        return Inertia::render('Chat/index');
+        return Inertia::render('Chat/index',[
+            'chats' => $this->chat->with([
+                'userrecive:id,name,profile_photo_path',
+                'usersent:id,name,profile_photo_path',
+                'messages' => function($query){
+                    $query->latest();
+                }
+                ])->where('user_sent',$this->usercurrent)
+                ->orWhere('user_recive',$this->usercurrent)->get()
+        ]);
     }
 
     public function getChat($nick_name){
-        if(User::where('nick_name',$nick_name)->exists()){
-            $user = User::where('nick_name',$nick_name)->first();
-    
-            return Chat::with([
+        if($this->user->where('nick_name',$nick_name)->exists()){
+            $user = $this->user->where('nick_name',$nick_name)->first();
+
+            return $this->chat->with([
                 'userrecive:id,name,profile_photo_path',
                 'usersent:id,name,profile_photo_path',
                 'messages'
