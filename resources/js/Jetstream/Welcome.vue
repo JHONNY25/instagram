@@ -66,7 +66,7 @@
                 this.url = URL.createObjectURL(file)
             },
             async getPost(){
-                await axios.post('/get-posts')
+                await axios.get('/get-posts')
                 .then(response => {
                     this.posts = response.data
                 })
