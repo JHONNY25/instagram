@@ -12,24 +12,22 @@ class ChatController extends Controller
 {
     public $chat;
     public $user;
-    public $usercurrent;
 
     public function __construct(User $user, Chat $chat){
         $this->chat = $chat;
         $this->user = $user;
-        $this->usercurrent = Auth::id();
     }
 
     public function index(){
-        return Inertia::render('Chat/index',[
+        return Inertia::render('Chat/Index',[
             'chats' => $this->chat->with([
-                'userrecive:id,name,profile_photo_path',
-                'usersent:id,name,profile_photo_path',
+                'userrecive:id,name,nick_name,profile_photo_path',
+                'usersent:id,name,nick_name,profile_photo_path',
                 'messages' => function($query){
                     $query->latest();
                 }
-                ])->where('user_sent',$this->usercurrent)
-                ->orWhere('user_recive',$this->usercurrent)->get()
+                ])->where('user_sent',Auth::id())
+                ->orWhere('user_recive',Auth::id())->get()
         ]);
     }
 
@@ -38,8 +36,8 @@ class ChatController extends Controller
             $user = $this->user->where('nick_name',$nick_name)->first();
 
             return $this->chat->with([
-                'userrecive:id,name,profile_photo_path',
-                'usersent:id,name,profile_photo_path',
+                'userrecive:id,name,nick_name,profile_photo_path',
+                'usersent:id,name,nick_name,profile_photo_path',
                 'messages'
             ])->where('user_recive',$user->id)
             ->orWhere('user_sent',$user->id)
