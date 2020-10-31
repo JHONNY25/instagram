@@ -83,7 +83,7 @@
                                         Cuenta
                                     </div>
 
-                                    <jet-dropdown-link :href="'/' + $page.user.nick_name">
+                                    <jet-dropdown-link :href="'/profile/' + $page.user.nick_name">
                                         Perfil
                                     </jet-dropdown-link>
 
@@ -173,7 +173,7 @@
                     </div>
 
                     <div class="mt-3 space-y-1">
-                        <jet-responsive-nav-link href="/user/profile" :active="$page.currentRouteName == 'profile.show'">
+                        <jet-responsive-nav-link :href="'/profile/' + $page.user.nick_name" :active="$page.currentRouteName == 'profile.show'">
                             Perfil
                         </jet-responsive-nav-link>
 
