@@ -3748,24 +3748,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['username', 'userimage', 'messages']
+  props: ['username', 'userimage', 'messages', 'usercurrent'],
+  methods: {
+    getStylesMessage: function getStylesMessage(message) {
+      return message.user_id === this.usercurrent ? 'right: -25px; border-left: 15px solid #f4f5f7; border-right: 15px solid transparent;' : 'left: -25px; border-left: 15px solid transparent; border-right: 15px solid #f4f5f7;';
+    }
+  }
 });
 
 /***/ }),
@@ -35718,10 +35707,19 @@ var render = function() {
       [
         _c(
           "ul",
-          [
-            _vm._l(_vm.messages, function(message, index) {
-              return _c("li", { key: index, staticClass: "clearfix2" }, [
-                _c("div", { staticClass: "w-full flex justify-end" }, [
+          _vm._l(_vm.messages, function(message, index) {
+            return _c("li", { key: index, staticClass: "clearfix2" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "w-full flex",
+                  class: [
+                    message.user_id === _vm.usercurrent
+                      ? "justify-end"
+                      : "justify-start"
+                  ]
+                },
+                [
                   _c(
                     "div",
                     {
@@ -35739,21 +35737,17 @@ var render = function() {
                         staticClass: "absolute w-0 h-0",
                         staticStyle: {
                           "border-bottom": "15px solid transparent",
-                          right: "-25px",
-                          "border-left": "15px solid #f4f5f7",
-                          "border-right": "15px solid transparent",
                           top: "0"
-                        }
+                        },
+                        style: _vm.getStylesMessage(message)
                       })
                     ]
                   )
-                ])
-              ])
-            }),
-            _vm._v(" "),
-            _vm._m(0)
-          ],
-          2
+                ]
+              )
+            ])
+          }),
+          0
         )
       ]
     ),
@@ -35840,40 +35834,7 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "clearfix2" }, [
-      _c("div", { staticClass: "w-full flex justify-start" }, [
-        _c(
-          "div",
-          {
-            staticClass:
-              "bg-gray-100 rounded px-5 py-2 my-2 text-gray-700 relative",
-            staticStyle: { "max-width": "300px" }
-          },
-          [
-            _vm._v(
-              "\n                        Probandooo\n                        "
-            ),
-            _c("div", {
-              staticClass: "absolute w-0 h-0",
-              staticStyle: {
-                "border-bottom": "15px solid transparent",
-                left: "-25px",
-                "border-left": "15px solid transparent",
-                "border-right": "15px solid #f4f5f7",
-                top: "0"
-              }
-            })
-          ]
-        )
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -36078,7 +36039,8 @@ var render = function() {
                         _vm.userchat.userrecive.id === _vm.$page.user.id
                           ? _vm.userchat.usersent.nick_name
                           : _vm.userchat.userrecive.name,
-                      messages: _vm.userchat.messages
+                      messages: _vm.userchat.messages,
+                      usercurrent: _vm.$page.user.id
                     }
                   })
             ],
