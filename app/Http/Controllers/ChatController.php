@@ -7,6 +7,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use App\Models\Messages;
+use App\Events\SendMessageEvent;
 
 class ChatController extends Controller
 {
@@ -45,5 +47,21 @@ class ChatController extends Controller
         }else{
             return response()->json(['error' => 'No se encontro el usuario']);
         }
+    }
+
+    public function sendMessage(Request $request){
+        try{
+
+            Message::create([
+                'chat_id' => $request->chat_id,
+                'user_id' => $request->user_id,
+                'text' => $request->message,
+            ]);
+
+            event(new SendMessageEvent($request->user_id,$request->message));
+        }catch(\Exception $e){
+            return response()->json($e->getMessage(),500);
+        }
+        
     }
 }
