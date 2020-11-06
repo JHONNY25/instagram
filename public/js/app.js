@@ -3749,6 +3749,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      message: ''
+    };
+  },
   props: ['username', 'userimage', 'messages', 'usercurrent'],
   methods: {
     getStylesMessage: function getStylesMessage(message) {
@@ -35707,47 +35712,66 @@ var render = function() {
       [
         _c(
           "ul",
-          _vm._l(_vm.messages, function(message, index) {
-            return _c("li", { key: index, staticClass: "clearfix2" }, [
-              _c(
-                "div",
-                {
-                  staticClass: "w-full flex",
-                  class: [
-                    message.user_id === _vm.usercurrent
-                      ? "justify-end"
-                      : "justify-start"
-                  ]
-                },
-                [
+          [
+            _vm.messages.lenght <= 0
+              ? _c("div", { staticClass: "w-full flex text-center" }, [
                   _c(
                     "div",
                     {
                       staticClass:
-                        "bg-gray-100 rounded px-5 py-2 my-2 text-gray-700 relative",
-                      staticStyle: { "max-width": "300px" }
+                        "w-full px-5 py-2 my-2 text-white text-center text-3xl"
                     },
                     [
                       _vm._v(
-                        "\n                        " +
-                          _vm._s(message.text) +
-                          "\n                        "
-                      ),
-                      _c("div", {
-                        staticClass: "absolute w-0 h-0",
-                        staticStyle: {
-                          "border-bottom": "15px solid transparent",
-                          top: "0"
-                        },
-                        style: _vm.getStylesMessage(message)
-                      })
+                        "\n                    No existe una conversación, se el primero en conversar!!\n                "
+                      )
                     ]
                   )
-                ]
-              )
-            ])
-          }),
-          0
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm._l(_vm.messages, function(message, index) {
+              return _c("li", { key: index, staticClass: "clearfix2" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "w-full flex",
+                    class: [
+                      message.user_id === _vm.usercurrent
+                        ? "justify-end"
+                        : "justify-start"
+                    ]
+                  },
+                  [
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "bg-gray-100 rounded px-5 py-2 my-2 text-gray-700 relative",
+                        staticStyle: { "max-width": "300px" }
+                      },
+                      [
+                        _vm._v(
+                          "\n                        " +
+                            _vm._s(message.text) +
+                            "\n                        "
+                        ),
+                        _c("div", {
+                          staticClass: "absolute w-0 h-0",
+                          staticStyle: {
+                            "border-bottom": "15px solid transparent",
+                            top: "0"
+                          },
+                          style: _vm.getStylesMessage(message)
+                        })
+                      ]
+                    )
+                  ]
+                )
+              ])
+            })
+          ],
+          2
         )
       ]
     ),
@@ -35786,6 +35810,14 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.message,
+              expression: "message"
+            }
+          ],
           staticClass:
             "py-2 mx-3 pl-5 block w-full rounded-full bg-gray-100 outline-none focus:text-gray-700",
           attrs: {
@@ -35794,42 +35826,53 @@ var render = function() {
             type: "text",
             name: "message",
             required: ""
+          },
+          domProps: { value: _vm.message },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.message = $event.target.value
+            }
           }
         }),
         _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "outline-none focus:outline-none",
-            on: {
-              click: function($event) {
-                return _vm.$emit("sendmessage", _vm.username)
-              }
-            }
-          },
-          [
-            _c(
-              "svg",
+        _vm.message !== ""
+          ? _c(
+              "button",
               {
-                staticClass:
-                  "text-gray-400 h-7 w-7 origin-center transform rotate-90",
-                attrs: {
-                  xmlns: "http://www.w3.org/2000/svg",
-                  viewBox: "0 0 20 20",
-                  fill: "currentColor"
+                staticClass: "outline-none focus:outline-none",
+                on: {
+                  click: function($event) {
+                    return _vm.$emit("sendmessage", _vm.username)
+                  }
                 }
               },
               [
-                _c("path", {
-                  attrs: {
-                    d:
-                      "M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"
-                  }
-                })
+                _c(
+                  "svg",
+                  {
+                    staticClass:
+                      "text-gray-400 h-7 w-7 origin-center transform rotate-90",
+                    attrs: {
+                      xmlns: "http://www.w3.org/2000/svg",
+                      viewBox: "0 0 20 20",
+                      fill: "currentColor"
+                    }
+                  },
+                  [
+                    _c("path", {
+                      attrs: {
+                        d:
+                          "M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"
+                      }
+                    })
+                  ]
+                )
               ]
             )
-          ]
-        )
+          : _vm._e()
       ]
     )
   ])
