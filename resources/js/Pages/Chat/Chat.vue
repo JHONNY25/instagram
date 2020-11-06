@@ -14,29 +14,13 @@
                     </div>
                 </div> -->
                 <li v-for="(message,index) in messages" :key="index" class="clearfix2">
-                    <div class="w-full flex justify-end">
+                    <div class="w-full flex" :class="[message.user_id === usercurrent ? 'justify-end' : 'justify-start']">
                         <div class="bg-gray-100 rounded px-5 py-2 my-2 text-gray-700 relative" style="max-width: 300px;">
                             {{ message.text }}
                             <div class="absolute w-0 h-0"
                             style="border-bottom: 15px solid transparent;
-                                right: -25px;
-                                border-left: 15px solid #f4f5f7;
-                                border-right: 15px solid transparent;
-                                top: 0;"></div>
-                        </div>
-                    </div>
-                </li>
-
-                <li class="clearfix2">
-                    <div class="w-full flex justify-start">
-                        <div class="bg-gray-100 rounded px-5 py-2 my-2 text-gray-700 relative" style="max-width: 300px;">
-                            Probandooo
-                            <div class="absolute w-0 h-0"
-                            style="border-bottom: 15px solid transparent;
-                                left: -25px;
-                                border-left: 15px solid transparent;
-                                border-right: 15px solid #f4f5f7;
-                                top: 0;"></div>
+                                top: 0;"
+                            :style="getStylesMessage(message)"></div>
                         </div>
                     </div>
                 </li>
@@ -65,7 +49,13 @@
 <script>
     export default {
         props:[
-            'username','userimage','messages'
-        ]
+            'username','userimage','messages','usercurrent'
+        ],
+        methods:{
+            getStylesMessage(message){
+                return message.user_id === this.usercurrent ? 'right: -25px; border-left: 15px solid #f4f5f7; border-right: 15px solid transparent;' 
+                                    :'left: -25px; border-left: 15px solid transparent; border-right: 15px solid #f4f5f7;'
+            }
+        }
     }
 </script>
