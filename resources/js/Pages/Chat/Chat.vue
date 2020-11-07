@@ -6,7 +6,7 @@
             :alt="username" />
             <span class="block ml-2 font-bold text-base text-gray-600">{{ username }}</span>
         </div>
-        <div class="w-full overflow-y-auto p-10" style="height: 700px;">
+        <div class="w-full overflow-y-auto p-10" style="height: 700px;" >
             <ul>
                 <div v-if="messages.lenght <= 0" class="w-full flex text-center">
                     <div class="w-full px-5 py-2 my-2 text-white text-center text-3xl">
@@ -36,31 +36,69 @@
             <input v-model="message" aria-placeholder="Escribe un mensaje aquí" placeholder="Escribe un mensaje aquí"
                 class="py-2 mx-3 pl-5 block w-full rounded-full bg-gray-100 outline-none focus:text-gray-700" type="text" name="message" required/>
 
-            <button v-if="message !== ''" class="outline-none focus:outline-none" @click="$emit('sendmessage',username)">
+            <button v-if="message !== ''" class="outline-none focus:outline-none" @click="sendMessage" type="submit">
                 <svg class="text-gray-400 h-7 w-7 origin-center transform rotate-90" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                     <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
                 </svg>
             </button>
         </div>
-
     </div>
 </template>
 
 <script>
+    
     export default {
         data(){
             return{
                 message: ''
             }
         },
-        props:[
-            'username','userimage','messages','usercurrent'
-        ],
+        props:{
+            username: String,
+            userimage: String,
+            messages: {
+                type: Array,
+                required: true
+            },
+            usercurrent: Number,
+            chatid: Number
+        },
         methods:{
             getStylesMessage(message){
-                return message.user_id === this.usercurrent ? 'right: -25px; border-left: 15px solid #f4f5f7; border-right: 15px solid transparent;' 
+                return message.user_id === this.usercurrent ? 'right: -25px; border-left: 15px solid #f4f5f7; border-right: 15px solid transparent;'
                                     :'left: -25px; border-left: 15px solid transparent; border-right: 15px solid #f4f5f7;'
-            }
+            },
+            async sendMessage(){
+                const formData = new FormData()
+                formData.append("chat_id", this.chatid)
+                formData.append("user_id", this.usercurrent)
+                formData.append('message', this.message)
+
+                await axios.post('/chat/send-message',formData,{
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
+                .then(response => {
+                    this.message = ''
+                })
+                .catch(error => console.log(error))
+
+            },
+            newMessage(message){
+                this.messages.push(message)
+            },
+        },
+        mounted(){
+            const thiscomponent = this;
+            const pusher = new Pusher('6176ca3de88da98be835', {
+                cluster: 'us2'
+            });
+
+            const channel = pusher.subscribe('instagram-chat');
+            channel.bind('message-event', function(data) {
+                thiscomponent.newMessage(data.message)
+            });
         }
     }
 </script>
