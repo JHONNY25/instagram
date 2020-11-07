@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 
 class Messages extends Model
 {
@@ -23,5 +24,14 @@ class Messages extends Model
 
     public function user(){
         return $this->belongsTo(User::class,'user_id');
+    }
+
+    public function sendMessage(Request $request){
+        return (new static)::create([
+            'chat_id' => $request->chat_id,
+            'user_id' => $request->user_id,
+            'text' => $request->message,
+            'send_date' => date('Y-m-d')
+        ]);
     }
 }
