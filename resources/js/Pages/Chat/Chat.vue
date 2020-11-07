@@ -6,7 +6,7 @@
             :alt="username" />
             <span class="block ml-2 font-bold text-base text-gray-600">{{ username }}</span>
         </div>
-        <div class="w-full overflow-y-auto p-10" style="height: 700px;" >
+        <div id="chat" class="w-full overflow-y-auto p-10" style="height: 700px;" ref="toolbarChat">
             <ul>
                 <div v-if="messages.lenght <= 0" class="w-full flex text-center">
                     <div class="w-full px-5 py-2 my-2 text-white text-center text-3xl">
@@ -88,8 +88,24 @@
             newMessage(message){
                 this.messages.push(message)
             },
+            scollToBottom(){
+                setTimeout(()=>{
+                    this.$refs.toolbarChat.scrollTop = this.$refs.toolbarChat.scrollHeight - this.$refs.toolbarChat.clientHeight
+                },50)
+            }
+        },
+        watch:{
+            messages(messages){
+                this.scollToBottom()
+            },
+            chatid(chatid){
+                this.scollToBottom()
+            }
         },
         mounted(){
+            const content = document.getElementById("chat");
+            content.scrollTo(0, 1500);
+            
             const thiscomponent = this;
             const pusher = new Pusher('6176ca3de88da98be835', {
                 cluster: 'us2'

@@ -3809,9 +3809,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     newMessage: function newMessage(message) {
       this.messages.push(message);
+    },
+    scollToBottom: function scollToBottom() {
+      var _this2 = this;
+
+      setTimeout(function () {
+        _this2.$refs.toolbarChat.scrollTop = _this2.$refs.toolbarChat.scrollHeight - _this2.$refs.toolbarChat.clientHeight;
+      }, 50);
+    }
+  },
+  watch: {
+    messages: function messages(_messages) {
+      this.scollToBottom();
+    },
+    chatid: function chatid(_chatid) {
+      this.scollToBottom();
     }
   },
   mounted: function mounted() {
+    var content = document.getElementById("chat");
+    content.scrollTo(0, 1500);
     var thiscomponent = this;
     var pusher = new Pusher('6176ca3de88da98be835', {
       cluster: 'us2'
@@ -35767,8 +35784,10 @@ var render = function() {
     _c(
       "div",
       {
+        ref: "toolbarChat",
         staticClass: "w-full overflow-y-auto p-10",
-        staticStyle: { height: "700px" }
+        staticStyle: { height: "700px" },
+        attrs: { id: "chat" }
       },
       [
         _c(
