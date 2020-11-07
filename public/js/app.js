@@ -3700,7 +3700,14 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -3754,11 +3761,82 @@ __webpack_require__.r(__webpack_exports__);
       message: ''
     };
   },
-  props: ['username', 'userimage', 'messages', 'usercurrent'],
+  props: {
+    username: String,
+    userimage: String,
+    messages: {
+      type: Array,
+      required: true
+    },
+    usercurrent: Number,
+    chatid: Number
+  },
   methods: {
     getStylesMessage: function getStylesMessage(message) {
       return message.user_id === this.usercurrent ? 'right: -25px; border-left: 15px solid #f4f5f7; border-right: 15px solid transparent;' : 'left: -25px; border-left: 15px solid transparent; border-right: 15px solid #f4f5f7;';
+    },
+    sendMessage: function sendMessage() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var formData;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                formData = new FormData();
+                formData.append("chat_id", _this.chatid);
+                formData.append("user_id", _this.usercurrent);
+                formData.append('message', _this.message);
+                _context.next = 6;
+                return axios.post('/chat/send-message', formData, {
+                  headers: {
+                    'Content-Type': 'multipart/form-data'
+                  }
+                }).then(function (response) {
+                  _this.message = '';
+                })["catch"](function (error) {
+                  return console.log(error);
+                });
+
+              case 6:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    newMessage: function newMessage(message) {
+      this.messages.push(message);
+    },
+    scollToBottom: function scollToBottom() {
+      var _this2 = this;
+
+      setTimeout(function () {
+        _this2.$refs.toolbarChat.scrollTop = _this2.$refs.toolbarChat.scrollHeight - _this2.$refs.toolbarChat.clientHeight;
+      }, 50);
     }
+  },
+  watch: {
+    messages: function messages(_messages) {
+      this.scollToBottom();
+    },
+    chatid: function chatid(_chatid) {
+      this.scollToBottom();
+    }
+  },
+  mounted: function mounted() {
+    var content = document.getElementById("chat");
+    content.scrollTo(0, 1500);
+    var thiscomponent = this;
+    var pusher = new Pusher('6176ca3de88da98be835', {
+      cluster: 'us2'
+    });
+    var channel = pusher.subscribe('instagram-chat');
+    channel.bind('message-event', function (data) {
+      thiscomponent.newMessage(data.message);
+    });
   }
 });
 
@@ -35706,8 +35784,10 @@ var render = function() {
     _c(
       "div",
       {
+        ref: "toolbarChat",
         staticClass: "w-full overflow-y-auto p-10",
-        staticStyle: { height: "700px" }
+        staticStyle: { height: "700px" },
+        attrs: { id: "chat" }
       },
       [
         _c(
@@ -35843,11 +35923,8 @@ var render = function() {
               "button",
               {
                 staticClass: "outline-none focus:outline-none",
-                on: {
-                  click: function($event) {
-                    return _vm.$emit("sendmessage", _vm.username)
-                  }
-                }
+                attrs: { type: "submit" },
+                on: { click: _vm.sendMessage }
               },
               [
                 _c(
@@ -35996,7 +36073,7 @@ var render = function() {
                             : chat.userrecive.nick_name,
                         userimage:
                           chat.userrecive.id === _vm.$page.user.id
-                            ? _vm.$chat.usersent.profile_photo_url
+                            ? chat.usersent.profile_photo_url
                             : chat.userrecive.profile_photo_url
                       },
                       on: { getchat: _vm.getChat }
@@ -36083,7 +36160,8 @@ var render = function() {
                           ? _vm.userchat.usersent.nick_name
                           : _vm.userchat.userrecive.name,
                       messages: _vm.userchat.messages,
-                      usercurrent: _vm.$page.user.id
+                      usercurrent: _vm.$page.user.id,
+                      chatid: _vm.userchat.id
                     }
                   })
             ],

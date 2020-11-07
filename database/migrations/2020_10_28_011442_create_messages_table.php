@@ -17,7 +17,7 @@ class CreateMessagesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('chat_id');
             $table->unsignedBigInteger('user_id');
-            $table->text('text');
+            $table->text('text')->nullable();
             $table->string('image_path')->nullable();
             $table->string('file_path')->nullable();
             $table->date('send_date');

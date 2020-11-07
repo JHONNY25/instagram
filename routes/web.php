@@ -33,7 +33,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/users-search/{nick_name}', [SearchController::class,'search'])->name('users-search');
     Route::post('/create-post', [PostController::class,'create'])->name('create-post');
     Route::get('/get-posts', [PostController::class,'all'])->name('get-posts');
-    
+
     Route::get('/user-chats', [ChatController::class,'index'])->name('get-chats');
     Route::get('/user-chats/{nick_name}', [ChatController::class,'getChat'])->name('get-chat-user');
+
+    Route::post('/chat/send-message', [ChatController::class,'sendMessage'])->name('create-message');
 });

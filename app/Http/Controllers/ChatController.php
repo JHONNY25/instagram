@@ -2,22 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\SendMessageEvent;
 use App\Models\Chat;
+use App\Models\Messages;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
-use App\Models\Messages;
-use App\Events\SendMessageEvent;
 
 class ChatController extends Controller
 {
     public $chat;
     public $user;
+    public $message;
 
-    public function __construct(User $user, Chat $chat){
+    public function __construct(User $user, Chat $chat,Messages $message){
         $this->chat = $chat;
         $this->user = $user;
+        $this->message = $message;
     }
 
     public function index(){
@@ -51,17 +53,14 @@ class ChatController extends Controller
 
     public function sendMessage(Request $request){
         try{
+            
+            $message = $this->message->sendMessage($request);
 
-            Message::create([
-                'chat_id' => $request->chat_id,
-                'user_id' => $request->user_id,
-                'text' => $request->message,
-            ]);
+            event(new SendMessageEvent($message));
 
-            event(new SendMessageEvent($request->user_id,$request->message));
         }catch(\Exception $e){
             return response()->json($e->getMessage(),500);
         }
-        
+
     }
 }
