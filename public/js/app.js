@@ -2156,6 +2156,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -2175,8 +2177,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['lastmessage', 'messagedate', 'username', 'userimage', 'chatid']
+  props: ['lastmessage', 'messagedate', 'username', 'userimage', 'chatid'],
+  methods: {
+    getDifferenceTime: function getDifferenceTime(date) {
+      return moment__WEBPACK_IMPORTED_MODULE_0___default()(date).tz('America/Mazatlan').toNow(true);
+    }
+  }
 });
 
 /***/ }),
@@ -55143,7 +55151,12 @@ var render = function() {
                 _c(
                   "span",
                   { staticClass: "block ml-2 text-sm text-gray-600" },
-                  [_vm._v(" " + _vm._s(_vm.messagedate))]
+                  [
+                    _vm._v(
+                      " " +
+                        _vm._s("Hace " + _vm.getDifferenceTime(_vm.messagedate))
+                    )
+                  ]
                 )
               ]),
               _vm._v(" "),
@@ -81549,6 +81562,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
 
+moment_timezone__WEBPACK_IMPORTED_MODULE_5___default.a.locale('es');
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_moment__WEBPACK_IMPORTED_MODULE_4___default.a, {
   moment: moment_timezone__WEBPACK_IMPORTED_MODULE_5___default.a
 });
