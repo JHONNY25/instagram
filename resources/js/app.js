@@ -5,7 +5,12 @@ import Vue from 'vue';
 import { InertiaApp } from '@inertiajs/inertia-vue';
 import { InertiaForm } from 'laravel-jetstream';
 import PortalVue from 'portal-vue';
-
+import VueMoment from 'vue-moment'
+import moment from 'moment-timezone'
+ 
+Vue.use(VueMoment, {
+    moment,
+});
 Vue.use(InertiaApp);
 Vue.use(InertiaForm);
 Vue.use(PortalVue);
