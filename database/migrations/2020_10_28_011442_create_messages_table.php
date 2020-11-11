@@ -20,7 +20,7 @@ class CreateMessagesTable extends Migration
             $table->text('text')->nullable();
             $table->string('image_path')->nullable();
             $table->string('file_path')->nullable();
-            $table->date('send_date');
+            $table->dateTime('send_date');
             $table->timestamps();
 
             $table->foreign('chat_id')->references('id')->on('chats');
