@@ -1,5 +1,5 @@
 <template>
-    <div v-else class="w-full">
+    <div class="w-full">
         <div class="flex items-center border-b border-gray-300 pl-3 py-3">
             <img class="h-10 w-10 rounded-full object-cover"
             :src="userimage"
@@ -16,7 +16,8 @@
                 <li v-for="(message,index) in messages" :key="index" class="clearfix2">
                     <div class="w-full flex" :class="[message.user_id === usercurrent ? 'justify-end' : 'justify-start']">
                         <div class="bg-gray-100 rounded px-5 py-2 my-2 text-gray-700 relative" style="max-width: 300px;">
-                            {{ message.text }}
+                            <span class="block">{{ message.text }}</span>
+                            <span class="block text-xs" :class="[message.user_id === usercurrent ? 'text-left' : 'text-right']">{{ getHoursByDate(message.send_date) }}</span>
                             <div class="absolute w-0 h-0"
                             style="border-bottom: 15px solid transparent;
                                 top: 0;"
@@ -46,7 +47,8 @@
 </template>
 
 <script>
-    
+    import moment from 'moment'
+
     export default {
         data(){
             return{
@@ -64,6 +66,9 @@
             chatid: Number
         },
         methods:{
+            getHoursByDate(date){
+                return moment(date).tz('America/Mazatlan').format('h:m A');
+            },
             getStylesMessage(message){
                 return message.user_id === this.usercurrent ? 'right: -25px; border-left: 15px solid #f4f5f7; border-right: 15px solid transparent;'
                                     :'left: -25px; border-left: 15px solid transparent; border-right: 15px solid #f4f5f7;'
@@ -100,12 +105,13 @@
             },
             chatid(chatid){
                 this.scollToBottom()
+
             }
         },
         mounted(){
             const content = document.getElementById("chat");
             content.scrollTo(0, 1500);
-            
+
             const thiscomponent = this;
             const pusher = new Pusher('6176ca3de88da98be835', {
                 cluster: 'us2'

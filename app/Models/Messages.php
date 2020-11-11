@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class Messages extends Model
 {
@@ -31,7 +32,7 @@ class Messages extends Model
             'chat_id' => $request->chat_id,
             'user_id' => $request->user_id,
             'text' => $request->message,
-            'send_date' => date('Y-m-d')
+            'send_date' => Carbon::now()
         ]);
     }
 }
