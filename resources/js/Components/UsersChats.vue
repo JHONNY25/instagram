@@ -26,7 +26,7 @@
         ],
         methods:{
             getDifferenceTime(date){
-                return moment(date).tz('America/Mazatlan').toNow(true);
+                return moment(date).toNow(true);
             }
         }
     }

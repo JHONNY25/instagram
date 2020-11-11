@@ -2182,7 +2182,7 @@ __webpack_require__.r(__webpack_exports__);
   props: ['lastmessage', 'messagedate', 'username', 'userimage', 'chatid'],
   methods: {
     getDifferenceTime: function getDifferenceTime(date) {
-      return moment__WEBPACK_IMPORTED_MODULE_0___default()(date).tz('America/Mazatlan').toNow(true);
+      return moment__WEBPACK_IMPORTED_MODULE_0___default()(date).toNow(true);
     }
   }
 });
@@ -3785,7 +3785,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   methods: {
     getHoursByDate: function getHoursByDate(date) {
-      return moment__WEBPACK_IMPORTED_MODULE_1___default()(date).tz('America/Mazatlan').format('h:m A');
+      return moment__WEBPACK_IMPORTED_MODULE_1___default()(date).format('h:m A');
     },
     getStylesMessage: function getStylesMessage(message) {
       return message.user_id === this.usercurrent ? 'right: -25px; border-left: 15px solid #f4f5f7; border-right: 15px solid transparent;' : 'left: -25px; border-left: 15px solid transparent; border-right: 15px solid #f4f5f7;';
