@@ -67,7 +67,7 @@
         },
         methods:{
             getHoursByDate(date){
-                return moment(date).tz('America/Mazatlan').format('h:m A');
+                return moment(date).format('h:m A');
             },
             getStylesMessage(message){
                 return message.user_id === this.usercurrent ? 'right: -25px; border-left: 15px solid #f4f5f7; border-right: 15px solid transparent;'
