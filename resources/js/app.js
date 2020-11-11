@@ -8,6 +8,7 @@ import PortalVue from 'portal-vue';
 import VueMoment from 'vue-moment'
 import moment from 'moment-timezone'
  
+moment.locale('es');
 Vue.use(VueMoment, {
     moment,
 });
