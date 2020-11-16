@@ -2173,10 +2173,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['lastmessage', 'messagedate', 'username', 'userimage', 'chatid'],
@@ -3766,11 +3762,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      message: ''
+      message: '',
+      typing: false,
+      user: ''
     };
   },
   props: {
@@ -3825,6 +3827,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     newMessage: function newMessage(message) {
       this.messages.push(message);
     },
+    isTyping: function isTyping() {
+      var thiscomponent = this;
+      var chat = Echo["private"]("chat.".concat(this.chatid));
+      setTimeout(function () {
+        chat.whisper('typing', {
+          user: Laravel.user,
+          typing: true,
+          chatid: thiscomponent.chatid
+        });
+      }, 300);
+    },
     scollToBottom: function scollToBottom() {
       var _this2 = this;
 
@@ -3852,6 +3865,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     channel.bind('message-event', function (data) {
       thiscomponent.newMessage(data.message);
     });
+    Echo["private"]("chat.".concat(this.chatid)).listenForWhisper('typing', function (e) {
+      if (e.chatid === thiscomponent.chatid) {
+        thiscomponent.user = e.user;
+        thiscomponent.typing = e.typing; // remove is typing indicator after 0.9s
+
+        setTimeout(function () {
+          thiscomponent.typing = false;
+        }, 900);
+      }
+    });
   }
 });
 
@@ -3877,6 +3900,10 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
 //
 //
 //
@@ -55116,56 +55143,42 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "ul",
-    { staticClass: "overflow-auto", staticStyle: { height: "500px" } },
+    "a",
+    {
+      staticClass:
+        "hover:bg-gray-100 border-b border-gray-300 px-3 py-2 cursor-pointer flex items-center text-sm focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out",
+      on: {
+        click: function($event) {
+          return _vm.$emit("getchat", _vm.username)
+        }
+      }
+    },
     [
-      _c("li", [
-        _c(
-          "a",
-          {
-            staticClass:
-              "hover:bg-gray-100 border-b border-gray-300 px-3 py-2 cursor-pointer flex items-center text-sm focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out",
-            on: {
-              click: function($event) {
-                return _vm.$emit("getchat", _vm.username)
-              }
-            }
-          },
-          [
-            _c("img", {
-              staticClass: "h-10 w-10 rounded-full object-cover",
-              attrs: { src: _vm.userimage, alt: _vm.username }
-            }),
-            _vm._v(" "),
-            _c("div", { staticClass: "w-full pb-2" }, [
-              _c("div", { staticClass: "flex justify-between" }, [
-                _c(
-                  "span",
-                  {
-                    staticClass:
-                      "block ml-2 font-semibold text-base text-gray-600 "
-                  },
-                  [_vm._v(_vm._s(_vm.username))]
-                ),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  { staticClass: "block ml-2 text-sm text-gray-600" },
-                  [
-                    _vm._v(
-                      " " +
-                        _vm._s("Hace " + _vm.getDifferenceTime(_vm.messagedate))
-                    )
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("span", { staticClass: "block ml-2 text-sm text-gray-600" }, [
-                _vm._v(_vm._s(_vm.lastmessage))
-              ])
-            ])
-          ]
-        )
+      _c("img", {
+        staticClass: "h-10 w-10 rounded-full object-cover",
+        attrs: { src: _vm.userimage, alt: _vm.username }
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "w-full pb-2" }, [
+        _c("div", { staticClass: "flex justify-between" }, [
+          _c(
+            "span",
+            {
+              staticClass: "block ml-2 font-semibold text-base text-gray-600 "
+            },
+            [_vm._v(_vm._s(_vm.username))]
+          ),
+          _vm._v(" "),
+          _c("span", { staticClass: "block ml-2 text-sm text-gray-600" }, [
+            _vm._v(
+              " " + _vm._s("Hace " + _vm.getDifferenceTime(_vm.messagedate))
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("span", { staticClass: "block ml-2 text-sm text-gray-600" }, [
+          _vm._v(_vm._s(_vm.lastmessage))
+        ])
       ])
     ]
   )
@@ -58164,8 +58177,8 @@ var render = function() {
                             staticClass: "block text-xs",
                             class: [
                               message.user_id === _vm.usercurrent
-                                ? "text-left"
-                                : "text-right"
+                                ? "text-right"
+                                : "text-left"
                             ]
                           },
                           [
@@ -58191,6 +58204,26 @@ var render = function() {
             })
           ],
           2
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.typing,
+                expression: "typing"
+              }
+            ],
+            staticClass: "w-full flex justify-start"
+          },
+          [
+            _c("div", { staticClass: "px-5 py-2 my-2 text-gray-700" }, [
+              _vm._v(_vm._s(_vm.user.name + " esta escribiendo ..."))
+            ])
+          ]
         )
       ]
     ),
@@ -58248,6 +58281,16 @@ var render = function() {
           },
           domProps: { value: _vm.message },
           on: {
+            keydown: _vm.isTyping,
+            keyup: function($event) {
+              if (
+                !$event.type.indexOf("key") &&
+                _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+              ) {
+                return null
+              }
+              return _vm.sendMessage($event)
+            },
             input: function($event) {
               if ($event.target.composing) {
                 return
@@ -58390,36 +58433,51 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _vm.chats.length === 0
-                ? _c(
-                    "span",
-                    {
-                      staticClass:
-                        "block text-center my-2 mx-2 text-sm text-gray-600"
-                    },
-                    [_vm._v("No tienes conversaciones.")]
-                  )
-                : _vm._l(_vm.chats, function(chat, index) {
-                    return _c("users-chats", {
-                      key: index,
-                      attrs: {
-                        chatid: chat.id,
-                        lastmessage: chat.messages[0].text,
-                        messagedate: chat.messages[0].send_date,
-                        username:
-                          chat.userrecive.id === _vm.$page.user.id
-                            ? chat.usersent.nick_name
-                            : chat.userrecive.nick_name,
-                        userimage:
-                          chat.userrecive.id === _vm.$page.user.id
-                            ? chat.usersent.profile_photo_url
-                            : chat.userrecive.profile_photo_url
-                      },
-                      on: { getchat: _vm.getChat }
-                    })
-                  })
-            ],
-            2
+              _c(
+                "ul",
+                {
+                  staticClass: "overflow-auto",
+                  staticStyle: { height: "500px" }
+                },
+                [
+                  _vm.chats.length === 0
+                    ? _c(
+                        "span",
+                        {
+                          staticClass:
+                            "block text-center my-2 mx-2 text-sm text-gray-600"
+                        },
+                        [_vm._v("No tienes conversaciones.")]
+                      )
+                    : _vm._l(_vm.chats, function(chat, index) {
+                        return _c(
+                          "li",
+                          { key: index },
+                          [
+                            _c("users-chats", {
+                              attrs: {
+                                chatid: chat.id,
+                                lastmessage: chat.messages[0].text,
+                                messagedate: chat.messages[0].send_date,
+                                username:
+                                  chat.userrecive.id === _vm.$page.user.id
+                                    ? chat.usersent.nick_name
+                                    : chat.userrecive.nick_name,
+                                userimage:
+                                  chat.userrecive.id === _vm.$page.user.id
+                                    ? chat.usersent.profile_photo_url
+                                    : chat.userrecive.profile_photo_url
+                              },
+                              on: { getchat: _vm.getChat }
+                            })
+                          ],
+                          1
+                        )
+                      })
+                ],
+                2
+              )
+            ]
           ),
           _vm._v(" "),
           _c(
