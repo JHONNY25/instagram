@@ -20,5 +20,13 @@
     </head>
     <body class="font-sans antialiased">
         @inertia
+
+        <script>
+            window.Laravel = {!! json_encode([
+              'csrfToken' => csrf_token(),
+              'user' => Auth::user(),
+              'pusherKey' => config('broadcasting.connections.pusher.key'),
+            ]) !!};
+        </script>
     </body>
 </html>
