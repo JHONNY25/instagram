@@ -32,7 +32,7 @@ class SendMessageEvent implements ShouldBroadcast
      */
      public function broadcastOn()
      {
-         return ['instagram-chat'];
+         return new Channel('instagram-chat');
      }
  
      public function broadcastAs()

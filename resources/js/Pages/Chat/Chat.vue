@@ -17,7 +17,7 @@
                     <div class="w-full flex" :class="[message.user_id === usercurrent ? 'justify-end' : 'justify-start']">
                         <div class="bg-gray-100 rounded px-5 py-2 my-2 text-gray-700 relative" style="max-width: 300px;">
                             <span class="block">{{ message.text }}</span>
-                            <span class="block text-xs" :class="[message.user_id === usercurrent ? 'text-left' : 'text-right']">{{ getHoursByDate(message.send_date) }}</span>
+                            <span class="block text-xs" :class="[message.user_id === usercurrent ? 'text-right' : 'text-left']">{{ getHoursByDate(message.send_date) }}</span>
                             <div class="absolute w-0 h-0"
                             style="border-bottom: 15px solid transparent;
                                 top: 0;"
@@ -26,6 +26,10 @@
                     </div>
                 </li>
             </ul>
+
+            <div v-show="typing" class="w-full flex justify-start">
+                <div class="px-5 py-2 my-2 text-gray-700">{{ user.name + ' esta escribiendo ...' }}</div>
+            </div>
         </div>
 
         <div class="w-full py-3 px-3 flex items-center justify-between border-t border-gray-300">
@@ -34,7 +38,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
                 </svg>
             </button>
-            <input v-model="message" aria-placeholder="Escribe un mensaje aquí" placeholder="Escribe un mensaje aquí"
+            <input v-model="message" @keydown="isTyping" @keyup.enter="sendMessage" aria-placeholder="Escribe un mensaje aquí" placeholder="Escribe un mensaje aquí"
                 class="py-2 mx-3 pl-5 block w-full rounded-full bg-gray-100 outline-none focus:text-gray-700" type="text" name="message" required/>
 
             <button v-if="message !== ''" class="outline-none focus:outline-none" @click="sendMessage" type="submit">
@@ -52,7 +56,9 @@
     export default {
         data(){
             return{
-                message: ''
+                message: '',
+                typing: false,
+                user: ''
             }
         },
         props:{
@@ -93,6 +99,18 @@
             newMessage(message){
                 this.messages.push(message)
             },
+            isTyping(){
+                const thiscomponent = this;
+                let chat = Echo.private(`chat.${this.chatid}`);
+
+                setTimeout(function() {
+                    chat.whisper('typing', {
+                        user: Laravel.user,
+                        typing: true,
+                        chatid: thiscomponent.chatid
+                    });
+                }, 300);
+            },   
             scollToBottom(){
                 setTimeout(()=>{
                     this.$refs.toolbarChat.scrollTop = this.$refs.toolbarChat.scrollHeight - this.$refs.toolbarChat.clientHeight
@@ -105,7 +123,6 @@
             },
             chatid(chatid){
                 this.scollToBottom()
-
             }
         },
         mounted(){
@@ -120,6 +137,19 @@
             const channel = pusher.subscribe('instagram-chat');
             channel.bind('message-event', function(data) {
                 thiscomponent.newMessage(data.message)
+            });
+
+            Echo.private(`chat.${this.chatid}`)
+            .listenForWhisper('typing', (e) => {
+                if(e.chatid === thiscomponent.chatid){
+                    thiscomponent.user = e.user;
+                    thiscomponent.typing = e.typing;
+
+                    // remove is typing indicator after 0.9s
+                    setTimeout(function() {
+                        thiscomponent.typing = false
+                    }, 900);
+                }
             });
         }
     }

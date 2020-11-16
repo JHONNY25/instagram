@@ -14,10 +14,14 @@
                             </div>
                         </div>
 
-                        <span v-if="chats.length === 0" class="block text-center my-2 mx-2 text-sm text-gray-600">No tienes conversaciones.</span>
-                        <users-chats v-else v-for="(chat,index) in chats" :key="index" :chatid="chat.id" :lastmessage="chat.messages[0].text" 
-                        :messagedate="chat.messages[0].send_date" :username="chat.userrecive.id === $page.user.id ? chat.usersent.nick_name : chat.userrecive.nick_name" 
-                        :userimage="chat.userrecive.id === $page.user.id ? chat.usersent.profile_photo_url : chat.userrecive.profile_photo_url " @getchat="getChat"></users-chats>
+                        <ul class="overflow-auto" style="height: 500px;">
+                            <span v-if="chats.length === 0" class="block text-center my-2 mx-2 text-sm text-gray-600">No tienes conversaciones.</span>
+                            <li v-else v-for="(chat,index) in chats" :key="index">
+                                <users-chats :chatid="chat.id" :lastmessage="chat.messages[0].text" 
+                                :messagedate="chat.messages[0].send_date" :username="chat.userrecive.id === $page.user.id ? chat.usersent.nick_name : chat.userrecive.nick_name" 
+                                :userimage="chat.userrecive.id === $page.user.id ? chat.usersent.profile_photo_url : chat.userrecive.profile_photo_url " @getchat="getChat"></users-chats>
+                            </li>
+                        </ul>
                     </div>
                     <div class="col-span-2 bg-white">
                         <div v-if="userchat.length <= 0" class="w-full flex items-center justify-center" style="height: 75vh;">
