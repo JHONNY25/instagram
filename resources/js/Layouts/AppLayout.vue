@@ -288,8 +288,18 @@
             },
 
             logout() {
+                axios.post(`/user/${Laravel.user.id}/offline`,{})
+
                 axios.post('/logout').then(response => {
                     window.location = '/';
+                })
+            },
+            listen(){
+                Echo.join('instagram-chat')
+                .joining((user) => {
+                    if(user.status === 0){
+                        axios.post(`/user/${user.id}/online`,{})
+                    }
                 })
             },
         },
@@ -323,6 +333,15 @@
                     this.accountexists = true
                 }
             }
+        },
+        mounted(){
+            const pusher = new Pusher('6176ca3de88da98be835', {
+                cluster: 'us2'
+            });
+
+            const channel = pusher.subscribe('instagram-chat');
+
+            this.listen()
         }
     }
 </script>
