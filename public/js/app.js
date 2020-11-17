@@ -3878,6 +3878,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     chatid: function chatid(_chatid) {
       this.scollToBottom();
+      this.reset();
     }
   },
   mounted: function mounted() {
@@ -3911,9 +3912,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, 900);
       }
     });
-  },
-  created: function created() {
-    this.reset();
   }
 });
 
