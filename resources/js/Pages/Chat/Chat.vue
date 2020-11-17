@@ -2,9 +2,14 @@
     <div class="w-full">
         <div class="flex items-center border-b border-gray-300 pl-3 py-3">
             <img class="h-10 w-10 rounded-full object-cover"
-            :src="userimage"
-            :alt="username" />
-            <span class="block ml-2 font-bold text-base text-gray-600">{{ username }}</span>
+            :src="userprop.profile_photo_url"
+            :alt="userprop.nick_name" />
+            <span class="block ml-2 font-bold text-base text-gray-600">{{ userprop.nick_name }}</span>
+            <span v-if="user.status === 1" class="connected text-green-500 ml-2" >
+                <svg width="6" height="6">
+                    <circle cx="3" cy="3" r="3" fill="currentColor"></circle>
+                </svg>
+            </span>
         </div>
         <div id="chat" class="w-full overflow-y-auto p-10" style="height: 700px;" ref="toolbarChat">
             <ul>
@@ -28,7 +33,7 @@
             </ul>
 
             <div v-show="typing" class="w-full flex justify-start">
-                <div class="px-5 py-2 my-2 text-gray-700">{{ user.name + ' esta escribiendo ...' }}</div>
+                <div class="px-5 py-2 my-2 text-gray-700">{{ usertyping.nick_name + ' esta escribiendo ...' }}</div>
             </div>
         </div>
 
@@ -58,12 +63,15 @@
             return{
                 message: '',
                 typing: false,
-                user: ''
+                usertyping: '',
+                user: this.userprop,
             }
         },
         props:{
-            username: String,
-            userimage: String,
+            userprop: {
+                type: Object,
+                required: true
+            },
             messages: {
                 type: Array,
                 required: true
@@ -110,11 +118,14 @@
                         chatid: thiscomponent.chatid
                     });
                 }, 300);
-            },   
+            },
             scollToBottom(){
                 setTimeout(()=>{
                     this.$refs.toolbarChat.scrollTop = this.$refs.toolbarChat.scrollHeight - this.$refs.toolbarChat.clientHeight
                 },50)
+            },
+            reset(){
+                Object.assign(this.$data, this.$options.data.apply(this))
             }
         },
         watch:{
@@ -135,14 +146,27 @@
             });
 
             const channel = pusher.subscribe('instagram-chat');
+
             channel.bind('message-event', function(data) {
                 thiscomponent.newMessage(data.message)
+            });
+
+            channel.bind('offline', function(data) {
+                if(thiscomponent.userprop.id === data.user.id){
+                    thiscomponent.user = data.user
+                }
+            });
+
+            channel.bind('online', function(data) {
+                if(thiscomponent.userprop.id === data.user.id){
+                    thiscomponent.user = data.user
+                }
             });
 
             Echo.private(`chat.${this.chatid}`)
             .listenForWhisper('typing', (e) => {
                 if(e.chatid === thiscomponent.chatid){
-                    thiscomponent.user = e.user;
+                    thiscomponent.usertyping = e.user;
                     thiscomponent.typing = e.typing;
 
                     // remove is typing indicator after 0.9s
@@ -151,6 +175,9 @@
                     }, 900);
                 }
             });
+        },
+        created(){
+            this.reset()
         }
     }
 </script>

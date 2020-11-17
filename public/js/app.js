@@ -3330,8 +3330,16 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     logout: function logout() {
+      axios.post("/user/".concat(Laravel.user.id, "/offline"), {});
       axios.post('/logout').then(function (response) {
         window.location = '/';
+      });
+    },
+    listen: function listen() {
+      Echo.join('instagram-chat').joining(function (user) {
+        if (user.status === 0) {
+          axios.post("/user/".concat(user.id, "/online"), {});
+        }
       });
     }
   },
@@ -3365,6 +3373,13 @@ __webpack_require__.r(__webpack_exports__);
         this.accountexists = true;
       }
     }
+  },
+  mounted: function mounted() {
+    var pusher = new Pusher('6176ca3de88da98be835', {
+      cluster: 'us2'
+    });
+    var channel = pusher.subscribe('instagram-chat');
+    this.listen();
   }
 });
 
@@ -3766,18 +3781,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       message: '',
       typing: false,
-      user: ''
+      usertyping: '',
+      user: this.userprop
     };
   },
   props: {
-    username: String,
-    userimage: String,
+    userprop: {
+      type: Object,
+      required: true
+    },
     messages: {
       type: Array,
       required: true
@@ -3844,6 +3867,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       setTimeout(function () {
         _this2.$refs.toolbarChat.scrollTop = _this2.$refs.toolbarChat.scrollHeight - _this2.$refs.toolbarChat.clientHeight;
       }, 50);
+    },
+    reset: function reset() {
+      Object.assign(this.$data, this.$options.data.apply(this));
     }
   },
   watch: {
@@ -3865,9 +3891,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     channel.bind('message-event', function (data) {
       thiscomponent.newMessage(data.message);
     });
+    channel.bind('offline', function (data) {
+      if (thiscomponent.userprop.id === data.user.id) {
+        thiscomponent.user = data.user;
+      }
+    });
+    channel.bind('online', function (data) {
+      if (thiscomponent.userprop.id === data.user.id) {
+        thiscomponent.user = data.user;
+      }
+    });
     Echo["private"]("chat.".concat(this.chatid)).listenForWhisper('typing', function (e) {
       if (e.chatid === thiscomponent.chatid) {
-        thiscomponent.user = e.user;
+        thiscomponent.usertyping = e.user;
         thiscomponent.typing = e.typing; // remove is typing indicator after 0.9s
 
         setTimeout(function () {
@@ -3875,6 +3911,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, 900);
       }
     });
+  },
+  created: function created() {
+    this.reset();
   }
 });
 
@@ -3900,7 +3939,6 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-//
 //
 //
 //
@@ -58106,14 +58144,27 @@ var render = function() {
       [
         _c("img", {
           staticClass: "h-10 w-10 rounded-full object-cover",
-          attrs: { src: _vm.userimage, alt: _vm.username }
+          attrs: {
+            src: _vm.userprop.profile_photo_url,
+            alt: _vm.userprop.nick_name
+          }
         }),
         _vm._v(" "),
         _c(
           "span",
           { staticClass: "block ml-2 font-bold text-base text-gray-600" },
-          [_vm._v(_vm._s(_vm.username))]
-        )
+          [_vm._v(_vm._s(_vm.userprop.nick_name))]
+        ),
+        _vm._v(" "),
+        _vm.user.status === 1
+          ? _c("span", { staticClass: "connected text-green-500 ml-2" }, [
+              _c("svg", { attrs: { width: "6", height: "6" } }, [
+                _c("circle", {
+                  attrs: { cx: "3", cy: "3", r: "3", fill: "currentColor" }
+                })
+              ])
+            ])
+          : _vm._e()
       ]
     ),
     _vm._v(" "),
@@ -58221,7 +58272,7 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "px-5 py-2 my-2 text-gray-700" }, [
-              _vm._v(_vm._s(_vm.user.name + " esta escribiendo ..."))
+              _vm._v(_vm._s(_vm.usertyping.nick_name + " esta escribiendo ..."))
             ])
           ]
         )
@@ -58548,14 +58599,10 @@ var render = function() {
                   )
                 : _c("chat", {
                     attrs: {
-                      userimage:
+                      userprop:
                         _vm.userchat.userrecive.id === _vm.$page.user.id
-                          ? _vm.userchat.usersent.profile_photo_url
-                          : _vm.userchat.userrecive.profile_photo_url,
-                      username:
-                        _vm.userchat.userrecive.id === _vm.$page.user.id
-                          ? _vm.userchat.usersent.nick_name
-                          : _vm.userchat.userrecive.name,
+                          ? _vm.userchat.usersent
+                          : _vm.userchat.userrecive,
                       messages: _vm.userchat.messages,
                       usercurrent: _vm.$page.user.id,
                       chatid: _vm.userchat.id

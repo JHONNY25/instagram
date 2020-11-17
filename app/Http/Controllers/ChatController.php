@@ -40,8 +40,8 @@ class ChatController extends Controller
             $user = $this->user->where('nick_name',$nick_name)->first();
 
             return $this->chat->with([
-                'userrecive:id,name,nick_name,profile_photo_path',
-                'usersent:id,name,nick_name,profile_photo_path',
+                'userrecive:id,name,nick_name,profile_photo_path,status',
+                'usersent:id,name,nick_name,profile_photo_path,status',
                 'messages'
             ])->where('user_recive',$user->id)
             ->orWhere('user_sent',$user->id)

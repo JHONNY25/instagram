@@ -19,9 +19,10 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 });
 
 Broadcast::channel('instagram-chat', function ($user) {
-    return Auth::check();
+    return $user;
 });
 
 Broadcast::channel('chat.{chatid}', function ($user, $chatid) {
     return $user->id;
 });
+

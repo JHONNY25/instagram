@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\OfflineController;
+use App\Http\Controllers\OnlineController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SearchController;
@@ -38,4 +40,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/user-chats/{nick_name}', [ChatController::class,'getChat'])->name('get-chat-user');
 
     Route::post('/chat/send-message', [ChatController::class,'sendMessage'])->name('create-message');
+
+    Route::post('/user/{userid}/online', OnlineController::class)->name('user-online');
+    Route::post('/user/{userid}/offline', OfflineController::class)->name('user-offline');
 });
