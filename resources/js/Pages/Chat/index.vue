@@ -36,8 +36,7 @@
                             </div>
                         </div>
 
-                        <chat v-else :userimage="userchat.userrecive.id === $page.user.id ? userchat.usersent.profile_photo_url : userchat.userrecive.profile_photo_url"
-                        :username="userchat.userrecive.id === $page.user.id ? userchat.usersent.nick_name : userchat.userrecive.name"
+                        <chat v-else :userprop="userchat.userrecive.id === $page.user.id ? userchat.usersent : userchat.userrecive"
                         :messages="userchat.messages" :usercurrent="$page.user.id" :chatid="userchat.id"></chat>
                     </div>
                 </div>
