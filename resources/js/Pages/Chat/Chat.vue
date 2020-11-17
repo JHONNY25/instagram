@@ -134,6 +134,7 @@
             },
             chatid(chatid){
                 this.scollToBottom()
+                this.reset()
             }
         },
         mounted(){
@@ -175,9 +176,6 @@
                     }, 900);
                 }
             });
-        },
-        created(){
-            this.reset()
         }
     }
 </script>
