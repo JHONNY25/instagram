@@ -3,22 +3,33 @@
         <div class="w-10/12">
             <div class="grid grid-cols-3 min-w-full border rounded" style="min-height: 80vh;">
                     <div class="col-span-1 bg-white border-r border-gray-300">
-                        <h2 class="ml-2 mb-2 text-gray-600 text-lg my-2">Chats</h2>
                         <div class="my-3 mx-3 ">
                             <div class="relative text-gray-600 focus-within:text-gray-400">
                                 <span class="absolute inset-y-0 left-0 flex items-center pl-2">
                                     <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-6 h-6 text-gray-500"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                                 </span>
-                                <input  aria-placeholder="Busca tus amigos o contacta nuevos" placeholder="Busca tus amigos"
+                                <input v-model="search"  aria-placeholder="Busca tus amigos o contacta nuevos" placeholder="Busca tus amigos"
                                 class="py-2 pl-10 block w-full rounded bg-gray-100 outline-none focus:text-gray-700" type="search" name="search" required autocomplete="search" />
                             </div>
                         </div>
 
+                        <div v-if="search.length > 0">
+                            <span class="block my-2 mx-2 text-sm text-gray-600">Amigos</span>
+                            <ul class="overflow-auto" style="max-height: 400px;">
+                                <span v-if="userssearch.length === 0" class="block text-center my-2 mx-2 text-sm text-gray-600">No sigues a nadie.</span>
+                                <li v-else v-for="(user,index) in userssearch" :key="index">
+                                    <users-chats :username="user.nick_name"
+                                    :userimage="user.profile_photo_url" @getchat="getChat"></users-chats>
+                                </li>
+                            </ul>
+                        </div>
+
                         <ul class="overflow-auto" style="height: 500px;">
+                            <h2 class="ml-2 mb-2 text-gray-600 text-lg my-2">Chats</h2>
                             <span v-if="chats.length === 0" class="block text-center my-2 mx-2 text-sm text-gray-600">No tienes conversaciones.</span>
                             <li v-else v-for="(chat,index) in chats" :key="index">
-                                <users-chats :chatid="chat.id" :lastmessage="chat.messages[0].text" 
-                                :messagedate="chat.messages[0].send_date" :username="chat.userrecive.id === $page.user.id ? chat.usersent.nick_name : chat.userrecive.nick_name" 
+                                <users-chats :lastmessage="chat.messages[0].text"
+                                :messagedate="chat.messages[0].send_date" :username="chat.userrecive.id === $page.user.id ? chat.usersent.nick_name : chat.userrecive.nick_name"
                                 :userimage="chat.userrecive.id === $page.user.id ? chat.usersent.profile_photo_url : chat.userrecive.profile_photo_url " @getchat="getChat"></users-chats>
                             </li>
                         </ul>
@@ -54,6 +65,8 @@
         data(){
             return {
                 userchat: [],
+                search: '',
+                userssearch: [],
             }
         },
         components: {
@@ -72,7 +85,22 @@
                 })
                 .catch(error => console.log(error))
             },
-            
+        },
+        computed:{
+            userSearch:{
+                cache: false,
+                get:async function(){
+                    if(this.search !== ''){
+                        await axios.get('/users/chat/'+this.search)
+                        .then(response => {
+                            this.userssearch = response.data
+                        })
+                        .catch(error => console.log(error))
+                    }else{
+                        this.userssearch = []
+                    }
+                }
+            }
         }
     }
 </script>

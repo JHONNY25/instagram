@@ -304,33 +304,39 @@
             },
         },
         computed: {
-            path() {
-                return window.location.pathname
+            path: {
+                cache: true,
+                get:function(){
+                    return window.location.pathname
+                }
             },
-            searchUsers(){
-                this.accountexists = true
-                if(this.search !== ""){
-
-                    axios.get('/users-search/'+this.search)
-                        .then(response => {
-                            if(response.data.length > 0 && Array.isArray(response.data)){
-                                this.accountexists = true
-                                this.users = response.data
-                            }else{
-                                this.accountexists = false
-                                this.users = []
-                            }
-                        })
-                        .catch(error => {
-                            console.log(error)
-                            this.errored = true
-                            this.accountexists = true
-                        })
-                        .finally(() => this.loading = false)
-
-                }else{
-                    this.users = []
+            searchUsers:{
+                cache: true,
+                get: async function(){
                     this.accountexists = true
+                    if(this.search !== ""){
+
+                        await axios.get('/users-search/'+this.search)
+                            .then(response => {
+                                if(response.data.length > 0 && Array.isArray(response.data)){
+                                    this.accountexists = true
+                                    this.users = response.data
+                                }else{
+                                    this.accountexists = false
+                                    this.users = []
+                                }
+                            })
+                            .catch(error => {
+                                console.log(error)
+                                this.errored = true
+                                this.accountexists = true
+                            })
+                            .finally(() => this.loading = false)
+
+                    }else{
+                        this.users = []
+                        this.accountexists = true
+                    }
                 }
             }
         },

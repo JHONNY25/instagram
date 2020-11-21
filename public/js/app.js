@@ -2175,7 +2175,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['lastmessage', 'messagedate', 'username', 'userimage', 'chatid'],
+  props: {
+    lastmessage: {
+      type: String,
+      required: false
+    },
+    messagedate: {
+      type: String,
+      required: false
+    },
+    username: {
+      type: String,
+      required: true
+    },
+    userimage: {
+      type: String,
+      required: true
+    }
+  },
   methods: {
     getDifferenceTime: function getDifferenceTime(date) {
       return moment__WEBPACK_IMPORTED_MODULE_0___default()(date).toNow(true);
@@ -3039,12 +3056,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Jetstream_ApplicationLogo__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../Jetstream/ApplicationLogo */ "./resources/js/Jetstream/ApplicationLogo.vue");
-/* harmony import */ var _Jetstream_ApplicationMark__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../Jetstream/ApplicationMark */ "./resources/js/Jetstream/ApplicationMark.vue");
-/* harmony import */ var _Components_Dropdown__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../Components/Dropdown */ "./resources/js/Components/Dropdown.vue");
-/* harmony import */ var _Jetstream_DropdownLink__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./../Jetstream/DropdownLink */ "./resources/js/Jetstream/DropdownLink.vue");
-/* harmony import */ var _Jetstream_NavLink__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./../Jetstream/NavLink */ "./resources/js/Jetstream/NavLink.vue");
-/* harmony import */ var _Jetstream_ResponsiveNavLink__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./../Jetstream/ResponsiveNavLink */ "./resources/js/Jetstream/ResponsiveNavLink.vue");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Jetstream_ApplicationLogo__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../Jetstream/ApplicationLogo */ "./resources/js/Jetstream/ApplicationLogo.vue");
+/* harmony import */ var _Jetstream_ApplicationMark__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../Jetstream/ApplicationMark */ "./resources/js/Jetstream/ApplicationMark.vue");
+/* harmony import */ var _Components_Dropdown__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./../Components/Dropdown */ "./resources/js/Components/Dropdown.vue");
+/* harmony import */ var _Jetstream_DropdownLink__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./../Jetstream/DropdownLink */ "./resources/js/Jetstream/DropdownLink.vue");
+/* harmony import */ var _Jetstream_NavLink__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./../Jetstream/NavLink */ "./resources/js/Jetstream/NavLink.vue");
+/* harmony import */ var _Jetstream_ResponsiveNavLink__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./../Jetstream/ResponsiveNavLink */ "./resources/js/Jetstream/ResponsiveNavLink.vue");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -3304,12 +3329,12 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    JetApplicationLogo: _Jetstream_ApplicationLogo__WEBPACK_IMPORTED_MODULE_0__["default"],
-    JetApplicationMark: _Jetstream_ApplicationMark__WEBPACK_IMPORTED_MODULE_1__["default"],
-    Dropdown: _Components_Dropdown__WEBPACK_IMPORTED_MODULE_2__["default"],
-    JetDropdownLink: _Jetstream_DropdownLink__WEBPACK_IMPORTED_MODULE_3__["default"],
-    JetNavLink: _Jetstream_NavLink__WEBPACK_IMPORTED_MODULE_4__["default"],
-    JetResponsiveNavLink: _Jetstream_ResponsiveNavLink__WEBPACK_IMPORTED_MODULE_5__["default"]
+    JetApplicationLogo: _Jetstream_ApplicationLogo__WEBPACK_IMPORTED_MODULE_1__["default"],
+    JetApplicationMark: _Jetstream_ApplicationMark__WEBPACK_IMPORTED_MODULE_2__["default"],
+    Dropdown: _Components_Dropdown__WEBPACK_IMPORTED_MODULE_3__["default"],
+    JetDropdownLink: _Jetstream_DropdownLink__WEBPACK_IMPORTED_MODULE_4__["default"],
+    JetNavLink: _Jetstream_NavLink__WEBPACK_IMPORTED_MODULE_5__["default"],
+    JetResponsiveNavLink: _Jetstream_ResponsiveNavLink__WEBPACK_IMPORTED_MODULE_6__["default"]
   },
   data: function data() {
     return {
@@ -3344,34 +3369,68 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   computed: {
-    path: function path() {
-      return window.location.pathname;
-    },
-    searchUsers: function searchUsers() {
-      var _this = this;
-
-      this.accountexists = true;
-
-      if (this.search !== "") {
-        axios.get('/users-search/' + this.search).then(function (response) {
-          if (response.data.length > 0 && Array.isArray(response.data)) {
-            _this.accountexists = true;
-            _this.users = response.data;
-          } else {
-            _this.accountexists = false;
-            _this.users = [];
-          }
-        })["catch"](function (error) {
-          console.log(error);
-          _this.errored = true;
-          _this.accountexists = true;
-        })["finally"](function () {
-          return _this.loading = false;
-        });
-      } else {
-        this.users = [];
-        this.accountexists = true;
+    path: {
+      cache: true,
+      get: function get() {
+        return window.location.pathname;
       }
+    },
+    searchUsers: {
+      cache: true,
+      get: function () {
+        var _get = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+          var _this = this;
+
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+            while (1) {
+              switch (_context.prev = _context.next) {
+                case 0:
+                  this.accountexists = true;
+
+                  if (!(this.search !== "")) {
+                    _context.next = 6;
+                    break;
+                  }
+
+                  _context.next = 4;
+                  return axios.get('/users-search/' + this.search).then(function (response) {
+                    if (response.data.length > 0 && Array.isArray(response.data)) {
+                      _this.accountexists = true;
+                      _this.users = response.data;
+                    } else {
+                      _this.accountexists = false;
+                      _this.users = [];
+                    }
+                  })["catch"](function (error) {
+                    console.log(error);
+                    _this.errored = true;
+                    _this.accountexists = true;
+                  })["finally"](function () {
+                    return _this.loading = false;
+                  });
+
+                case 4:
+                  _context.next = 8;
+                  break;
+
+                case 6:
+                  this.users = [];
+                  this.accountexists = true;
+
+                case 8:
+                case "end":
+                  return _context.stop();
+              }
+            }
+          }, _callee, this);
+        }));
+
+        function get() {
+          return _get.apply(this, arguments);
+        }
+
+        return get;
+      }()
     }
   },
   mounted: function mounted() {
@@ -3984,13 +4043,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      userchat: []
+      userchat: [],
+      search: '',
+      userssearch: []
     };
   },
   components: {
@@ -4022,6 +4094,52 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee);
       }))();
+    }
+  },
+  computed: {
+    userSearch: {
+      cache: false,
+      get: function () {
+        var _get = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+          var _this2 = this;
+
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+            while (1) {
+              switch (_context2.prev = _context2.next) {
+                case 0:
+                  if (!(this.search !== '')) {
+                    _context2.next = 5;
+                    break;
+                  }
+
+                  _context2.next = 3;
+                  return axios.get('/users/chat/' + this.search).then(function (response) {
+                    _this2.userssearch = response.data;
+                  })["catch"](function (error) {
+                    return console.log(error);
+                  });
+
+                case 3:
+                  _context2.next = 6;
+                  break;
+
+                case 5:
+                  this.userssearch = [];
+
+                case 6:
+                case "end":
+                  return _context2.stop();
+              }
+            }
+          }, _callee2, this);
+        }));
+
+        function get() {
+          return _get.apply(this, arguments);
+        }
+
+        return get;
+      }()
     }
   }
 });
@@ -55207,7 +55325,12 @@ var render = function() {
           _vm._v(" "),
           _c("span", { staticClass: "block ml-2 text-sm text-gray-600" }, [
             _vm._v(
-              " " + _vm._s("Hace " + _vm.getDifferenceTime(_vm.messagedate))
+              " " +
+                _vm._s(
+                  _vm.messagedate != ""
+                    ? "Hace " + _vm.getDifferenceTime(_vm.messagedate)
+                    : ""
+                )
             )
           ])
         ]),
@@ -58420,12 +58543,6 @@ var render = function() {
             "div",
             { staticClass: "col-span-1 bg-white border-r border-gray-300" },
             [
-              _c(
-                "h2",
-                { staticClass: "ml-2 mb-2 text-gray-600 text-lg my-2" },
-                [_vm._v("Chats")]
-              ),
-              _vm._v(" "),
               _c("div", { staticClass: "my-3 mx-3 " }, [
                 _c(
                   "div",
@@ -58466,6 +58583,14 @@ var render = function() {
                     ),
                     _vm._v(" "),
                     _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.search,
+                          expression: "search"
+                        }
+                      ],
                       staticClass:
                         "py-2 pl-10 block w-full rounded bg-gray-100 outline-none focus:text-gray-700",
                       attrs: {
@@ -58476,11 +58601,66 @@ var render = function() {
                         name: "search",
                         required: "",
                         autocomplete: "search"
+                      },
+                      domProps: { value: _vm.search },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.search = $event.target.value
+                        }
                       }
                     })
                   ]
                 )
               ]),
+              _vm._v(" "),
+              _vm.search.length > 0
+                ? _c("div", [
+                    _c(
+                      "span",
+                      { staticClass: "block my-2 mx-2 text-sm text-gray-600" },
+                      [_vm._v("Amigos")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "ul",
+                      {
+                        staticClass: "overflow-auto",
+                        staticStyle: { "max-height": "400px" }
+                      },
+                      [
+                        _vm.userssearch.length === 0
+                          ? _c(
+                              "span",
+                              {
+                                staticClass:
+                                  "block text-center my-2 mx-2 text-sm text-gray-600"
+                              },
+                              [_vm._v("No sigues a nadie.")]
+                            )
+                          : _vm._l(_vm.userssearch, function(user, index) {
+                              return _c(
+                                "li",
+                                { key: index },
+                                [
+                                  _c("users-chats", {
+                                    attrs: {
+                                      username: user.nick_name,
+                                      userimage: user.profile_photo_url
+                                    },
+                                    on: { getchat: _vm.getChat }
+                                  })
+                                ],
+                                1
+                              )
+                            })
+                      ],
+                      2
+                    )
+                  ])
+                : _vm._e(),
               _vm._v(" "),
               _c(
                 "ul",
@@ -58489,6 +58669,12 @@ var render = function() {
                   staticStyle: { height: "500px" }
                 },
                 [
+                  _c(
+                    "h2",
+                    { staticClass: "ml-2 mb-2 text-gray-600 text-lg my-2" },
+                    [_vm._v("Chats")]
+                  ),
+                  _vm._v(" "),
                   _vm.chats.length === 0
                     ? _c(
                         "span",
@@ -58505,7 +58691,6 @@ var render = function() {
                           [
                             _c("users-chats", {
                               attrs: {
-                                chatid: chat.id,
                                 lastmessage: chat.messages[0].text,
                                 messagedate: chat.messages[0].send_date,
                                 username:

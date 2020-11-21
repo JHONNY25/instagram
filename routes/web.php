@@ -33,6 +33,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::get('/profile/{nick_name}', [ProfileController::class,'index'])->name('nick_name');
     Route::get('/users-search/{nick_name}', [SearchController::class,'search'])->name('users-search');
+    Route::get('/users/chat/{search}', [SearchController::class,'searchUsersIFollow'])->name('users-search-chat');
     Route::post('/create-post', [PostController::class,'create'])->name('create-post');
     Route::get('/get-posts', [PostController::class,'all'])->name('get-posts');
 

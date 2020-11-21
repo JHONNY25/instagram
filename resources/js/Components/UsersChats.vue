@@ -6,7 +6,7 @@
         <div class="w-full pb-2">
             <div class="flex justify-between">
                 <span class="block ml-2 font-semibold text-base text-gray-600 ">{{ username }}</span>
-                <span class="block ml-2 text-sm text-gray-600"> {{ 'Hace '+getDifferenceTime(messagedate) }}</span>
+                <span class="block ml-2 text-sm text-gray-600"> {{ messagedate != '' ? 'Hace '+getDifferenceTime(messagedate) : '' }}</span>
             </div>
             <span class="block ml-2 text-sm text-gray-600">{{ lastmessage }}</span>
         </div>
@@ -17,9 +17,24 @@
     import moment from 'moment'
 
     export default {
-        props:[
-            'lastmessage','messagedate','username','userimage','chatid'
-        ],
+        props:{
+            lastmessage: {
+                type: String,
+                required: false
+            },
+            messagedate: {
+                type: String,
+                required: false
+            },
+            username:{
+                type: String,
+                required: true
+            },
+            userimage:{
+                type: String,
+                required: true
+            }
+        },
         methods:{
             getDifferenceTime(date){
                 return moment(date).toNow(true);
