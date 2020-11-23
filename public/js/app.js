@@ -5744,7 +5744,7 @@ __webpack_require__.r(__webpack_exports__);
     ImagePost: _ImagePost__WEBPACK_IMPORTED_MODULE_1__["default"],
     UserDetails: _UserDetails__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
-  props: ['user']
+  props: ['user', 'followers', 'posts', 'followed']
 });
 
 /***/ }),
@@ -5797,7 +5797,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['name', 'nickname', 'presentation', 'website', 'imageurl', 'urlprofileconfig']
+  props: ['name', 'nickname', 'presentation', 'website', 'imageurl', 'urlprofileconfig', 'followerscount', 'postscount', 'followedcount']
 });
 
 /***/ }),
@@ -61431,6 +61431,9 @@ var render = function() {
           _c("user-details", {
             staticClass: "flex w-9/12 justify-content-around",
             attrs: {
+              followerscount: _vm.followers,
+              postscount: _vm.posts,
+              followedcount: _vm.followed,
               urlprofileconfig: _vm.hrefprofile,
               imageurl: _vm.user.profile_photo_url,
               name: _vm.user.name,
@@ -61544,7 +61547,51 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _vm._m(0),
+      _c("ul", { staticClass: "flex justify-content-around items-center" }, [
+        _c("li", [
+          _c("span", { staticClass: "block text-base flex" }, [
+            _c("span", { staticClass: "font-bold mr-2" }, [
+              _vm._v(_vm._s(_vm.postscount) + " ")
+            ]),
+            _vm._v(
+              " " +
+                _vm._s(_vm.postscount === 1 ? "Publicación" : "Publicaciones") +
+                " "
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c(
+            "span",
+            { staticClass: "cursor-pointer block text-base flex ml-5" },
+            [
+              _c("span", { staticClass: "font-bold mr-2" }, [
+                _vm._v(_vm._s(_vm.followerscount) + " ")
+              ]),
+              _vm._v(
+                " " +
+                  _vm._s(_vm.followerscount === 1 ? "Seguidor" : "Seguidores")
+              )
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c(
+            "span",
+            { staticClass: "cursor-pointer block text-base flex ml-5" },
+            [
+              _c("span", { staticClass: "font-bold mr-2" }, [
+                _vm._v(_vm._s(_vm.followedcount) + " ")
+              ]),
+              _vm._v(
+                " " + _vm._s(_vm.followedcount === 1 ? "Seguido" : "Seguidos")
+              )
+            ]
+          )
+        ])
+      ]),
       _vm._v(" "),
       _c("br"),
       _vm._v(" "),
@@ -61573,47 +61620,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "ul",
-      { staticClass: "flex justify-content-around items-center" },
-      [
-        _c("li", [
-          _c("span", { staticClass: "block text-base flex" }, [
-            _c("span", { staticClass: "font-bold mr-2" }, [_vm._v("20 ")]),
-            _vm._v(" Publicaciones")
-          ])
-        ]),
-        _vm._v(" "),
-        _c("li", [
-          _c(
-            "span",
-            { staticClass: "cursor-pointer block text-base flex ml-5" },
-            [
-              _c("span", { staticClass: "font-bold mr-2" }, [_vm._v("40 ")]),
-              _vm._v(" Seguidores")
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", [
-          _c(
-            "span",
-            { staticClass: "cursor-pointer block text-base flex ml-5" },
-            [
-              _c("span", { staticClass: "font-bold mr-2" }, [_vm._v("230 ")]),
-              _vm._v(" Seguidos")
-            ]
-          )
-        ])
-      ]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
