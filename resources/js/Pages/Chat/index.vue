@@ -8,7 +8,7 @@
                                 <span class="absolute inset-y-0 left-0 flex items-center pl-2">
                                     <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-6 h-6 text-gray-500"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                                 </span>
-                                <input v-model="search"  aria-placeholder="Busca tus amigos o contacta nuevos" placeholder="Busca tus amigos"
+                                <input v-model="search" @keyup="searchFriends" aria-placeholder="Busca tus amigos o contacta nuevos" placeholder="Busca tus amigos"
                                 class="py-2 pl-10 block w-full rounded bg-gray-100 outline-none focus:text-gray-700" type="search" name="search" required autocomplete="search" />
                             </div>
                         </div>
@@ -16,7 +16,7 @@
                         <div v-if="search.length > 0">
                             <span class="block my-2 mx-2 text-sm text-gray-600">Amigos</span>
                             <ul class="overflow-auto" style="max-height: 400px;">
-                                <span v-if="userssearch.length === 0" class="block text-center my-2 mx-2 text-sm text-gray-600">No sigues a nadie.</span>
+                                <span v-if="userssearch.length === 0" class="block text-center my-2 mx-2 text-sm text-gray-600">No se encontro el usuario.</span>
                                 <li v-else v-for="(user,index) in userssearch" :key="index">
                                     <users-chats :username="user.nick_name"
                                     :userimage="user.profile_photo_url" @getchat="getChat"></users-chats>
@@ -85,22 +85,17 @@
                 })
                 .catch(error => console.log(error))
             },
-        },
-        computed:{
-            userSearch:{
-                cache: false,
-                get:async function(){
-                    if(this.search !== ''){
-                        await axios.get('/users/chat/'+this.search)
-                        .then(response => {
-                            this.userssearch = response.data
-                        })
-                        .catch(error => console.log(error))
-                    }else{
-                        this.userssearch = []
-                    }
+            async searchFriends(){
+                if(this.search !== ''){
+                    await axios.get('/users/chat/'+this.search)
+                    .then(response => {
+                        this.userssearch = response.data
+                    })
+                    .catch(error => console.log(error))
+                }else{
+                    this.userssearch = []
                 }
             }
-        }
+        },
     }
 </script>
