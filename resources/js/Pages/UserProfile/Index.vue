@@ -2,7 +2,7 @@
     <app-layout>
         <div class="w-10/12">
             <div class="flex justify-center pb-10">
-                    <user-details class="flex w-9/12 justify-content-around" :urlprofileconfig="hrefprofile" :imageurl="user.profile_photo_url" :name="user.name" :nickname="user.nick_name" :website="user.web_site" :presentation="user.presentation" ></user-details>
+                    <user-details class="flex w-9/12 justify-content-around" :followerscount="followers" :postscount="posts" :followedcount="followed" :urlprofileconfig="hrefprofile" :imageurl="user.profile_photo_url" :name="user.name" :nickname="user.nick_name" :website="user.web_site" :presentation="user.presentation" ></user-details>
             </div>
             <div class="border-b border-gray-300"></div>
             <article class="mt-5 grid grid-cols-3 gap-10">
@@ -36,6 +36,9 @@
         },
         props: [
             'user',
+            'followers',
+            'posts',
+            'followed'
         ],
     }
 </script>
