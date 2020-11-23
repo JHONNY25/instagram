@@ -6,7 +6,7 @@
         <div class="w-full pb-2">
             <div class="flex justify-between">
                 <span class="block ml-2 font-semibold text-base text-gray-600 ">{{ username }}</span>
-                <span class="block ml-2 text-sm text-gray-600"> {{ messagedate != '' ? 'Hace '+getDifferenceTime(messagedate) : '' }}</span>
+                <span class="block ml-2 text-sm text-gray-600"> {{ messagedate ? 'Hace '+getDifferenceTime(messagedate) : '' }}</span>
             </div>
             <span class="block ml-2 text-sm text-gray-600">{{ lastmessage }}</span>
         </div>
