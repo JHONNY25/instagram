@@ -3366,6 +3366,51 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           axios.post("/user/".concat(user.id, "/online"), {});
         }
       });
+    },
+    userSearch: function userSearch() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (!(_this.search !== '')) {
+                  _context.next = 5;
+                  break;
+                }
+
+                _context.next = 3;
+                return axios.get('/users-search/' + _this.search).then(function (response) {
+                  if (response.data.length > 0 && Array.isArray(response.data)) {
+                    _this.accountexists = true;
+                    _this.users = response.data;
+                  } else {
+                    _this.accountexists = false;
+                    _this.users = [];
+                  }
+                })["catch"](function (error) {
+                  _this.errored = true;
+                  _this.accountexists = true;
+                })["finally"](function () {
+                  return _this.loading = false;
+                });
+
+              case 3:
+                _context.next = 7;
+                break;
+
+              case 5:
+                _this.accountexists = true;
+                _this.users = [];
+
+              case 7:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
     }
   },
   computed: {
@@ -3374,63 +3419,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       get: function get() {
         return window.location.pathname;
       }
-    },
-    searchUsers: {
-      cache: true,
-      get: function () {
-        var _get = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-          var _this = this;
-
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-            while (1) {
-              switch (_context.prev = _context.next) {
-                case 0:
-                  this.accountexists = true;
-
-                  if (!(this.search !== "")) {
-                    _context.next = 6;
-                    break;
-                  }
-
-                  _context.next = 4;
-                  return axios.get('/users-search/' + this.search).then(function (response) {
-                    if (response.data.length > 0 && Array.isArray(response.data)) {
-                      _this.accountexists = true;
-                      _this.users = response.data;
-                    } else {
-                      _this.accountexists = false;
-                      _this.users = [];
-                    }
-                  })["catch"](function (error) {
-                    console.log(error);
-                    _this.errored = true;
-                    _this.accountexists = true;
-                  })["finally"](function () {
-                    return _this.loading = false;
-                  });
-
-                case 4:
-                  _context.next = 8;
-                  break;
-
-                case 6:
-                  this.users = [];
-                  this.accountexists = true;
-
-                case 8:
-                case "end":
-                  return _context.stop();
-              }
-            }
-          }, _callee, this);
-        }));
-
-        function get() {
-          return _get.apply(this, arguments);
-        }
-
-        return get;
-      }()
     }
   },
   mounted: function mounted() {
@@ -4094,52 +4082,41 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee);
       }))();
-    }
-  },
-  computed: {
-    userSearch: {
-      cache: false,
-      get: function () {
-        var _get = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-          var _this2 = this;
+    },
+    searchFriends: function searchFriends() {
+      var _this2 = this;
 
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-            while (1) {
-              switch (_context2.prev = _context2.next) {
-                case 0:
-                  if (!(this.search !== '')) {
-                    _context2.next = 5;
-                    break;
-                  }
-
-                  _context2.next = 3;
-                  return axios.get('/users/chat/' + this.search).then(function (response) {
-                    _this2.userssearch = response.data;
-                  })["catch"](function (error) {
-                    return console.log(error);
-                  });
-
-                case 3:
-                  _context2.next = 6;
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                if (!(_this2.search !== '')) {
+                  _context2.next = 5;
                   break;
+                }
 
-                case 5:
-                  this.userssearch = [];
+                _context2.next = 3;
+                return axios.get('/users/chat/' + _this2.search).then(function (response) {
+                  _this2.userssearch = response.data;
+                })["catch"](function (error) {
+                  return console.log(error);
+                });
 
-                case 6:
-                case "end":
-                  return _context2.stop();
-              }
+              case 3:
+                _context2.next = 6;
+                break;
+
+              case 5:
+                _this2.userssearch = [];
+
+              case 6:
+              case "end":
+                return _context2.stop();
             }
-          }, _callee2, this);
-        }));
-
-        function get() {
-          return _get.apply(this, arguments);
-        }
-
-        return get;
-      }()
+          }
+        }, _callee2);
+      }))();
     }
   }
 });
@@ -55327,7 +55304,7 @@ var render = function() {
             _vm._v(
               " " +
                 _vm._s(
-                  _vm.messagedate != ""
+                  _vm.messagedate
                     ? "Hace " + _vm.getDifferenceTime(_vm.messagedate)
                     : ""
                 )
@@ -56753,6 +56730,7 @@ var render = function() {
                                 },
                                 domProps: { value: _vm.search },
                                 on: {
+                                  keyup: _vm.userSearch,
                                   input: function($event) {
                                     if ($event.target.composing) {
                                       return
@@ -58604,6 +58582,7 @@ var render = function() {
                       },
                       domProps: { value: _vm.search },
                       on: {
+                        keyup: _vm.searchFriends,
                         input: function($event) {
                           if ($event.target.composing) {
                             return
@@ -58638,7 +58617,7 @@ var render = function() {
                                 staticClass:
                                   "block text-center my-2 mx-2 text-sm text-gray-600"
                               },
-                              [_vm._v("No sigues a nadie.")]
+                              [_vm._v("No se encontro el usuario.")]
                             )
                           : _vm._l(_vm.userssearch, function(user, index) {
                               return _c(
@@ -80304,14 +80283,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!********************************************!*\
   !*** ./resources/js/Layouts/AppLayout.vue ***!
   \********************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _AppLayout_vue_vue_type_template_id_5663af57___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AppLayout.vue?vue&type=template&id=5663af57& */ "./resources/js/Layouts/AppLayout.vue?vue&type=template&id=5663af57&");
 /* harmony import */ var _AppLayout_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AppLayout.vue?vue&type=script&lang=js& */ "./resources/js/Layouts/AppLayout.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _AppLayout_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _AppLayout_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -80341,7 +80321,7 @@ component.options.__file = "resources/js/Layouts/AppLayout.vue"
 /*!*********************************************************************!*\
   !*** ./resources/js/Layouts/AppLayout.vue?vue&type=script&lang=js& ***!
   \*********************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
