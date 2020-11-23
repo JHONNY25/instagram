@@ -17,13 +17,13 @@
             </div>
             <ul class="flex justify-content-around items-center">
                 <li>
-                    <span class="block text-base flex"><span class="font-bold mr-2">20 </span> Publicaciones</span>
+                    <span class="block text-base flex"><span class="font-bold mr-2">{{postscount}} </span> {{postscount === 1 ? 'Publicación' : 'Publicaciones'}} </span>
                 </li>
                 <li>
-                    <span class="cursor-pointer block text-base flex ml-5"><span class="font-bold mr-2">40 </span> Seguidores</span>
+                    <span class="cursor-pointer block text-base flex ml-5"><span class="font-bold mr-2">{{followerscount}} </span> {{followerscount === 1 ? 'Seguidor' : 'Seguidores'}}</span>
                 </li>
                 <li>
-                    <span class="cursor-pointer block text-base flex ml-5"><span class="font-bold mr-2">230 </span> Seguidos</span>
+                    <span class="cursor-pointer block text-base flex ml-5"><span class="font-bold mr-2">{{followedcount}} </span> {{followedcount === 1 ? 'Seguido' : 'Seguidos'}}</span>
                 </li>
             </ul>
             <br>
@@ -38,6 +38,6 @@
 
 <script>
     export default{
-        props:['name','nickname','presentation','website','imageurl','urlprofileconfig']
+        props:['name','nickname','presentation','website','imageurl','urlprofileconfig','followerscount','postscount','followedcount']
     }
 </script>
