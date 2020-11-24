@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Comments;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -17,6 +18,7 @@ class Posts extends Model
         'image_path',
         'description',
         'user_id',
+        'date_posts',
     ];
 
     protected $appends = ['countcomments','countlikes'];
@@ -50,13 +52,14 @@ class Posts extends Model
             Storage::disk('public')->put($name, $file);
             $url = Storage::url($name);
         }
-        
+
         $url = Storage::url($name);
 
         $post = (new static)::create([
             'image_path' => $url,
             'description' => $request->textpost,
             'user_id' => Auth::id(),
+            'date_posts' => Carbon::now(),
         ]);
 
         return (new static)::with([

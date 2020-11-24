@@ -7,7 +7,7 @@
                     alt="Jusnito" />
                     <div>
                         <h2 class="block ml-2 font-bold">{{ nickName }}</h2>
-                        <span class="block ml-2 text-xs text-gray-600">{{ publicationTime }}</span>
+                        <span class="block ml-2 text-xs text-gray-600">{{ getDifferenceTime(publicationTime) }}</span>
                     </div>
                 </a>
             </div>
@@ -50,6 +50,7 @@
 
 <script>
     import CommentPost from './CommentPost'
+    import moment from 'moment'
 
     export default {
         data(){
@@ -64,6 +65,9 @@
         methods: {
             showModal(){
                 this.$emit('show')
+            },
+            getDifferenceTime(date){
+                return moment(date).toNow(true);
             }
         }
     }
