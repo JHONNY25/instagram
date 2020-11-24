@@ -1,8 +1,8 @@
 <template>
-    <div class="max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl">
-        <button class="flex justify-center w-full mb-5 text-center bg-blue-500 rounded text-white py-2" @click="changeStateShowPost">Agregar publicación</button>
+    <div class="max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl w-full">
+        <button class="flex justify-center w-full mb-5 text-center bg-blue-500 rounded text-white py-2 outline-none focus:outline-none hover:bg-blue-600" @click="changeStateShowPost">Agregar publicación</button>
 
-        <post-component v-if="posts.length > 0" v-for="(post,index) in posts" :key="index" @show="changeStateShow" :nickName="post.user.nick_name" :likes="post.countlikes" :commentsnum="post.countcomments" :comment="post.description" :urlImage="post.user.profile_photo_url" :publicationTime="publicationTime"></post-component>
+        <post-component v-if="posts.length > 0" v-for="(post,index) in posts" :key="index" @show="changeStateShow" :nickName="post.user.nick_name" :likes="post.countlikes" :commentsnum="post.countcomments" :comment="post.description" :urlImage="post.user.profile_photo_url" :publicationTime="post.created_at"></post-component>
 
         <div v-else class="text-3xl">No hay publicaciones</div>
 
@@ -26,7 +26,7 @@
                             <input @change="fileChange" id="image" type="file" name="image" accept="image/gif,image/jpeg,image/jpg,image/png" style="display: none"/>
                         </div>
                     </div>
-                    <button type="submit" class="flex justify-center w-full outline-none focus:outline-none my-3 text-center bg-blue-500 rounded text-white py-2" @click="createPost">Publicar</button>
+                    <button type="submit" class="flex justify-center w-full outline-none focus:outline-none my-3 text-center bg-blue-500  hover:bg-blue-600 rounded text-white py-2" @click="createPost">Publicar</button>
                 </div>
             </modal>
     </div>
@@ -41,12 +41,6 @@
         data(){
             return {
                 posts: [],
-                nickName: 'JRH',
-                likes: '2300',
-                comments: 24,
-                urlImage: 'https://cdn.pixabay.com/photo/2020/10/19/09/44/woman-5667299_960_720.jpg',
-                publicationTime: '5 horas',
-                comment: 'Un par de jugadas que se dieron en la cancha xd',
                 show: false,
                 showPost: false,
                 imagepost: null,
@@ -81,6 +75,12 @@
             dispatchInputFile(){
                 document.getElementById('image').click()
             },
+            resetData(){
+                this.showPost = false
+                this.imagepost = null
+                this.textpost = null
+                this.url = null
+            },
             async createPost(){
                 const formData = new FormData()
                 formData.append("image", this.imagepost)
@@ -91,10 +91,12 @@
                         'Content-Type': 'multipart/form-data'
                     }
                 }).then(response => {
-                    this.posts.push(response.data)
+                    this.posts.unshift(response.data)
                 })
                 .catch(error => console.log(error))
-                .finally(() => this.showPost = false)
+                .finally(() => {
+                    this.resetData()
+                })
             }
         },
         created(){
