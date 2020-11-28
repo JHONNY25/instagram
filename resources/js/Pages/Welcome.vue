@@ -2,7 +2,8 @@
     <div class="max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl w-full">
         <button class="flex justify-center w-full mb-5 text-center bg-blue-500 rounded text-white py-2 outline-none focus:outline-none hover:bg-blue-600" @click="changeStateShowPost">Agregar publicación</button>
 
-        <post-component v-if="posts.length > 0" v-for="(post,index) in posts" :key="index" @show="changeStateShow" :nickName="post.user.nick_name" :likes="post.countlikes" :commentsnum="post.countcomments" :comment="post.description" :urlImage="post.user.profile_photo_url" :publicationTime="post.created_at"></post-component>
+        <post-component v-if="posts.length > 0" v-for="(post,index) in posts" :key="index" 
+        @show="changeStateShow" :post="post"></post-component>
 
         <div v-else class="text-3xl">No hay publicaciones</div>
 

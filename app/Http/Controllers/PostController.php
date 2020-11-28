@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Likes;
 use App\Models\Posts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -9,10 +10,12 @@ use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
-    protected $post;
+    public $post;
+    public $like;
 
-    public function __construct(Posts $post){
+    public function __construct(Posts $post,Likes $like){
         $this->post = $post;
+        $this->like = $like;
     }
 
     public function all(){
@@ -38,4 +41,23 @@ class PostController extends Controller
         }
 
     }
+
+    public function like(Request $request){
+
+        try {
+            if(!$this->like->where('post_id',(int)$request->postId)->where('user_id',auth()->user()->id)->exists()){
+                $this->like->createLike((int)$request->postId,(int)auth()->user()->id);
+
+                return response()->json(['like' => true,'likes' => $this->like->where('post_id',$request->postId)->get()],200);
+            }else{
+                $this->like->deleteLike((int)$request->postId,(int)auth()->user()->id);
+                
+                return response()->json(['like' => false,'likes' => $this->like->where('post_id',$request->postId)->get()],200);
+            }
+
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage(),500);
+        }
+    }
+
 }

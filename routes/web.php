@@ -32,14 +32,16 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     });
 
     Route::get('/profile/{nick_name}', [ProfileController::class,'index'])->name('nick_name');
+
     Route::get('/users-search/{nick_name}', [SearchController::class,'search'])->name('users-search');
     Route::get('/users/chat/{search}', [SearchController::class,'searchUsersIFollow'])->name('users-search-chat');
+
     Route::post('/create-post', [PostController::class,'create'])->name('create-post');
     Route::get('/get-posts', [PostController::class,'all'])->name('get-posts');
+    Route::post('/like-post', [PostController::class,'like'])->name('like-posts');
 
     Route::get('/user-chats', [ChatController::class,'index'])->name('get-chats');
     Route::get('/user-chats/{nick_name}', [ChatController::class,'getChat'])->name('get-chat-user');
-
     Route::post('/chat/send-message', [ChatController::class,'sendMessage'])->name('create-message');
 
     Route::post('/user/{userid}/online', OnlineController::class)->name('user-online');
