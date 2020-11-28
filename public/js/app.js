@@ -2076,9 +2076,22 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _CommentPost__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CommentPost */ "./resources/js/Components/CommentPost.vue");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _CommentPost__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CommentPost */ "./resources/js/Components/CommentPost.vue");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_2__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2137,16 +2150,48 @@ __webpack_require__.r(__webpack_exports__);
       showUserImage: false
     };
   },
-  props: ['nickName', 'likes', 'commentsnum', 'comment', 'urlImage', 'publicationTime'],
+  props: ['post'],
   components: {
-    CommentPost: _CommentPost__WEBPACK_IMPORTED_MODULE_0__["default"]
+    CommentPost: _CommentPost__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   methods: {
     showModal: function showModal() {
       this.$emit('show');
     },
     getDifferenceTime: function getDifferenceTime(date) {
-      return moment__WEBPACK_IMPORTED_MODULE_1___default()(date).toNow(true);
+      return moment__WEBPACK_IMPORTED_MODULE_2___default()(date).toNow(true);
+    },
+    likeOrDislike: function likeOrDislike() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var formData;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                formData = new FormData();
+                formData.append("postId", _this.post.id);
+                _context.next = 4;
+                return axios.post('/like-post', formData).then(function (response) {
+                  _this.post.likes = response.data.likes;
+
+                  if (response.data.like) {
+                    _this.post.countlikes++;
+                  } else {
+                    --_this.post.countlikes;
+                  }
+                })["catch"](function (error) {
+                  return console.log(error);
+                });
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
     }
   }
 });
@@ -5704,6 +5749,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
@@ -5820,7 +5866,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".fill-heart:hover{\n  fill: #e53e3e;\n  color: #e53e3e;\n}\n", ""]);
+exports.push([module.i, ".fill-heart:hover{\n  fill: #e53e3e;\n  color: #e53e3e;\n}\n.heart{\n  fill: #e53e3e;\n  color: #e53e3e;\n}\n", ""]);
 
 // exports
 
@@ -55090,23 +55136,26 @@ var render = function() {
             {
               staticClass:
                 "cursor-pointer m-4 flex items-center text-sm outline-none focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out",
-              attrs: { href: "/profile/" + _vm.nickName }
+              attrs: { href: "/profile/" + _vm.post.user.nick_name }
             },
             [
               _c("img", {
                 staticClass: "h-9 w-9 rounded-full object-cover",
-                attrs: { src: _vm.urlImage, alt: "Jusnito" }
+                attrs: {
+                  src: _vm.post.user.profile_photo_url,
+                  alt: _vm.post.user.nick_name
+                }
               }),
               _vm._v(" "),
               _c("div", [
                 _c("h2", { staticClass: "block ml-2 font-bold" }, [
-                  _vm._v(_vm._s(_vm.nickName))
+                  _vm._v(_vm._s(_vm.post.user.nick_name))
                 ]),
                 _vm._v(" "),
                 _c(
                   "span",
                   { staticClass: "block ml-2 text-xs text-gray-600" },
-                  [_vm._v(_vm._s(_vm.getDifferenceTime(_vm.publicationTime)))]
+                  [_vm._v(_vm._s(_vm.getDifferenceTime(_vm.post.created_at)))]
                 )
               ])
             ]
@@ -55126,36 +55175,75 @@ var render = function() {
       _c("div", { staticClass: "px-6 pt-4" }, [
         _c("div", { staticClass: "mb-2" }, [
           _c("div", { staticClass: "flex items-center" }, [
-            _c(
-              "span",
-              { staticClass: "mr-3 inline-flex items-center cursor-pointer" },
-              [
-                _c(
-                  "svg",
+            _vm.post.likes.find(function(u) {
+              return u.user_id === _vm.$page.user.id
+            })
+              ? _c(
+                  "span",
                   {
-                    staticClass:
-                      "fill-heart text-gray-700 inline-block h-7 w-7 ",
-                    attrs: {
-                      xmlns: "http://www.w3.org/2000/svg",
-                      fill: "none",
-                      viewBox: "0 0 24 24",
-                      stroke: "currentColor"
-                    }
+                    staticClass: "mr-3 inline-flex items-center cursor-pointer",
+                    on: { click: _vm.likeOrDislike }
                   },
                   [
-                    _c("path", {
-                      attrs: {
-                        "stroke-linecap": "round",
-                        "stroke-linejoin": "round",
-                        "stroke-width": "2",
-                        d:
-                          "M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                      }
-                    })
+                    _c(
+                      "svg",
+                      {
+                        staticClass:
+                          "fill-heart text-gray-700 inline-block h-7 w-7 heart",
+                        attrs: {
+                          xmlns: "http://www.w3.org/2000/svg",
+                          fill: "none",
+                          viewBox: "0 0 24 24",
+                          stroke: "currentColor"
+                        }
+                      },
+                      [
+                        _c("path", {
+                          attrs: {
+                            "stroke-linecap": "round",
+                            "stroke-linejoin": "round",
+                            "stroke-width": "2",
+                            d:
+                              "M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                          }
+                        })
+                      ]
+                    )
                   ]
                 )
-              ]
-            ),
+              : _c(
+                  "span",
+                  {
+                    staticClass: "mr-3 inline-flex items-center cursor-pointer",
+                    on: { click: _vm.likeOrDislike }
+                  },
+                  [
+                    _c(
+                      "svg",
+                      {
+                        staticClass:
+                          "fill-heart text-gray-700 inline-block h-7 w-7",
+                        attrs: {
+                          xmlns: "http://www.w3.org/2000/svg",
+                          fill: "none",
+                          viewBox: "0 0 24 24",
+                          stroke: "currentColor"
+                        }
+                      },
+                      [
+                        _c("path", {
+                          attrs: {
+                            "stroke-linecap": "round",
+                            "stroke-linejoin": "round",
+                            "stroke-width": "2",
+                            d:
+                              "M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                          }
+                        })
+                      ]
+                    )
+                  ]
+                ),
             _vm._v(" "),
             _c(
               "span",
@@ -55189,7 +55277,7 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("span", { staticClass: "text-gray-600 text-sm font-bold" }, [
-            _vm._v(_vm._s(_vm.likes) + " Me gusta")
+            _vm._v(_vm._s(_vm.post.countlikes) + " Me gusta")
           ])
         ]),
         _vm._v(" "),
@@ -55200,9 +55288,9 @@ var render = function() {
             _c("comment-post", {
               attrs: {
                 showUserImage: _vm.showUserImage,
-                comment: _vm.comment,
-                nickName: _vm.nickName,
-                urlImage: _vm.urlImage
+                comment: _vm.post.description,
+                nickName: _vm.post.user.nick_name,
+                urlImage: _vm.post.user.profile_photo_url
               }
             }),
             _vm._v(" "),
@@ -55213,7 +55301,11 @@ var render = function() {
                   "text-gray-400 text-sm cursor-pointer font-semibold",
                 on: { click: _vm.showModal }
               },
-              [_vm._v("ver los " + _vm._s(_vm.commentsnum) + " comentarios")]
+              [
+                _vm._v(
+                  "ver los " + _vm._s(_vm.post.countcomments) + " comentarios"
+                )
+              ]
             )
           ],
           1
@@ -56475,202 +56567,242 @@ var render = function() {
       staticStyle: { "background-color": "#fafafa" }
     },
     [
-      _c("nav", { staticClass: "bg-white border-b border-gray-300" }, [
-        _c("div", { staticClass: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" }, [
-          _c("div", { staticClass: "flex justify-between h-16" }, [
-            _vm._m(0),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "flex items-center relative" },
-              [
-                _c("dropdown", {
-                  attrs: {
-                    align: "center",
-                    width: "100",
-                    overflow: "overflow-y-auto",
-                    maxheight: "300"
-                  },
-                  scopedSlots: _vm._u([
-                    {
-                      key: "trigger",
-                      fn: function() {
-                        return [
-                          _c(
-                            "div",
-                            {
-                              staticClass:
-                                "relative rounded border border-gray-300"
-                            },
-                            [
-                              _c(
-                                "span",
-                                {
-                                  staticClass:
-                                    "absolute inset-y-0 left-0 flex items-center pl-1"
-                                },
-                                [
-                                  _c(
-                                    "svg",
+      _c(
+        "nav",
+        {
+          staticClass:
+            "bg-white border-b border-gray-300 fixed top-0 left-0 right-0"
+        },
+        [
+          _c("div", { staticClass: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" }, [
+            _c("div", { staticClass: "flex justify-between h-16" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "flex items-center relative" },
+                [
+                  _c("dropdown", {
+                    attrs: {
+                      align: "center",
+                      width: "100",
+                      overflow: "overflow-y-auto",
+                      maxheight: "300"
+                    },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "trigger",
+                        fn: function() {
+                          return [
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "relative rounded border border-gray-300"
+                              },
+                              [
+                                _c(
+                                  "span",
+                                  {
+                                    staticClass:
+                                      "absolute inset-y-0 left-0 flex items-center pl-1"
+                                  },
+                                  [
+                                    _c(
+                                      "svg",
+                                      {
+                                        staticClass: "w-5 h-5",
+                                        attrs: {
+                                          fill: "none",
+                                          stroke: "currentColor",
+                                          "stroke-linecap": "round",
+                                          "stroke-linejoin": "round",
+                                          "stroke-width": "2",
+                                          viewBox: "0 0 24 24"
+                                        }
+                                      },
+                                      [
+                                        _c("path", {
+                                          staticClass: "text-gray-400",
+                                          attrs: {
+                                            d:
+                                              "M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                                          }
+                                        })
+                                      ]
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
                                     {
-                                      staticClass: "w-5 h-5",
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.search,
+                                      expression: "search"
+                                    }
+                                  ],
+                                  staticClass:
+                                    "h-7 py-2 pr-2 pl-10 block w-full rounded-lg focus:outline-none text-gray-900",
+                                  staticStyle: {
+                                    "background-color": "#fafafa"
+                                  },
+                                  attrs: {
+                                    "aria-placeholder":
+                                      "Busca tus amigos o contacta nuevos",
+                                    placeholder: "Buscar",
+                                    type: "search",
+                                    required: ""
+                                  },
+                                  domProps: { value: _vm.search },
+                                  on: {
+                                    keyup: _vm.userSearch,
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.search = $event.target.value
+                                    }
+                                  }
+                                })
+                              ]
+                            )
+                          ]
+                        },
+                        proxy: true
+                      },
+                      {
+                        key: "content",
+                        fn: function() {
+                          return [
+                            _vm._l(_vm.users, function(user, index) {
+                              return _vm.users.length > 0
+                                ? _c(
+                                    "a",
+                                    {
+                                      key: index,
+                                      staticClass:
+                                        "block hover:bg-gray-100 text-xs text-gray-400 flex items-center py-2 px-3",
                                       attrs: {
-                                        fill: "none",
-                                        stroke: "currentColor",
-                                        "stroke-linecap": "round",
-                                        "stroke-linejoin": "round",
-                                        "stroke-width": "2",
-                                        viewBox: "0 0 24 24"
+                                        href: "/profile/" + user.nick_name
                                       }
                                     },
                                     [
-                                      _c("path", {
-                                        staticClass: "text-gray-400",
+                                      _c("img", {
+                                        staticClass:
+                                          "w-9 h-9 object-cover rounded-full",
                                         attrs: {
-                                          d:
-                                            "M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                                          src: user.profile_photo_url,
+                                          alt: user.name
                                         }
-                                      })
+                                      }),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "ml-2" }, [
+                                        _c(
+                                          "h1",
+                                          {
+                                            staticClass:
+                                              "block leading-relaxed font-bold text-gray-700 text-sm"
+                                          },
+                                          [_vm._v(" " + _vm._s(user.nick_name))]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "h2",
+                                          {
+                                            staticClass:
+                                              "text-sm font-light text-gray-400"
+                                          },
+                                          [_vm._v(_vm._s(user.name))]
+                                        )
+                                      ])
                                     ]
                                   )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.search,
-                                    expression: "search"
-                                  }
-                                ],
-                                staticClass:
-                                  "h-7 py-2 pr-2 pl-10 block w-full rounded-lg focus:outline-none text-gray-900",
-                                staticStyle: { "background-color": "#fafafa" },
-                                attrs: {
-                                  "aria-placeholder":
-                                    "Busca tus amigos o contacta nuevos",
-                                  placeholder: "Buscar",
-                                  type: "search",
-                                  required: ""
-                                },
-                                domProps: { value: _vm.search },
-                                on: {
-                                  keyup: _vm.userSearch,
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.search = $event.target.value
-                                  }
-                                }
-                              })
-                            ]
-                          )
-                        ]
-                      },
-                      proxy: true
-                    },
-                    {
-                      key: "content",
-                      fn: function() {
-                        return [
-                          _vm._l(_vm.users, function(user, index) {
-                            return _vm.users.length > 0
+                                : _vm._e()
+                            }),
+                            _vm._v(" "),
+                            _vm.search == ""
                               ? _c(
-                                  "a",
+                                  "div",
                                   {
-                                    key: index,
-                                    staticClass:
-                                      "block hover:bg-gray-100 text-xs text-gray-400 flex items-center py-2 px-3",
-                                    attrs: {
-                                      href: "/profile/" + user.nick_name
-                                    }
+                                    staticClass: "flex items-center py-2 px-3"
                                   },
                                   [
-                                    _c("img", {
-                                      staticClass:
-                                        "w-9 h-9 object-cover rounded-full",
-                                      attrs: {
-                                        src: user.profile_photo_url,
-                                        alt: user.name
-                                      }
-                                    }),
-                                    _vm._v(" "),
-                                    _c("div", { staticClass: "ml-2" }, [
-                                      _c(
-                                        "h1",
-                                        {
-                                          staticClass:
-                                            "block leading-relaxed font-bold text-gray-700 text-sm"
-                                        },
-                                        [_vm._v(" " + _vm._s(user.nick_name))]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "h2",
-                                        {
-                                          staticClass:
-                                            "text-sm font-light text-gray-400"
-                                        },
-                                        [_vm._v(_vm._s(user.name))]
-                                      )
-                                    ])
+                                    _c(
+                                      "h2",
+                                      {
+                                        staticClass:
+                                          "text-sm font-light text-gray-400"
+                                      },
+                                      [_vm._v("Busca a tus amigos...")]
+                                    )
+                                  ]
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            !_vm.accountexists
+                              ? _c(
+                                  "div",
+                                  {
+                                    staticClass: "flex items-center py-2 px-3"
+                                  },
+                                  [
+                                    _c(
+                                      "h2",
+                                      {
+                                        staticClass:
+                                          "text-sm font-light text-gray-400"
+                                      },
+                                      [_vm._v("No existe una cuenta")]
+                                    )
                                   ]
                                 )
                               : _vm._e()
-                          }),
-                          _vm._v(" "),
-                          _vm.search == ""
-                            ? _c(
-                                "div",
-                                { staticClass: "flex items-center py-2 px-3" },
-                                [
-                                  _c(
-                                    "h2",
-                                    {
-                                      staticClass:
-                                        "text-sm font-light text-gray-400"
-                                    },
-                                    [_vm._v("Busca a tus amigos...")]
-                                  )
-                                ]
-                              )
-                            : _vm._e(),
-                          _vm._v(" "),
-                          !_vm.accountexists
-                            ? _c(
-                                "div",
-                                { staticClass: "flex items-center py-2 px-3" },
-                                [
-                                  _c(
-                                    "h2",
-                                    {
-                                      staticClass:
-                                        "text-sm font-light text-gray-400"
-                                    },
-                                    [_vm._v("No existe una cuenta")]
-                                  )
-                                ]
-                              )
-                            : _vm._e()
+                          ]
+                        },
+                        proxy: true
+                      }
+                    ])
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "hidden sm:flex sm:items-center sm:ml-6" },
+                [
+                  _c("div", { staticClass: "mr-3" }, [
+                    _c("a", { attrs: { href: "/dashboard" } }, [
+                      _c(
+                        "svg",
+                        {
+                          staticClass: "w-6 h-6 cursor-pointer",
+                          attrs: {
+                            xmlns: "http://www.w3.org/2000/svg",
+                            fill: "none",
+                            viewBox: "0 0 24 24",
+                            stroke: "currentColor"
+                          }
+                        },
+                        [
+                          _c("path", {
+                            staticClass: "text-gray-600",
+                            attrs: {
+                              "stroke-linecap": "round",
+                              "stroke-linejoin": "round",
+                              "stroke-width": "1.5",
+                              d:
+                                "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                            }
+                          })
                         ]
-                      },
-                      proxy: true
-                    }
-                  ])
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "hidden sm:flex sm:items-center sm:ml-6" },
-              [
-                _c("div", { staticClass: "mr-3" }, [
-                  _c("a", { attrs: { href: "/dashboard" } }, [
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "mr-3" }, [
                     _c(
                       "svg",
                       {
@@ -56690,313 +56822,593 @@ var render = function() {
                             "stroke-linejoin": "round",
                             "stroke-width": "1.5",
                             d:
-                              "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                              "M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
                           }
                         })
                       ]
                     )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "mr-3" }, [
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "mr-3" }, [
+                    _c("a", { attrs: { href: "/user-chats" } }, [
+                      _c(
+                        "svg",
+                        {
+                          staticClass: "w-6 h-6 cursor-pointer",
+                          attrs: {
+                            xmlns: "http://www.w3.org/2000/svg",
+                            fill: "none",
+                            viewBox: "0 0 24 24",
+                            stroke: "currentColor"
+                          }
+                        },
+                        [
+                          _c("path", {
+                            staticClass: "text-gray-600",
+                            attrs: {
+                              "stroke-linecap": "round",
+                              "stroke-linejoin": "round",
+                              "stroke-width": "2",
+                              d: "M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                            }
+                          })
+                        ]
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
                   _c(
-                    "svg",
-                    {
-                      staticClass: "w-6 h-6 cursor-pointer",
-                      attrs: {
-                        xmlns: "http://www.w3.org/2000/svg",
-                        fill: "none",
-                        viewBox: "0 0 24 24",
-                        stroke: "currentColor"
-                      }
-                    },
+                    "div",
+                    { staticClass: "ml-3 relative" },
                     [
-                      _c("path", {
-                        staticClass: "text-gray-600",
-                        attrs: {
-                          "stroke-linecap": "round",
-                          "stroke-linejoin": "round",
-                          "stroke-width": "1.5",
-                          d:
-                            "M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                        }
+                      _c("dropdown", {
+                        attrs: { align: "right", width: "48" },
+                        scopedSlots: _vm._u([
+                          {
+                            key: "trigger",
+                            fn: function() {
+                              return [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass:
+                                      "flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out"
+                                  },
+                                  [
+                                    _c("img", {
+                                      staticClass:
+                                        "h-8 w-8 rounded-full object-cover",
+                                      attrs: {
+                                        src: _vm.$page.user.profile_photo_url,
+                                        alt: _vm.$page.user.name
+                                      }
+                                    })
+                                  ]
+                                )
+                              ]
+                            },
+                            proxy: true
+                          },
+                          {
+                            key: "content",
+                            fn: function() {
+                              return [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "block px-4 py-2 text-xs text-gray-400"
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                    Cuenta\n                                "
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "jet-dropdown-link",
+                                  {
+                                    attrs: {
+                                      href:
+                                        "/profile/" + _vm.$page.user.nick_name
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                    Perfil\n                                "
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "jet-dropdown-link",
+                                  { attrs: { href: "/user/profile" } },
+                                  [
+                                    _vm._v(
+                                      "\n                                    Configuración\n                                "
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _vm.$page.jetstream.hasApiFeatures
+                                  ? _c(
+                                      "jet-dropdown-link",
+                                      { attrs: { href: "/user/api-tokens" } },
+                                      [
+                                        _vm._v(
+                                          "\n                                    API Tokens\n                                "
+                                        )
+                                      ]
+                                    )
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _c("div", {
+                                  staticClass: "border-t border-gray-100"
+                                }),
+                                _vm._v(" "),
+                                _vm.$page.jetstream.hasTeamFeatures
+                                  ? [
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "block px-4 py-2 text-xs text-gray-400"
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                        Manage Team\n                                    "
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "jet-dropdown-link",
+                                        {
+                                          attrs: {
+                                            href:
+                                              "/teams/" +
+                                              _vm.$page.user.current_team_id
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                        Team Settings\n                                    "
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _vm.$page.jetstream.canCreateTeams
+                                        ? _c(
+                                            "jet-dropdown-link",
+                                            {
+                                              attrs: { href: "/teams/create" }
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n                                        Create New Team\n                                    "
+                                              )
+                                            ]
+                                          )
+                                        : _vm._e(),
+                                      _vm._v(" "),
+                                      _c("div", {
+                                        staticClass: "border-t border-gray-100"
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "block px-4 py-2 text-xs text-gray-400"
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                        Switch Teams\n                                    "
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _vm._l(_vm.$page.user.all_teams, function(
+                                        team
+                                      ) {
+                                        return [
+                                          _c(
+                                            "form",
+                                            {
+                                              on: {
+                                                submit: function($event) {
+                                                  $event.preventDefault()
+                                                  return _vm.switchToTeam(team)
+                                                }
+                                              }
+                                            },
+                                            [
+                                              _c(
+                                                "jet-dropdown-link",
+                                                { attrs: { as: "button" } },
+                                                [
+                                                  _c(
+                                                    "div",
+                                                    {
+                                                      staticClass:
+                                                        "flex items-center"
+                                                    },
+                                                    [
+                                                      team.id ==
+                                                      _vm.$page.user
+                                                        .current_team_id
+                                                        ? _c(
+                                                            "svg",
+                                                            {
+                                                              staticClass:
+                                                                "mr-2 h-5 w-5 text-green-400",
+                                                              attrs: {
+                                                                fill: "none",
+                                                                "stroke-linecap":
+                                                                  "round",
+                                                                "stroke-linejoin":
+                                                                  "round",
+                                                                "stroke-width":
+                                                                  "2",
+                                                                stroke:
+                                                                  "currentColor",
+                                                                viewBox:
+                                                                  "0 0 24 24"
+                                                              }
+                                                            },
+                                                            [
+                                                              _c("path", {
+                                                                attrs: {
+                                                                  d:
+                                                                    "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                                                                }
+                                                              })
+                                                            ]
+                                                          )
+                                                        : _vm._e(),
+                                                      _vm._v(" "),
+                                                      _c("div", [
+                                                        _vm._v(
+                                                          _vm._s(team.name)
+                                                        )
+                                                      ])
+                                                    ]
+                                                  )
+                                                ]
+                                              )
+                                            ],
+                                            1
+                                          )
+                                        ]
+                                      }),
+                                      _vm._v(" "),
+                                      _c("div", {
+                                        staticClass: "border-t border-gray-100"
+                                      })
+                                    ]
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _c(
+                                  "form",
+                                  {
+                                    on: {
+                                      submit: function($event) {
+                                        $event.preventDefault()
+                                        return _vm.logout($event)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c(
+                                      "jet-dropdown-link",
+                                      { attrs: { as: "button" } },
+                                      [
+                                        _vm._v(
+                                          "\n                                        Logout\n                                    "
+                                        )
+                                      ]
+                                    )
+                                  ],
+                                  1
+                                )
+                              ]
+                            },
+                            proxy: true
+                          }
+                        ])
                       })
-                    ]
+                    ],
+                    1
                   )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "mr-3" }, [
-                  _c("a", { attrs: { href: "/user-chats" } }, [
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "-mr-2 flex items-center sm:hidden" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out",
+                    on: {
+                      click: function($event) {
+                        _vm.showingNavigationDropdown = !_vm.showingNavigationDropdown
+                      }
+                    }
+                  },
+                  [
                     _c(
                       "svg",
                       {
-                        staticClass: "w-6 h-6 cursor-pointer",
+                        staticClass: "h-6 w-6",
                         attrs: {
-                          xmlns: "http://www.w3.org/2000/svg",
+                          stroke: "currentColor",
                           fill: "none",
-                          viewBox: "0 0 24 24",
-                          stroke: "currentColor"
+                          viewBox: "0 0 24 24"
                         }
                       },
                       [
                         _c("path", {
-                          staticClass: "text-gray-600",
+                          class: {
+                            hidden: _vm.showingNavigationDropdown,
+                            "inline-flex": !_vm.showingNavigationDropdown
+                          },
                           attrs: {
                             "stroke-linecap": "round",
                             "stroke-linejoin": "round",
                             "stroke-width": "2",
-                            d: "M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                            d: "M4 6h16M4 12h16M4 18h16"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("path", {
+                          class: {
+                            hidden: !_vm.showingNavigationDropdown,
+                            "inline-flex": _vm.showingNavigationDropdown
+                          },
+                          attrs: {
+                            "stroke-linecap": "round",
+                            "stroke-linejoin": "round",
+                            "stroke-width": "2",
+                            d: "M6 18L18 6M6 6l12 12"
                           }
                         })
                       ]
+                    )
+                  ]
+                )
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "sm:hidden",
+              class: {
+                block: _vm.showingNavigationDropdown,
+                hidden: !_vm.showingNavigationDropdown
+              }
+            },
+            [
+              _c("div", { staticClass: "pt-4 pb-1 border-t border-gray-200" }, [
+                _c("div", { staticClass: "flex items-center px-4" }, [
+                  _c("div", { staticClass: "flex-shrink-0" }, [
+                    _c("img", {
+                      staticClass: "h-10 w-10 rounded-full",
+                      attrs: {
+                        src: _vm.$page.user.profile_photo_url,
+                        alt: _vm.$page.user.name
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "ml-3" }, [
+                    _c(
+                      "div",
+                      { staticClass: "font-medium text-base text-gray-800" },
+                      [_vm._v(_vm._s(_vm.$page.user.name))]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "font-medium text-sm text-gray-500" },
+                      [_vm._v(_vm._s(_vm.$page.user.email))]
                     )
                   ])
                 ]),
                 _vm._v(" "),
                 _c(
                   "div",
-                  { staticClass: "ml-3 relative" },
+                  { staticClass: "mt-3 space-y-1" },
                   [
-                    _c("dropdown", {
-                      attrs: { align: "right", width: "48" },
-                      scopedSlots: _vm._u([
-                        {
-                          key: "trigger",
-                          fn: function() {
-                            return [
-                              _c(
-                                "button",
-                                {
-                                  staticClass:
-                                    "flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out"
-                                },
-                                [
-                                  _c("img", {
-                                    staticClass:
-                                      "h-8 w-8 rounded-full object-cover",
-                                    attrs: {
-                                      src: _vm.$page.user.profile_photo_url,
-                                      alt: _vm.$page.user.name
-                                    }
-                                  })
-                                ]
+                    _c(
+                      "jet-responsive-nav-link",
+                      {
+                        attrs: {
+                          href: "/profile/" + _vm.$page.user.nick_name,
+                          active: _vm.$page.currentRouteName == "profile.show"
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "\n                        Perfil\n                    "
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "jet-dropdown-link",
+                      { attrs: { href: "/user/profile" } },
+                      [
+                        _vm._v(
+                          "\n                        Configuración\n                    "
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _vm.$page.jetstream.hasApiFeatures
+                      ? _c(
+                          "jet-responsive-nav-link",
+                          {
+                            attrs: {
+                              href: "/user/api-tokens",
+                              active:
+                                _vm.$page.currentRouteName == "api-tokens.index"
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                        API Tokens\n                    "
+                            )
+                          ]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c(
+                      "form",
+                      {
+                        attrs: { method: "POST" },
+                        on: {
+                          submit: function($event) {
+                            $event.preventDefault()
+                            return _vm.logout($event)
+                          }
+                        }
+                      },
+                      [
+                        _c(
+                          "jet-responsive-nav-link",
+                          { attrs: { as: "button" } },
+                          [
+                            _vm._v(
+                              "\n                            Logout\n                        "
+                            )
+                          ]
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _vm.$page.jetstream.hasTeamFeatures
+                      ? [
+                          _c("div", {
+                            staticClass: "border-t border-gray-200"
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "block px-4 py-2 text-xs text-gray-400"
+                            },
+                            [
+                              _vm._v(
+                                "\n                            Manage Team\n                        "
                               )
                             ]
-                          },
-                          proxy: true
-                        },
-                        {
-                          key: "content",
-                          fn: function() {
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "jet-responsive-nav-link",
+                            {
+                              attrs: {
+                                href:
+                                  "/teams/" + _vm.$page.user.current_team_id,
+                                active:
+                                  _vm.$page.currentRouteName == "teams.show"
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                            Team Settings\n                        "
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "jet-responsive-nav-link",
+                            {
+                              attrs: {
+                                href: "/teams/create",
+                                active:
+                                  _vm.$page.currentRouteName == "teams.create"
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                            Create New Team\n                        "
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c("div", {
+                            staticClass: "border-t border-gray-200"
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "block px-4 py-2 text-xs text-gray-400"
+                            },
+                            [
+                              _vm._v(
+                                "\n                            Switch Teams\n                        "
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _vm._l(_vm.$page.user.all_teams, function(team) {
                             return [
-                              _c(
-                                "div",
-                                {
-                                  staticClass:
-                                    "block px-4 py-2 text-xs text-gray-400"
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                                    Cuenta\n                                "
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "jet-dropdown-link",
-                                {
-                                  attrs: {
-                                    href: "/profile/" + _vm.$page.user.nick_name
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                                    Perfil\n                                "
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "jet-dropdown-link",
-                                { attrs: { href: "/user/profile" } },
-                                [
-                                  _vm._v(
-                                    "\n                                    Configuración\n                                "
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _vm.$page.jetstream.hasApiFeatures
-                                ? _c(
-                                    "jet-dropdown-link",
-                                    { attrs: { href: "/user/api-tokens" } },
-                                    [
-                                      _vm._v(
-                                        "\n                                    API Tokens\n                                "
-                                      )
-                                    ]
-                                  )
-                                : _vm._e(),
-                              _vm._v(" "),
-                              _c("div", {
-                                staticClass: "border-t border-gray-100"
-                              }),
-                              _vm._v(" "),
-                              _vm.$page.jetstream.hasTeamFeatures
-                                ? [
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "block px-4 py-2 text-xs text-gray-400"
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n                                        Manage Team\n                                    "
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "jet-dropdown-link",
-                                      {
-                                        attrs: {
-                                          href:
-                                            "/teams/" +
-                                            _vm.$page.user.current_team_id
-                                        }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n                                        Team Settings\n                                    "
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _vm.$page.jetstream.canCreateTeams
-                                      ? _c(
-                                          "jet-dropdown-link",
-                                          { attrs: { href: "/teams/create" } },
-                                          [
-                                            _vm._v(
-                                              "\n                                        Create New Team\n                                    "
-                                            )
-                                          ]
-                                        )
-                                      : _vm._e(),
-                                    _vm._v(" "),
-                                    _c("div", {
-                                      staticClass: "border-t border-gray-100"
-                                    }),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "block px-4 py-2 text-xs text-gray-400"
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n                                        Switch Teams\n                                    "
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _vm._l(_vm.$page.user.all_teams, function(
-                                      team
-                                    ) {
-                                      return [
-                                        _c(
-                                          "form",
-                                          {
-                                            on: {
-                                              submit: function($event) {
-                                                $event.preventDefault()
-                                                return _vm.switchToTeam(team)
-                                              }
-                                            }
-                                          },
-                                          [
-                                            _c(
-                                              "jet-dropdown-link",
-                                              { attrs: { as: "button" } },
-                                              [
-                                                _c(
-                                                  "div",
-                                                  {
-                                                    staticClass:
-                                                      "flex items-center"
-                                                  },
-                                                  [
-                                                    team.id ==
-                                                    _vm.$page.user
-                                                      .current_team_id
-                                                      ? _c(
-                                                          "svg",
-                                                          {
-                                                            staticClass:
-                                                              "mr-2 h-5 w-5 text-green-400",
-                                                            attrs: {
-                                                              fill: "none",
-                                                              "stroke-linecap":
-                                                                "round",
-                                                              "stroke-linejoin":
-                                                                "round",
-                                                              "stroke-width":
-                                                                "2",
-                                                              stroke:
-                                                                "currentColor",
-                                                              viewBox:
-                                                                "0 0 24 24"
-                                                            }
-                                                          },
-                                                          [
-                                                            _c("path", {
-                                                              attrs: {
-                                                                d:
-                                                                  "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                                                              }
-                                                            })
-                                                          ]
-                                                        )
-                                                      : _vm._e(),
-                                                    _vm._v(" "),
-                                                    _c("div", [
-                                                      _vm._v(_vm._s(team.name))
-                                                    ])
-                                                  ]
-                                                )
-                                              ]
-                                            )
-                                          ],
-                                          1
-                                        )
-                                      ]
-                                    }),
-                                    _vm._v(" "),
-                                    _c("div", {
-                                      staticClass: "border-t border-gray-100"
-                                    })
-                                  ]
-                                : _vm._e(),
-                              _vm._v(" "),
                               _c(
                                 "form",
                                 {
                                   on: {
                                     submit: function($event) {
                                       $event.preventDefault()
-                                      return _vm.logout($event)
+                                      return _vm.switchToTeam(team)
                                     }
                                   }
                                 },
                                 [
                                   _c(
-                                    "jet-dropdown-link",
+                                    "jet-responsive-nav-link",
                                     { attrs: { as: "button" } },
                                     [
-                                      _vm._v(
-                                        "\n                                        Logout\n                                    "
+                                      _c(
+                                        "div",
+                                        { staticClass: "flex items-center" },
+                                        [
+                                          team.id ==
+                                          _vm.$page.user.current_team_id
+                                            ? _c(
+                                                "svg",
+                                                {
+                                                  staticClass:
+                                                    "mr-2 h-5 w-5 text-green-400",
+                                                  attrs: {
+                                                    fill: "none",
+                                                    "stroke-linecap": "round",
+                                                    "stroke-linejoin": "round",
+                                                    "stroke-width": "2",
+                                                    stroke: "currentColor",
+                                                    viewBox: "0 0 24 24"
+                                                  }
+                                                },
+                                                [
+                                                  _c("path", {
+                                                    attrs: {
+                                                      d:
+                                                        "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                                                    }
+                                                  })
+                                                ]
+                                              )
+                                            : _vm._e(),
+                                          _vm._v(" "),
+                                          _c("div", [_vm._v(_vm._s(team.name))])
+                                        ]
                                       )
                                     ]
                                   )
@@ -57004,314 +57416,20 @@ var render = function() {
                                 1
                               )
                             ]
-                          },
-                          proxy: true
-                        }
-                      ])
-                    })
+                          })
+                        ]
+                      : _vm._e()
                   ],
-                  1
+                  2
                 )
-              ]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "-mr-2 flex items-center sm:hidden" }, [
-              _c(
-                "button",
-                {
-                  staticClass:
-                    "inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out",
-                  on: {
-                    click: function($event) {
-                      _vm.showingNavigationDropdown = !_vm.showingNavigationDropdown
-                    }
-                  }
-                },
-                [
-                  _c(
-                    "svg",
-                    {
-                      staticClass: "h-6 w-6",
-                      attrs: {
-                        stroke: "currentColor",
-                        fill: "none",
-                        viewBox: "0 0 24 24"
-                      }
-                    },
-                    [
-                      _c("path", {
-                        class: {
-                          hidden: _vm.showingNavigationDropdown,
-                          "inline-flex": !_vm.showingNavigationDropdown
-                        },
-                        attrs: {
-                          "stroke-linecap": "round",
-                          "stroke-linejoin": "round",
-                          "stroke-width": "2",
-                          d: "M4 6h16M4 12h16M4 18h16"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("path", {
-                        class: {
-                          hidden: !_vm.showingNavigationDropdown,
-                          "inline-flex": _vm.showingNavigationDropdown
-                        },
-                        attrs: {
-                          "stroke-linecap": "round",
-                          "stroke-linejoin": "round",
-                          "stroke-width": "2",
-                          d: "M6 18L18 6M6 6l12 12"
-                        }
-                      })
-                    ]
-                  )
-                ]
-              )
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass: "sm:hidden",
-            class: {
-              block: _vm.showingNavigationDropdown,
-              hidden: !_vm.showingNavigationDropdown
-            }
-          },
-          [
-            _c("div", { staticClass: "pt-4 pb-1 border-t border-gray-200" }, [
-              _c("div", { staticClass: "flex items-center px-4" }, [
-                _c("div", { staticClass: "flex-shrink-0" }, [
-                  _c("img", {
-                    staticClass: "h-10 w-10 rounded-full",
-                    attrs: {
-                      src: _vm.$page.user.profile_photo_url,
-                      alt: _vm.$page.user.name
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "ml-3" }, [
-                  _c(
-                    "div",
-                    { staticClass: "font-medium text-base text-gray-800" },
-                    [_vm._v(_vm._s(_vm.$page.user.name))]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "font-medium text-sm text-gray-500" },
-                    [_vm._v(_vm._s(_vm.$page.user.email))]
-                  )
-                ])
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "mt-3 space-y-1" },
-                [
-                  _c(
-                    "jet-responsive-nav-link",
-                    {
-                      attrs: {
-                        href: "/profile/" + _vm.$page.user.nick_name,
-                        active: _vm.$page.currentRouteName == "profile.show"
-                      }
-                    },
-                    [
-                      _vm._v(
-                        "\n                        Perfil\n                    "
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "jet-dropdown-link",
-                    { attrs: { href: "/user/profile" } },
-                    [
-                      _vm._v(
-                        "\n                        Configuración\n                    "
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _vm.$page.jetstream.hasApiFeatures
-                    ? _c(
-                        "jet-responsive-nav-link",
-                        {
-                          attrs: {
-                            href: "/user/api-tokens",
-                            active:
-                              _vm.$page.currentRouteName == "api-tokens.index"
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "\n                        API Tokens\n                    "
-                          )
-                        ]
-                      )
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _c(
-                    "form",
-                    {
-                      attrs: { method: "POST" },
-                      on: {
-                        submit: function($event) {
-                          $event.preventDefault()
-                          return _vm.logout($event)
-                        }
-                      }
-                    },
-                    [
-                      _c(
-                        "jet-responsive-nav-link",
-                        { attrs: { as: "button" } },
-                        [
-                          _vm._v(
-                            "\n                            Logout\n                        "
-                          )
-                        ]
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _vm.$page.jetstream.hasTeamFeatures
-                    ? [
-                        _c("div", { staticClass: "border-t border-gray-200" }),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            staticClass: "block px-4 py-2 text-xs text-gray-400"
-                          },
-                          [
-                            _vm._v(
-                              "\n                            Manage Team\n                        "
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "jet-responsive-nav-link",
-                          {
-                            attrs: {
-                              href: "/teams/" + _vm.$page.user.current_team_id,
-                              active: _vm.$page.currentRouteName == "teams.show"
-                            }
-                          },
-                          [
-                            _vm._v(
-                              "\n                            Team Settings\n                        "
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "jet-responsive-nav-link",
-                          {
-                            attrs: {
-                              href: "/teams/create",
-                              active:
-                                _vm.$page.currentRouteName == "teams.create"
-                            }
-                          },
-                          [
-                            _vm._v(
-                              "\n                            Create New Team\n                        "
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "border-t border-gray-200" }),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            staticClass: "block px-4 py-2 text-xs text-gray-400"
-                          },
-                          [
-                            _vm._v(
-                              "\n                            Switch Teams\n                        "
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _vm._l(_vm.$page.user.all_teams, function(team) {
-                          return [
-                            _c(
-                              "form",
-                              {
-                                on: {
-                                  submit: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.switchToTeam(team)
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "jet-responsive-nav-link",
-                                  { attrs: { as: "button" } },
-                                  [
-                                    _c(
-                                      "div",
-                                      { staticClass: "flex items-center" },
-                                      [
-                                        team.id ==
-                                        _vm.$page.user.current_team_id
-                                          ? _c(
-                                              "svg",
-                                              {
-                                                staticClass:
-                                                  "mr-2 h-5 w-5 text-green-400",
-                                                attrs: {
-                                                  fill: "none",
-                                                  "stroke-linecap": "round",
-                                                  "stroke-linejoin": "round",
-                                                  "stroke-width": "2",
-                                                  stroke: "currentColor",
-                                                  viewBox: "0 0 24 24"
-                                                }
-                                              },
-                                              [
-                                                _c("path", {
-                                                  attrs: {
-                                                    d:
-                                                      "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                                                  }
-                                                })
-                                              ]
-                                            )
-                                          : _vm._e(),
-                                        _vm._v(" "),
-                                        _c("div", [_vm._v(_vm._s(team.name))])
-                                      ]
-                                    )
-                                  ]
-                                )
-                              ],
-                              1
-                            )
-                          ]
-                        })
-                      ]
-                    : _vm._e()
-                ],
-                2
-              )
-            ])
-          ]
-        )
-      ]),
+              ])
+            ]
+          )
+        ]
+      ),
       _vm._v(" "),
       _c("main", [
-        _c("div", { staticClass: "py-12" }, [
+        _c("div", { staticClass: "py-24" }, [
           _c(
             "div",
             { staticClass: "max-w-7xl min-w-7xl mx-auto sm:px-6 lg:px-8" },
@@ -61490,14 +61608,7 @@ var render = function() {
         return _vm.posts.length > 0
           ? _c("post-component", {
               key: index,
-              attrs: {
-                nickName: post.user.nick_name,
-                likes: post.countlikes,
-                commentsnum: post.countcomments,
-                comment: post.description,
-                urlImage: post.user.profile_photo_url,
-                publicationTime: post.created_at
-              },
+              attrs: { post: post },
               on: { show: _vm.changeStateShow }
             })
           : _c("div", { staticClass: "text-3xl" }, [
