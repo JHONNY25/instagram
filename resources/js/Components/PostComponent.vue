@@ -69,7 +69,7 @@
         },
         methods: {
             showModal(){
-                this.$emit('show')
+                this.$emit('show',this.post)
             },
             getDifferenceTime(date){
                 return moment(date).toNow(true);
