@@ -6,7 +6,7 @@
                     <img :src="post.user.profile_photo_url" class="h-9 w-9 rounded-full object-cover"
                     :alt="post.user.nick_name" />
                     <div>
-                        <h2 class="block ml-2 font-bold">{{ post.user.nick_name }}</h2>
+                        <p class="block ml-2 font-bold">{{ post.user.nick_name }}</p>
                         <span class="block ml-2 text-xs text-gray-600">{{ getDifferenceTime(post.created_at) }}</span>
                     </div>
                 </a>
