@@ -2143,6 +2143,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -55313,12 +55330,12 @@ var render = function() {
     },
     [
       _c("div", { staticClass: "bg-white overflow-hidden shadow-none" }, [
-        _c("div", { staticClass: "flex" }, [
+        _c("div", { staticClass: "grid grid-cols-3 min-w-full" }, [
           _c(
             "div",
             {
               staticClass:
-                "max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl"
+                "col-span-2 max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl"
             },
             [
               _c("img", {
@@ -55332,10 +55349,72 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
-          _c("div", [
+          _c("div", { staticClass: "col-span-1 relative" }, [
+            _c(
+              "header",
+              { staticClass: "flex items-center border-b border-grey-400" },
+              [
+                _c(
+                  "a",
+                  {
+                    staticClass:
+                      "block cursor-pointer py-4 flex items-center text-sm outline-none focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out",
+                    attrs: { href: "/profile/" + _vm.post.user.nick_name }
+                  },
+                  [
+                    _c("img", {
+                      staticClass: "h-9 w-9 rounded-full object-cover",
+                      attrs: {
+                        src: _vm.post.user.profile_photo_url,
+                        alt: _vm.post.user.nick_name
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "block ml-2 font-bold" }, [
+                      _vm._v(_vm._s(_vm.post.user.nick_name))
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "flex items-center ml-3 border border-blue-600 rounded outline-none focus:outline-none bg-transparent text-blue-600 text-sm py-1 px-2"
+                  },
+                  [
+                    _c("span", { staticClass: "block" }, [_vm._v("Siguiendo")]),
+                    _vm._v(" "),
+                    _c(
+                      "svg",
+                      {
+                        staticClass: "block h-5 w-5 pl-1",
+                        attrs: {
+                          xmlns: "http://www.w3.org/2000/svg",
+                          fill: "none",
+                          viewBox: "0 0 24 24",
+                          stroke: "currentColor"
+                        }
+                      },
+                      [
+                        _c("path", {
+                          attrs: {
+                            "stroke-linecap": "round",
+                            "stroke-linejoin": "round",
+                            "stroke-width": "2",
+                            d: "M5 13l4 4L19 7"
+                          }
+                        })
+                      ]
+                    )
+                  ]
+                )
+              ]
+            ),
+            _vm._v(" "),
             _c(
               "div",
-              { staticClass: "px-6 pt-4" },
+              { staticClass: "pt-1" },
               [
                 _c("comment-post", {
                   attrs: {
@@ -55349,158 +55428,171 @@ var render = function() {
               1
             ),
             _vm._v(" "),
-            _c("div", { staticClass: "h-2/4 overflow-y-auto" }, [
+            _c("div", { staticClass: "h-1/3 overflow-y-auto" }, [
               _vm._v("\n                    comentarios\n                ")
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "px-6 pt-4" }, [
-              _c("div", { staticClass: "mb-2" }, [
-                _c("div", { staticClass: "flex items-center" }, [
-                  _vm.post.likes.find(function(u) {
-                    return u.user_id === _vm.$page.user.id
-                  })
-                    ? _c(
-                        "span",
-                        {
-                          staticClass:
-                            "mr-3 inline-flex items-center cursor-pointer",
-                          on: { click: _vm.likeOrDislike }
-                        },
-                        [
-                          _c(
-                            "svg",
-                            {
-                              staticClass:
-                                "fill-heart text-gray-700 inline-block h-7 w-7 heart",
-                              attrs: {
-                                xmlns: "http://www.w3.org/2000/svg",
-                                fill: "none",
-                                viewBox: "0 0 24 24",
-                                stroke: "currentColor"
-                              }
-                            },
-                            [
-                              _c("path", {
+            _c("div", { staticClass: "absolute bottom-0 left-0 right-0" }, [
+              _c("div", { staticClass: "pt-4" }, [
+                _c("div", { staticClass: "mb-2" }, [
+                  _c("div", { staticClass: "flex items-center" }, [
+                    _vm.post.likes.find(function(u) {
+                      return u.user_id === _vm.$page.user.id
+                    })
+                      ? _c(
+                          "span",
+                          {
+                            staticClass:
+                              "mr-3 inline-flex items-center cursor-pointer",
+                            on: { click: _vm.likeOrDislike }
+                          },
+                          [
+                            _c(
+                              "svg",
+                              {
+                                staticClass:
+                                  "fill-heart text-gray-700 inline-block h-7 w-7 heart",
                                 attrs: {
-                                  "stroke-linecap": "round",
-                                  "stroke-linejoin": "round",
-                                  "stroke-width": "2",
-                                  d:
-                                    "M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                                  xmlns: "http://www.w3.org/2000/svg",
+                                  fill: "none",
+                                  viewBox: "0 0 24 24",
+                                  stroke: "currentColor"
                                 }
-                              })
-                            ]
-                          )
-                        ]
-                      )
-                    : _c(
-                        "span",
-                        {
-                          staticClass:
-                            "mr-3 inline-flex items-center cursor-pointer",
-                          on: { click: _vm.likeOrDislike }
-                        },
-                        [
-                          _c(
-                            "svg",
-                            {
-                              staticClass:
-                                "fill-heart text-gray-700 inline-block h-7 w-7",
-                              attrs: {
-                                xmlns: "http://www.w3.org/2000/svg",
-                                fill: "none",
-                                viewBox: "0 0 24 24",
-                                stroke: "currentColor"
-                              }
-                            },
-                            [
-                              _c("path", {
+                              },
+                              [
+                                _c("path", {
+                                  attrs: {
+                                    "stroke-linecap": "round",
+                                    "stroke-linejoin": "round",
+                                    "stroke-width": "2",
+                                    d:
+                                      "M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                                  }
+                                })
+                              ]
+                            )
+                          ]
+                        )
+                      : _c(
+                          "span",
+                          {
+                            staticClass:
+                              "mr-3 inline-flex items-center cursor-pointer",
+                            on: { click: _vm.likeOrDislike }
+                          },
+                          [
+                            _c(
+                              "svg",
+                              {
+                                staticClass:
+                                  "fill-heart text-gray-700 inline-block h-7 w-7",
                                 attrs: {
-                                  "stroke-linecap": "round",
-                                  "stroke-linejoin": "round",
-                                  "stroke-width": "2",
-                                  d:
-                                    "M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                                  xmlns: "http://www.w3.org/2000/svg",
+                                  fill: "none",
+                                  viewBox: "0 0 24 24",
+                                  stroke: "currentColor"
                                 }
-                              })
-                            ]
-                          )
-                        ]
-                      ),
+                              },
+                              [
+                                _c("path", {
+                                  attrs: {
+                                    "stroke-linecap": "round",
+                                    "stroke-linejoin": "round",
+                                    "stroke-width": "2",
+                                    d:
+                                      "M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                                  }
+                                })
+                              ]
+                            )
+                          ]
+                        ),
+                    _vm._v(" "),
+                    _c(
+                      "span",
+                      {
+                        staticClass:
+                          "mr-3 inline-flex items-center cursor-pointer"
+                      },
+                      [
+                        _c(
+                          "svg",
+                          {
+                            staticClass: "text-gray-700 inline-block h-7 w-7 ",
+                            attrs: {
+                              xmlns: "http://www.w3.org/2000/svg",
+                              fill: "none",
+                              viewBox: "0 0 24 24",
+                              stroke: "currentColor"
+                            }
+                          },
+                          [
+                            _c("path", {
+                              attrs: {
+                                "stroke-linecap": "round",
+                                "stroke-linejoin": "round",
+                                "stroke-width": "2",
+                                d:
+                                  "M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+                              }
+                            })
+                          ]
+                        )
+                      ]
+                    )
+                  ]),
                   _vm._v(" "),
                   _c(
                     "span",
-                    {
-                      staticClass:
-                        "mr-3 inline-flex items-center cursor-pointer"
-                    },
-                    [
-                      _c(
-                        "svg",
-                        {
-                          staticClass: "text-gray-700 inline-block h-7 w-7 ",
-                          attrs: {
-                            xmlns: "http://www.w3.org/2000/svg",
-                            fill: "none",
-                            viewBox: "0 0 24 24",
-                            stroke: "currentColor"
-                          }
-                        },
-                        [
-                          _c("path", {
-                            attrs: {
-                              "stroke-linecap": "round",
-                              "stroke-linejoin": "round",
-                              "stroke-width": "2",
-                              d:
-                                "M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-                            }
-                          })
-                        ]
-                      )
-                    ]
+                    { staticClass: "text-gray-600 text-sm font-bold" },
+                    [_vm._v(_vm._s(_vm.post.countlikes) + " Me gusta")]
                   )
                 ]),
                 _vm._v(" "),
-                _c("span", { staticClass: "text-gray-600 text-sm font-bold" }, [
-                  _vm._v(_vm._s(_vm.post.countlikes) + " Me gusta")
-                ])
+                _c(
+                  "span",
+                  { staticClass: "block ml-2 text-xs text-gray-600" },
+                  [
+                    _vm._v(
+                      _vm._s(
+                        "Hace " + _vm.getDifferenceTime(_vm.post.created_at)
+                      )
+                    )
+                  ]
+                )
               ]),
               _vm._v(" "),
-              _c("span", { staticClass: "block ml-2 text-xs text-gray-600" }, [
-                _vm._v(
-                  _vm._s("Hace " + _vm.getDifferenceTime(_vm.post.created_at))
+              _c("div", { staticClass: "pt-4 pb-1 pr-3" }, [
+                _c(
+                  "form",
+                  {
+                    staticClass: "flex items-start",
+                    attrs: { method: "POST" }
+                  },
+                  [
+                    _c("textarea", {
+                      staticClass:
+                        "w-full resize-none outline-none appearance-none",
+                      staticStyle: { height: "36px" },
+                      attrs: {
+                        "aria-label": "Agrega un comentario...",
+                        placeholder: "Agrega un comentario...",
+                        autocomplete: "off",
+                        autocorrect: "off"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass:
+                          "mb-2 focus:outline-none border-none bg-transparent text-blue-600"
+                      },
+                      [_vm._v("Publicar")]
+                    )
+                  ]
                 )
               ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "px-6 pt-4 pb-1" }, [
-              _c(
-                "form",
-                { staticClass: "flex items-start", attrs: { method: "POST" } },
-                [
-                  _c("textarea", {
-                    staticClass:
-                      "w-full resize-none outline-none appearance-none",
-                    staticStyle: { height: "36px" },
-                    attrs: {
-                      "aria-label": "Agrega un comentario...",
-                      placeholder: "Agrega un comentario...",
-                      autocomplete: "off",
-                      autocorrect: "off"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass:
-                        "mb-2 focus:outline-none border-none bg-transparent text-blue-600"
-                    },
-                    [_vm._v("Publicar")]
-                  )
-                ]
-              )
             ])
           ])
         ])
@@ -55556,7 +55648,7 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("div", [
-                _c("h2", { staticClass: "block ml-2 font-bold" }, [
+                _c("p", { staticClass: "block ml-2 font-bold" }, [
                   _vm._v(_vm._s(_vm.post.user.nick_name))
                 ]),
                 _vm._v(" "),

@@ -1,51 +1,68 @@
 <template>
     <modal :show="show" @close="changeStateShow" maxWidth="5xl">
         <div class="bg-white overflow-hidden shadow-none">
-            <div class="flex">
-                <div class="max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl">
+            <div class="grid grid-cols-3 min-w-full">
+                
+                <div class="col-span-2 max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl">
                     <img class="w-full max-w-full min-w-full"
                         src="https://images.pexels.com/photos/5286173/pexels-photo-5286173.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
                         alt="Sunset in the mountains">
                 </div>
 
-                <div>
-                    <div class="px-6 pt-4">
+                <div class="col-span-1 relative">
+                    <header class="flex items-center border-b border-grey-400">
+                        <a :href="'/profile/'+post.user.nick_name" class="block cursor-pointer py-4 flex items-center text-sm outline-none focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out">
+                            <img :src="post.user.profile_photo_url" class="h-9 w-9 rounded-full object-cover"
+                            :alt="post.user.nick_name" />
+                            <p class="block ml-2 font-bold">{{ post.user.nick_name }}</p>
+                        </a>
+                        <button class="flex items-center ml-3 border border-blue-600 rounded outline-none focus:outline-none bg-transparent text-blue-600 text-sm py-1 px-2">
+                            <span class="block">Siguiendo</span>
+                            <svg class="block h-5 w-5 pl-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                        </button>
+                    </header>
+
+                    <div class="pt-1">
                         <comment-post showUserImage="true" :comment="post.description" :nickName="post.user.nick_name" :urlImage="post.user.profile_photo_url"></comment-post>
                     </div>
 
-                    <div class="h-2/4 overflow-y-auto">
+                    <div class="h-1/3 overflow-y-auto">
                         comentarios
                     </div>
 
-                    <div class="px-6 pt-4">
-                        <div class="mb-2">
-                            <div class="flex items-center">
-                                <span v-if="post.likes.find(u => u.user_id === $page.user.id)" @click="likeOrDislike" class="mr-3 inline-flex items-center cursor-pointer">
-                                    <svg class="fill-heart text-gray-700 inline-block h-7 w-7 heart" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                                    </svg>
-                                </span>
-                                <span v-else @click="likeOrDislike" class="mr-3 inline-flex items-center cursor-pointer">
-                                    <svg class="fill-heart text-gray-700 inline-block h-7 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                                    </svg>
-                                </span>
-                                <span class="mr-3 inline-flex items-center cursor-pointer">
-                                    <svg class="text-gray-700 inline-block h-7 w-7 " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                                    </svg>
-                                </span>
+                    <div class="absolute bottom-0 left-0 right-0">
+                        <div class="pt-4">
+                            <div class="mb-2">
+                                <div class="flex items-center">
+                                    <span v-if="post.likes.find(u => u.user_id === $page.user.id)" @click="likeOrDislike" class="mr-3 inline-flex items-center cursor-pointer">
+                                        <svg class="fill-heart text-gray-700 inline-block h-7 w-7 heart" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                        </svg>
+                                    </span>
+                                    <span v-else @click="likeOrDislike" class="mr-3 inline-flex items-center cursor-pointer">
+                                        <svg class="fill-heart text-gray-700 inline-block h-7 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                        </svg>
+                                    </span>
+                                    <span class="mr-3 inline-flex items-center cursor-pointer">
+                                        <svg class="text-gray-700 inline-block h-7 w-7 " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                                        </svg>
+                                    </span>
+                                </div>
+                                <span class="text-gray-600 text-sm font-bold">{{ post.countlikes }} Me gusta</span>
                             </div>
-                            <span class="text-gray-600 text-sm font-bold">{{ post.countlikes }} Me gusta</span>
+                            <span class="block ml-2 text-xs text-gray-600">{{ 'Hace '+getDifferenceTime(post.created_at) }}</span>
                         </div>
-                        <span class="block ml-2 text-xs text-gray-600">{{ 'Hace '+getDifferenceTime(post.created_at) }}</span>
-                    </div>
 
-                    <div class="px-6 pt-4 pb-1">
-                        <form method="POST" class="flex items-start">
-                            <textarea class="w-full resize-none outline-none appearance-none" aria-label="Agrega un comentario..." placeholder="Agrega un comentario..."  autocomplete="off" autocorrect="off" style="height: 36px;"></textarea>
-                            <button class="mb-2 focus:outline-none border-none bg-transparent text-blue-600">Publicar</button>
-                        </form>
+                        <div class="pt-4 pb-1 pr-3">
+                            <form method="POST" class="flex items-start">
+                                <textarea class="w-full resize-none outline-none appearance-none" aria-label="Agrega un comentario..." placeholder="Agrega un comentario..."  autocomplete="off" autocorrect="off" style="height: 36px;"></textarea>
+                                <button class="mb-2 focus:outline-none border-none bg-transparent text-blue-600">Publicar</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
