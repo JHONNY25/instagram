@@ -2171,10 +2171,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   methods: {
     showModal: function showModal() {
-      this.$emit('showPost');
-    },
-    changeStateShow: function changeStateShow() {
-      this.show = !this.show;
+      this.$emit('show');
     },
     getDifferenceTime: function getDifferenceTime(date) {
       return moment__WEBPACK_IMPORTED_MODULE_2___default()(date).toNow(true);
@@ -5955,7 +5952,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.show = !this.show;
       this.post = post;
     },
-    changeStateShowPost: function changeStateShowPost() {
+    changeState: function changeState() {
+      this.show = !this.show;
+    },
+    changeStateShowCreatePost: function changeStateShowCreatePost() {
       this.showPost = !this.showPost;
     },
     dispatchInputFile: function dispatchInputFile() {
@@ -6020,7 +6020,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".fill-heart:hover{\n  fill: #e53e3e;\n  color: #e53e3e;\n}\n.heart{\n  fill: #e53e3e;\n  color: #e53e3e;\n}\n", ""]);
+exports.push([module.i, ".fill-heart:hover{\n  fill: #e53e3e;\n  color: #e53e3e;\n}\n.heart{\n  fill: #e53e3e;\n  color: #e53e3e;\n}\n.scroll {\n  max-height: 240px;\n  overflow-y: auto;\n}\n.scroll::-webkit-scrollbar {\n  width: 12px;\n}\n.scroll::-webkit-scrollbar-track {\n  -webkit-box-shadow: inset 0 0 2px rgba(0,0,0,0.3);\n  border-radius: 10px;\n}\n.scroll::-webkit-scrollbar-thumb {\n  border-radius: 10px;\n  -webkit-box-shadow: inset 0 0 2px rgba(0,0,0,0.5);\n}\n", ""]);
 
 // exports
 
@@ -55326,7 +55326,7 @@ var render = function() {
     "modal",
     {
       attrs: { show: _vm.show, maxWidth: "5xl" },
-      on: { close: _vm.changeStateShow }
+      on: { close: _vm.showModal }
     },
     [
       _c("div", { staticClass: "bg-white overflow-hidden shadow-none" }, [
@@ -55414,23 +55414,44 @@ var render = function() {
             _vm._v(" "),
             _c(
               "div",
-              { staticClass: "pt-1" },
+              { staticClass: "scroll" },
               [
-                _c("comment-post", {
-                  attrs: {
-                    showUserImage: "true",
-                    comment: _vm.post.description,
-                    nickName: _vm.post.user.nick_name,
-                    urlImage: _vm.post.user.profile_photo_url
-                  }
+                _c(
+                  "div",
+                  { staticClass: "pt-1" },
+                  [
+                    _c("comment-post", {
+                      attrs: {
+                        showUserImage: "true",
+                        comment: _vm.post.description,
+                        nickName: _vm.post.user.nick_name,
+                        urlImage: _vm.post.user.profile_photo_url
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _vm._l(_vm.post.comments, function(comment, index) {
+                  return _vm.post.comments.length > 0
+                    ? _c("comment-post", {
+                        key: index,
+                        attrs: {
+                          showUserImage: "true",
+                          comment: comment.comment,
+                          nickName: comment.user.nick_name,
+                          urlImage: comment.user.profile_photo_url
+                        }
+                      })
+                    : _c(
+                        "div",
+                        { staticClass: "w-100 text-center text-grey-500" },
+                        [_vm._v(" No hay comentarios")]
+                      )
                 })
               ],
-              1
+              2
             ),
-            _vm._v(" "),
-            _c("div", { staticClass: "h-1/3 overflow-y-auto" }, [
-              _vm._v("\n                    comentarios\n                ")
-            ]),
             _vm._v(" "),
             _c("div", { staticClass: "absolute bottom-0 left-0 right-0" }, [
               _c("div", { staticClass: "pt-4" }, [
@@ -55747,7 +55768,10 @@ var render = function() {
             _vm._v(" "),
             _c(
               "span",
-              { staticClass: "mr-3 inline-flex items-center cursor-pointer" },
+              {
+                staticClass: "mr-3 inline-flex items-center cursor-pointer",
+                on: { click: _vm.showModal }
+              },
               [
                 _c(
                   "svg",
@@ -62099,7 +62123,7 @@ var render = function() {
         {
           staticClass:
             "flex justify-center w-full mb-5 text-center bg-blue-500 rounded text-white py-2 outline-none focus:outline-none hover:bg-blue-600",
-          on: { click: _vm.changeStateShowPost }
+          on: { click: _vm.changeStateShowCreatePost }
         },
         [_vm._v("Agregar publicación")]
       ),
@@ -62116,13 +62140,16 @@ var render = function() {
             ])
       }),
       _vm._v(" "),
-      _c("modal-post", { attrs: { show: _vm.show, post: _vm.post } }),
+      _c("modal-post", {
+        attrs: { show: _vm.show, post: _vm.post },
+        on: { show: _vm.changeState }
+      }),
       _vm._v(" "),
       _c(
         "modal",
         {
           attrs: { show: _vm.showPost },
-          on: { close: _vm.changeStateShowPost }
+          on: { close: _vm.changeStateShowCreatePost }
         },
         [
           _c("div", { staticClass: "p-5" }, [

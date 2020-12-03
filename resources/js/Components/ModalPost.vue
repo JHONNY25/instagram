@@ -1,8 +1,8 @@
 <template>
-    <modal :show="show" @close="changeStateShow" maxWidth="5xl">
+    <modal :show="show" @close="showModal" maxWidth="5xl">
         <div class="bg-white overflow-hidden shadow-none">
             <div class="grid grid-cols-3 min-w-full">
-                
+
                 <div class="col-span-2 max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl">
                     <img class="w-full max-w-full min-w-full"
                         src="https://images.pexels.com/photos/5286173/pexels-photo-5286173.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
@@ -24,12 +24,12 @@
                         </button>
                     </header>
 
-                    <div class="pt-1">
-                        <comment-post showUserImage="true" :comment="post.description" :nickName="post.user.nick_name" :urlImage="post.user.profile_photo_url"></comment-post>
-                    </div>
-
-                    <div class="h-1/3 overflow-y-auto">
-                        comentarios
+                    <div class="scroll">
+                        <div class="pt-1">
+                            <comment-post showUserImage="true" :comment="post.description" :nickName="post.user.nick_name" :urlImage="post.user.profile_photo_url"></comment-post>
+                        </div>
+                        <comment-post v-if="post.comments.length > 0" v-for="(comment,index) in post.comments" :key="index" showUserImage="true" :comment="comment.comment" :nickName="comment.user.nick_name" :urlImage="comment.user.profile_photo_url"></comment-post>
+                        <div v-else class="w-100 text-center text-grey-500"> No hay comentarios</div>
                     </div>
 
                     <div class="absolute bottom-0 left-0 right-0">
@@ -83,10 +83,7 @@
         },
         methods:{
             showModal(){
-                this.$emit('showPost')
-            },
-            changeStateShow(){
-                this.show = !this.show
+                this.$emit('show')
             },
             getDifferenceTime(date){
                 return moment(date).toNow(true);
@@ -119,5 +116,23 @@
     .heart{
         fill: #e53e3e;
         color: #e53e3e;
+    }
+
+    .scroll {
+        max-height: 240px;
+        overflow-y: auto;
+    }
+    .scroll::-webkit-scrollbar {
+        width: 12px;
+    }
+
+    .scroll::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 2px rgba(0,0,0,0.3); 
+        border-radius: 10px;
+    }
+
+    .scroll::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 2px rgba(0,0,0,0.5); 
     }
 </style>
