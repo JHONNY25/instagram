@@ -73,7 +73,9 @@ class Posts extends Model
         return (new static)::with([
             'user',
             'likes',
-            'comments'
+            'comments' => function($query){
+                $query->with('user:id,name,nick_name,profile_photo_path');
+            }
         ])->orderBy('created_at', 'desc')->get();
     }
 }
