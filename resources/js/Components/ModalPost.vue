@@ -1,5 +1,5 @@
 <template>
-    <modal :show="show" @close="changeStateShow" maxWidth="5xl">
+    <modal :show="show" @close="showModal" maxWidth="5xl">
         <div class="bg-white overflow-hidden shadow-none">
             <div class="grid grid-cols-3 min-w-full">
 
@@ -83,10 +83,7 @@
         },
         methods:{
             showModal(){
-                this.$emit('showPost')
-            },
-            changeStateShow(){
-                this.show = !this.show
+                this.$emit('show')
             },
             getDifferenceTime(date){
                 return moment(date).toNow(true);
