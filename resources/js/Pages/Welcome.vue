@@ -1,15 +1,15 @@
 <template>
     <div class="max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl w-full">
-        <button class="flex justify-center w-full mb-5 text-center bg-blue-500 rounded text-white py-2 outline-none focus:outline-none hover:bg-blue-600" @click="changeStateShowPost">Agregar publicación</button>
+        <button class="flex justify-center w-full mb-5 text-center bg-blue-500 rounded text-white py-2 outline-none focus:outline-none hover:bg-blue-600" @click="changeStateShowCreatePost">Agregar publicación</button>
 
         <post-component v-if="posts.length > 0" v-for="(post,index) in posts" :key="index"
         @show="changeStateShowAndSetPost" :post="post"></post-component>
 
         <div v-else class="text-3xl">No hay publicaciones</div>
 
-        <modal-post :show="show" :post="post"></modal-post>
+        <modal-post :show="show" :post="post" @show="changeState"></modal-post>
 
-        <modal :show="showPost" @close="changeStateShowPost">
+        <modal :show="showPost" @close="changeStateShowCreatePost">
             <div class="p-5">
                 <div class="border rounded border-gray-300 p-5">
                     <textarea v-model="textpost" id="posttext" class="w-full h-16 resize-none outline-none p-2 rounded focus:boutline-none appearance-none" name="posttext" cols="30" rows="10" placeholder="En que estas pensando ...?"></textarea>
@@ -72,7 +72,10 @@
                 this.show = !this.show
                 this.post = post
             },
-            changeStateShowPost(){
+            changeState(){
+                this.show = !this.show
+            },
+            changeStateShowCreatePost(){
                 this.showPost = !this.showPost
             },
             dispatchInputFile(){
