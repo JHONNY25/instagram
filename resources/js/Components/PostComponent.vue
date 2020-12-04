@@ -45,10 +45,10 @@
         </div>
 
         <div class="px-6 pt-4 pb-3">
-            <form method="POST" class="flex items-start">
-                <textarea class="w-full resize-none outline-none appearance-none" aria-label="Agrega un comentario..." placeholder="Agrega un comentario..."  autocomplete="off" autocorrect="off" style="height: 36px;"></textarea>
-                <button class="mb-2 focus:outline-none border-none bg-transparent text-blue-600">Publicar</button>
-            </form>
+            <div class="flex items-start">
+                <textarea v-model="textComment" class="w-full resize-none outline-none appearance-none" aria-label="Agrega un comentario..." placeholder="Agrega un comentario..."  autocomplete="off" autocorrect="off" style="height: 36px;"></textarea>
+                <button @click="postComment($page.user.id)" class="mb-2 focus:outline-none border-none bg-transparent text-blue-600">Publicar</button>
+            </div>
         </div>
     </div>
 </template>
@@ -61,6 +61,7 @@
         data(){
             return {
                 showUserImage: false,
+                textComment: '',
             }
         },
         props: ['post'],
@@ -86,6 +87,15 @@
                     }else{
                         --this.post.countlikes
                     }
+                })
+                .catch(error => console.log(error))
+            },
+            async postComment(userId){
+                await axios.post('/post-comment',{post_id:this.post.id,user_comment_id: userId,comment: this.textComment})
+                .then(response => {
+                    this.post.countcomments++
+                    this.post.comments.push(response.data)
+                    this.textComment = ''
                 })
                 .catch(error => console.log(error))
             }
