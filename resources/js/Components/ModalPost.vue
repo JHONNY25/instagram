@@ -24,7 +24,7 @@
                         </button>
                     </header>
 
-                    <div class="scroll">
+                    <div class="scroll" ref="scrollMessagePost">
                         <div class="pt-1">
                             <comment-post showUserImage="true" :comment="post.description" :nickName="post.user.nick_name" :urlImage="post.user.profile_photo_url"></comment-post>
                         </div>
@@ -58,10 +58,10 @@
                         </div>
 
                         <div class="pt-4 pb-1 pr-3">
-                            <form method="POST" class="flex items-start">
-                                <textarea class="w-full resize-none outline-none appearance-none" aria-label="Agrega un comentario..." placeholder="Agrega un comentario..."  autocomplete="off" autocorrect="off" style="height: 36px;"></textarea>
-                                <button class="mb-2 focus:outline-none border-none bg-transparent text-blue-600">Publicar</button>
-                            </form>
+                            <div class="flex items-start">
+                                <textarea v-model="textComment" class="w-full resize-none outline-none appearance-none" aria-label="Agrega un comentario..." placeholder="Agrega un comentario..."  autocomplete="off" autocorrect="off" style="height: 36px;"></textarea>
+                                <button @click="postComment($page.user.id)" class="mb-2 focus:outline-none border-none bg-transparent text-blue-600">Publicar</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -76,6 +76,11 @@
     import CommentPost from './CommentPost'
 
     export default {
+        data(){
+            return {
+                textComment: '',
+            }
+        },
         props:['post','show'],
         components:{
             Modal,
@@ -102,8 +107,23 @@
                     }
                 })
                 .catch(error => console.log(error))
-            }
-        }
+            },
+            async postComment(userId){
+                await axios.post('/post-comment',{post_id:this.post.id,user_comment_id: userId,comment: this.textComment})
+                .then(response => {
+                    this.post.countcomments++
+                    this.post.comments.push(response.data)
+                    this.textComment = ''
+                    this.scollToBottom()
+                })
+                .catch(error => console.log(error))
+            },
+            scollToBottom(){
+                setTimeout(()=>{
+                    this.$refs.scrollMessagePost.scrollTop = this.$refs.scrollMessagePost.scrollHeight - this.$refs.scrollMessagePost.clientHeight
+                },50)
+            },
+        },
     }
 </script>
 
@@ -119,7 +139,7 @@
     }
 
     .scroll {
-        max-height: 240px;
+        height: 240px;
         overflow-y: auto;
     }
     .scroll::-webkit-scrollbar {
