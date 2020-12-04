@@ -24,11 +24,7 @@ class Comments extends Model
         return $this->belongsTo(Posts::class,'post_id');
     }
 
-    public function postComment(Request $request){
-        return (new static)::create([
-            'post_id' => $request->post_id,
-            'user_comment_id' => $request->user_id,
-            'comment' => $request->comment
-        ]);
+    public function postComment($request){
+        return (new static)::create($request);
     }
 }
