@@ -2164,6 +2164,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      textComment: ''
+    };
+  },
   props: ['post', 'show'],
   components: {
     Modal: _Jetstream_Modal__WEBPACK_IMPORTED_MODULE_1__["default"],
@@ -2207,6 +2212,46 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee);
       }))();
+    },
+    postComment: function postComment(userId) {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return axios.post('/post-comment', {
+                  post_id: _this2.post.id,
+                  user_comment_id: userId,
+                  comment: _this2.textComment
+                }).then(function (response) {
+                  _this2.post.countcomments++;
+
+                  _this2.post.comments.push(response.data);
+
+                  _this2.textComment = '';
+
+                  _this2.scollToBottom();
+                })["catch"](function (error) {
+                  return console.log(error);
+                });
+
+              case 2:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    scollToBottom: function scollToBottom() {
+      var _this3 = this;
+
+      setTimeout(function () {
+        _this3.$refs.scrollMessagePost.scrollTop = _this3.$refs.scrollMessagePost.scrollHeight - _this3.$refs.scrollMessagePost.clientHeight;
+      }, 50);
     }
   }
 });
@@ -2293,7 +2338,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      showUserImage: false
+      showUserImage: false,
+      textComment: ''
     };
   },
   props: ['post'],
@@ -2337,6 +2383,37 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee);
+      }))();
+    },
+    postComment: function postComment(userId) {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return axios.post('/post-comment', {
+                  post_id: _this2.post.id,
+                  user_comment_id: userId,
+                  comment: _this2.textComment
+                }).then(function (response) {
+                  _this2.post.countcomments++;
+
+                  _this2.post.comments.push(response.data);
+
+                  _this2.textComment = '';
+                })["catch"](function (error) {
+                  return console.log(error);
+                });
+
+              case 2:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
       }))();
     }
   }
@@ -6020,7 +6097,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".fill-heart:hover{\n  fill: #e53e3e;\n  color: #e53e3e;\n}\n.heart{\n  fill: #e53e3e;\n  color: #e53e3e;\n}\n.scroll {\n  max-height: 240px;\n  overflow-y: auto;\n}\n.scroll::-webkit-scrollbar {\n  width: 12px;\n}\n.scroll::-webkit-scrollbar-track {\n  -webkit-box-shadow: inset 0 0 2px rgba(0,0,0,0.3);\n  border-radius: 10px;\n}\n.scroll::-webkit-scrollbar-thumb {\n  border-radius: 10px;\n  -webkit-box-shadow: inset 0 0 2px rgba(0,0,0,0.5);\n}\n", ""]);
+exports.push([module.i, ".fill-heart:hover{\n  fill: #e53e3e;\n  color: #e53e3e;\n}\n.heart{\n  fill: #e53e3e;\n  color: #e53e3e;\n}\n.scroll {\n  height: 240px;\n  overflow-y: auto;\n}\n.scroll::-webkit-scrollbar {\n  width: 12px;\n}\n.scroll::-webkit-scrollbar-track {\n  -webkit-box-shadow: inset 0 0 2px rgba(0,0,0,0.3);\n  border-radius: 10px;\n}\n.scroll::-webkit-scrollbar-thumb {\n  border-radius: 10px;\n  -webkit-box-shadow: inset 0 0 2px rgba(0,0,0,0.5);\n}\n", ""]);
 
 // exports
 
@@ -55414,7 +55491,7 @@ var render = function() {
             _vm._v(" "),
             _c(
               "div",
-              { staticClass: "scroll" },
+              { ref: "scrollMessagePost", staticClass: "scroll" },
               [
                 _c(
                   "div",
@@ -55584,35 +55661,50 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "pt-4 pb-1 pr-3" }, [
-                _c(
-                  "form",
-                  {
-                    staticClass: "flex items-start",
-                    attrs: { method: "POST" }
-                  },
-                  [
-                    _c("textarea", {
-                      staticClass:
-                        "w-full resize-none outline-none appearance-none",
-                      staticStyle: { height: "36px" },
-                      attrs: {
-                        "aria-label": "Agrega un comentario...",
-                        placeholder: "Agrega un comentario...",
-                        autocomplete: "off",
-                        autocorrect: "off"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "button",
+                _c("div", { staticClass: "flex items-start" }, [
+                  _c("textarea", {
+                    directives: [
                       {
-                        staticClass:
-                          "mb-2 focus:outline-none border-none bg-transparent text-blue-600"
-                      },
-                      [_vm._v("Publicar")]
-                    )
-                  ]
-                )
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.textComment,
+                        expression: "textComment"
+                      }
+                    ],
+                    staticClass:
+                      "w-full resize-none outline-none appearance-none",
+                    staticStyle: { height: "36px" },
+                    attrs: {
+                      "aria-label": "Agrega un comentario...",
+                      placeholder: "Agrega un comentario...",
+                      autocomplete: "off",
+                      autocorrect: "off"
+                    },
+                    domProps: { value: _vm.textComment },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.textComment = $event.target.value
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass:
+                        "mb-2 focus:outline-none border-none bg-transparent text-blue-600",
+                      on: {
+                        click: function($event) {
+                          return _vm.postComment(_vm.$page.user.id)
+                        }
+                      }
+                    },
+                    [_vm._v("Publicar")]
+                  )
+                ])
               ])
             ])
           ])
@@ -55836,21 +55928,17 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _vm._m(0)
-    ]
-  )
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "px-6 pt-4 pb-3" }, [
-      _c(
-        "form",
-        { staticClass: "flex items-start", attrs: { method: "POST" } },
-        [
+      _c("div", { staticClass: "px-6 pt-4 pb-3" }, [
+        _c("div", { staticClass: "flex items-start" }, [
           _c("textarea", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.textComment,
+                expression: "textComment"
+              }
+            ],
             staticClass: "w-full resize-none outline-none appearance-none",
             staticStyle: { height: "36px" },
             attrs: {
@@ -55858,6 +55946,15 @@ var staticRenderFns = [
               placeholder: "Agrega un comentario...",
               autocomplete: "off",
               autocorrect: "off"
+            },
+            domProps: { value: _vm.textComment },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.textComment = $event.target.value
+              }
             }
           }),
           _vm._v(" "),
@@ -55865,15 +55962,21 @@ var staticRenderFns = [
             "button",
             {
               staticClass:
-                "mb-2 focus:outline-none border-none bg-transparent text-blue-600"
+                "mb-2 focus:outline-none border-none bg-transparent text-blue-600",
+              on: {
+                click: function($event) {
+                  return _vm.postComment(_vm.$page.user.id)
+                }
+              }
             },
             [_vm._v("Publicar")]
           )
-        ]
-      )
-    ])
-  }
-]
+        ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -62140,10 +62243,12 @@ var render = function() {
             ])
       }),
       _vm._v(" "),
-      _c("modal-post", {
-        attrs: { show: _vm.show, post: _vm.post },
-        on: { show: _vm.changeState }
-      }),
+      _vm.posts.length > 0
+        ? _c("modal-post", {
+            attrs: { show: _vm.show, post: _vm.post },
+            on: { show: _vm.changeState }
+          })
+        : _vm._e(),
       _vm._v(" "),
       _c(
         "modal",
