@@ -7,7 +7,7 @@
 
         <div v-else class="text-3xl">No hay publicaciones</div>
 
-        <modal-post :show="show" :post="post" @show="changeState"></modal-post>
+        <modal-post v-if="posts.length > 0" :show="show" :post="post" @show="changeState"></modal-post>
 
         <modal :show="showPost" @close="changeStateShowCreatePost">
             <div class="p-5">
