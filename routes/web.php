@@ -39,6 +39,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('/create-post', [PostController::class,'create'])->name('create-post');
     Route::get('/get-posts', [PostController::class,'all'])->name('get-posts');
     Route::post('/like-post', [PostController::class,'like'])->name('like-posts');
+    Route::post('/post-comment', [PostController::class,'comment'])->name('post-comment');
 
     Route::get('/user-chats', [ChatController::class,'index'])->name('get-chats');
     Route::get('/user-chats/{nick_name}', [ChatController::class,'getChat'])->name('get-chat-user');
