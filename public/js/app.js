@@ -3459,6 +3459,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       showingNavigationDropdown: false,
       search: '',
       users: [],
+      user: '',
       loading: true,
       errored: false,
       accountexists: true
@@ -3540,6 +3541,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   mounted: function mounted() {
+    this.user = Laravel.user;
     var pusher = new Pusher('6176ca3de88da98be835', {
       cluster: 'us2'
     });
@@ -5848,13 +5850,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      url: 'https://cdn.pixabay.com/photo/2020/10/03/11/08/girl-5623231_960_720.jpg',
-      userimage: 'https://instagram.fsjd1-1.fna.fbcdn.net/v/t51.2885-19/s150x150/117756684_324341175604256_3627028918051777584_n.jpg?_nc_ht=instagram.fsjd1-1.fna.fbcdn.net&_nc_ohc=D_s2gyyHqLMAX9Vf2md&oh=9613db0350b7734e521da0918c56f824&oe=5F8EF6E2',
-      name: 'Juanito',
-      nickname: 'JRH',
-      website: 'https://www.google.com/',
-      presentation: 'Soy desarrollador web y megusta el BMX',
-      hrefprofile: '/user/profile'
+      url: 'https://cdn.pixabay.com/photo/2020/10/03/11/08/girl-5623231_960_720.jpg'
     };
   },
   components: {
@@ -5914,8 +5910,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['name', 'nickname', 'presentation', 'website', 'imageurl', 'urlprofileconfig', 'followerscount', 'postscount', 'followedcount']
+  data: function data() {
+    return {
+      userLoggedIn: ''
+    };
+  },
+  props: ['user', 'imageurl', 'urlprofileconfig', 'followerscount', 'postscount', 'followedcount'],
+  mounted: function mounted() {
+    this.userLoggedIn = Laravel.user;
+  }
 });
 
 /***/ }),
@@ -57506,8 +57511,8 @@ var render = function() {
                                       staticClass:
                                         "h-8 w-8 rounded-full object-cover",
                                       attrs: {
-                                        src: _vm.$page.user.profile_photo_url,
-                                        alt: _vm.$page.user.name
+                                        src: _vm.user.profile_photo_url,
+                                        alt: _vm.user.name
                                       }
                                     })
                                   ]
@@ -57537,8 +57542,7 @@ var render = function() {
                                   "jet-dropdown-link",
                                   {
                                     attrs: {
-                                      href:
-                                        "/profile/" + _vm.$page.user.nick_name
+                                      href: "/profile/" + _vm.user.nick_name
                                     }
                                   },
                                   [
@@ -62008,10 +62012,7 @@ var render = function() {
               followedcount: _vm.followed,
               urlprofileconfig: _vm.hrefprofile,
               imageurl: _vm.user.profile_photo_url,
-              name: _vm.user.name,
-              nickname: _vm.user.nick_name,
-              website: _vm.user.web_site,
-              presentation: _vm.user.presentation
+              user: _vm.user
             }
           })
         ],
@@ -62059,7 +62060,7 @@ var render = function() {
   return _c("div", [
     _c("img", {
       staticClass: "h-40 w-40 rounded-full object-cover",
-      attrs: { src: _vm.imageurl, alt: _vm.name }
+      attrs: { src: _vm.imageurl, alt: _vm.user.name }
     }),
     _vm._v(" "),
     _c("div", { staticClass: "ml-10" }, [
@@ -62070,18 +62071,28 @@ var render = function() {
             staticClass:
               "block leading-relaxed font-light text-gray-700 text-3xl"
           },
-          [_vm._v(" " + _vm._s(_vm.nickname))]
+          [_vm._v(" " + _vm._s(_vm.user.nick_name))]
         ),
         _vm._v(" "),
-        _c(
-          "a",
-          {
-            staticClass:
-              "h-7 px-3 ml-3 focus:outline-none hover:border-transparent text-center rounded border border-gray-400 hover:bg-blue-500 hover:text-white bg-transparent text-gray-500 font-semibold",
-            attrs: { href: _vm.urlprofileconfig }
-          },
-          [_vm._v("Editar perfil")]
-        ),
+        _vm.userLoggedIn.id === _vm.user.id
+          ? _c(
+              "a",
+              {
+                staticClass:
+                  "h-7 px-3 ml-3 focus:outline-none hover:border-transparent text-center rounded border border-gray-400 hover:bg-blue-500 hover:text-white bg-transparent text-gray-500 font-semibold",
+                attrs: { href: _vm.urlprofileconfig }
+              },
+              [_vm._v("Editar perfil")]
+            )
+          : _c(
+              "a",
+              {
+                staticClass:
+                  "h-7 px-3 ml-3 focus:outline-none hover:border-transparent text-center rounded border border-gray-400 hover:bg-blue-500 hover:text-white bg-transparent text-gray-500 font-semibold",
+                attrs: { href: _vm.urlprofileconfig }
+              },
+              [_vm._v("Seguir")]
+            ),
         _vm._v(" "),
         _c(
           "a",
@@ -62169,23 +62180,23 @@ var render = function() {
       _vm._v(" "),
       _c("div", {}, [
         _c("h1", { staticClass: "text-base font-bold font-light" }, [
-          _vm._v(_vm._s(_vm.name))
+          _vm._v(_vm._s(_vm.user.name))
         ]),
         _vm._v(" "),
-        _vm.presentation !== null
+        _vm.user.presentation !== null
           ? _c("span", { staticClass: "text-base" }, [
-              _vm._v(_vm._s(_vm.presentation))
+              _vm._v(_vm._s(_vm.user.presentation))
             ])
           : _vm._e(),
         _vm._v(" "),
-        _vm.website !== null
+        _vm.user.web_site !== null
           ? _c(
               "a",
               {
                 staticClass: "block text-base text-blue-500 mt-2",
-                attrs: { href: _vm.website, target: "_blank" }
+                attrs: { href: _vm.user.web_site, target: "_blank" }
               },
-              [_vm._v(_vm._s(_vm.website))]
+              [_vm._v(_vm._s(_vm.user.web_site))]
             )
           : _vm._e()
       ])
