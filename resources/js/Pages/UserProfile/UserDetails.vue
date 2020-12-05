@@ -2,11 +2,12 @@
     <div>
         <img :src="imageurl"
             class="h-40 w-40 rounded-full object-cover"
-            :alt="name" />
+            :alt="user.name" />
         <div class="ml-10">
             <div class="flex items-center">
-                <h2 class="block leading-relaxed font-light text-gray-700 text-3xl"> {{ nickname }}</h2>
-                <a :href="urlprofileconfig" class="h-7 px-3 ml-3 focus:outline-none hover:border-transparent text-center rounded border border-gray-400 hover:bg-blue-500 hover:text-white bg-transparent text-gray-500 font-semibold">Editar perfil</a>
+                <h2 class="block leading-relaxed font-light text-gray-700 text-3xl"> {{ user.nick_name }}</h2>
+                <a v-if="userLoggedIn.id === user.id" :href="urlprofileconfig" class="h-7 px-3 ml-3 focus:outline-none hover:border-transparent text-center rounded border border-gray-400 hover:bg-blue-500 hover:text-white bg-transparent text-gray-500 font-semibold">Editar perfil</a>
+                <a v-else :href="urlprofileconfig" class="h-7 px-3 ml-3 focus:outline-none hover:border-transparent text-center rounded border border-gray-400 hover:bg-blue-500 hover:text-white bg-transparent text-gray-500 font-semibold">Seguir</a>
                 <a class="ml-2 p-1 border-transparent text-gray-700 rounded-full hover:text-blue-600 focus:outline-none focus:text-gray-600"
                 aria-label="Notifications">
                     <svg class="h-8 w-8" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24">
@@ -28,9 +29,9 @@
             </ul>
             <br>
             <div class="">
-                <h1 class="text-base font-bold font-light">{{ name }}</h1>
-                <span v-if="presentation !== null" class="text-base">{{ presentation }}</span>
-                <a v-if="website !== null" :href="website" class="block text-base text-blue-500 mt-2" target="_blank">{{ website }}</a>
+                <h1 class="text-base font-bold font-light">{{ user.name }}</h1>
+                <span v-if="user.presentation !== null" class="text-base">{{ user.presentation }}</span>
+                <a v-if="user.web_site !== null" :href="user.web_site" class="block text-base text-blue-500 mt-2" target="_blank">{{ user.web_site }}</a>
             </div>
         </div>
     </div>
@@ -38,6 +39,14 @@
 
 <script>
     export default{
-        props:['name','nickname','presentation','website','imageurl','urlprofileconfig','followerscount','postscount','followedcount']
+        data(){
+            return {
+                userLoggedIn:''
+            }
+        },
+        props:['user','imageurl','urlprofileconfig','followerscount','postscount','followedcount'],
+        mounted(){
+            this.userLoggedIn = Laravel.user
+        }
     }
 </script>
