@@ -73,7 +73,7 @@
                             <dropdown align="right" width="48">
                                 <template #trigger>
                                     <button class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out">
-                                        <img class="h-8 w-8 rounded-full object-cover" :src="$page.user.profile_photo_url" :alt="$page.user.name" />
+                                        <img class="h-8 w-8 rounded-full object-cover" :src="user.profile_photo_url" :alt="user.name" />
                                     </button>
                                 </template>
 
@@ -83,7 +83,7 @@
                                         Cuenta
                                     </div>
 
-                                    <jet-dropdown-link :href="'/profile/' + $page.user.nick_name">
+                                    <jet-dropdown-link :href="'/profile/' + user.nick_name">
                                         Perfil
                                     </jet-dropdown-link>
 
@@ -272,6 +272,7 @@
                 showingNavigationDropdown: false,
                 search: '',
                 users:[],
+                user:'',
                 loading: true,
                 errored: false,
                 accountexists: true
@@ -334,6 +335,7 @@
             },
         },
         mounted(){
+            this.user = Laravel.user
             const pusher = new Pusher('6176ca3de88da98be835', {
                 cluster: 'us2'
             });
