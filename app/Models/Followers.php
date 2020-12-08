@@ -21,5 +21,12 @@ class Followers extends Model
     public function follower(){
         return $this->belongsTo(User::class);
     }
+
+    public static function follow(int $userId){
+        return (new static)::create([
+            'user_id' => $userId,
+            'follower_id' => auth()->user()->id,
+        ]);
+    }
 }
 

@@ -32,6 +32,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     });
 
     Route::get('/profile/{nick_name}', [ProfileController::class,'index'])->name('nick_name');
+    Route::post('/follow-user', [ProfileController::class,'followUser'])->name('follow-user');
+    Route::post('/unfollow-user', [ProfileController::class,'unFollowUser'])->name('unfollow-user');
+    Route::get('/exists-follow/{user_id}', [ProfileController::class,'existsFollow'])->name('exists-follow');
 
     Route::get('/users-search/{nick_name}', [SearchController::class,'search'])->name('users-search');
     Route::get('/users/chat/{search}', [SearchController::class,'searchUsersIFollow'])->name('users-search-chat');

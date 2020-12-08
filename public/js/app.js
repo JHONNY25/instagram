@@ -5872,6 +5872,17 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
 //
 //
 //
@@ -5914,12 +5925,93 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      userLoggedIn: ''
+      userLoggedIn: '',
+      followState: false
     };
   },
-  props: ['user', 'imageurl', 'urlprofileconfig', 'followerscount', 'postscount', 'followedcount'],
+  props: ['user', 'imageurl', 'followerscount', 'postscount', 'followedcount'],
+  methods: {
+    follow: function follow() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return axios.post('/follow-user', {
+                  user_id: _this.user.id
+                }).then(function (response) {
+                  _this.followState = !_this.followState;
+                })["catch"](function (error) {
+                  return console.log(error);
+                });
+
+              case 2:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    unFollow: function unFollow() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return axios.post('/unfollow-user', {
+                  user_id: _this2.user.id
+                }).then(function (response) {
+                  _this2.followState = !_this2.followState;
+                })["catch"](function (error) {
+                  return console.log(error);
+                });
+
+              case 2:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    existsFollow: function existsFollow() {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return axios.get('/exists-follow/' + _this3.user.id).then(function (response) {
+                  if (response.data.exists) {
+                    _this3.followState = !_this3.followState;
+                  }
+                })["catch"](function (error) {
+                  return console.log(error);
+                });
+
+              case 2:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
+    }
+  },
   mounted: function mounted() {
     this.userLoggedIn = Laravel.user;
+  },
+  created: function created() {
+    this.existsFollow();
   }
 });
 
@@ -62010,7 +62102,6 @@ var render = function() {
               followerscount: _vm.followers,
               postscount: _vm.posts,
               followedcount: _vm.followed,
-              urlprofileconfig: _vm.hrefprofile,
               imageurl: _vm.user.profile_photo_url,
               user: _vm.user
             }
@@ -62027,7 +62118,7 @@ var render = function() {
         _vm._l(5, function(index) {
           return _c("image-post", {
             key: index,
-            attrs: { url: _vm.url, name: _vm.name }
+            attrs: { url: _vm.url, name: "name de prueba" }
           })
         }),
         1
@@ -62079,55 +62170,71 @@ var render = function() {
               "a",
               {
                 staticClass:
-                  "h-7 px-3 ml-3 focus:outline-none hover:border-transparent text-center rounded border border-gray-400 hover:bg-blue-500 hover:text-white bg-transparent text-gray-500 font-semibold",
-                attrs: { href: _vm.urlprofileconfig }
+                  "cursor-pointer h-7 px-3 ml-3 focus:outline-none hover:border-transparent text-center rounded border border-gray-400 hover:bg-blue-500 hover:text-white bg-transparent text-gray-500 font-semibold",
+                attrs: { href: "user/profile" }
               },
               [_vm._v("Editar perfil")]
             )
-          : _c(
+          : _c("div", [
+              _vm.followState
+                ? _c(
+                    "a",
+                    {
+                      staticClass:
+                        "cursor-pointer h-7 px-3 ml-3 focus:outline-none hover:border-transparent text-center rounded border border-gray-400 hover:bg-blue-500 hover:text-white bg-transparent text-gray-500 font-semibold",
+                      on: { click: _vm.unFollow }
+                    },
+                    [_vm._v("Dejar de Seguir")]
+                  )
+                : _c(
+                    "a",
+                    {
+                      staticClass:
+                        "cursor-pointer h-7 px-3 ml-3 focus:outline-none hover:border-transparent text-center rounded border border-gray-400 hover:bg-blue-500 hover:text-white bg-transparent text-gray-500 font-semibold",
+                      on: { click: _vm.follow }
+                    },
+                    [_vm._v("Seguir")]
+                  )
+            ]),
+        _vm._v(" "),
+        _vm.userLoggedIn.id === _vm.user.id
+          ? _c(
               "a",
               {
                 staticClass:
-                  "h-7 px-3 ml-3 focus:outline-none hover:border-transparent text-center rounded border border-gray-400 hover:bg-blue-500 hover:text-white bg-transparent text-gray-500 font-semibold",
-                attrs: { href: _vm.urlprofileconfig }
-              },
-              [_vm._v("Seguir")]
-            ),
-        _vm._v(" "),
-        _c(
-          "a",
-          {
-            staticClass:
-              "ml-2 p-1 border-transparent text-gray-700 rounded-full hover:text-blue-600 focus:outline-none focus:text-gray-600",
-            attrs: { "aria-label": "Notifications" }
-          },
-          [
-            _c(
-              "svg",
-              {
-                staticClass: "h-8 w-8",
-                attrs: {
-                  fill: "none",
-                  "stroke-linecap": "round",
-                  "stroke-linejoin": "round",
-                  "stroke-width": "1.5",
-                  stroke: "currentColor",
-                  viewBox: "0 0 24 24"
-                }
+                  "cursor-pointer ml-2 p-1 border-transparent text-gray-700 rounded-full hover:text-blue-600 focus:outline-none focus:text-gray-600",
+                attrs: { href: "user/profile", "aria-label": "Notifications" }
               },
               [
-                _c("path", {
-                  attrs: {
-                    d:
-                      "M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-                  }
-                }),
-                _vm._v(" "),
-                _c("path", { attrs: { d: "M15 12a3 3 0 11-6 0 3 3 0 016 0z" } })
+                _c(
+                  "svg",
+                  {
+                    staticClass: "h-8 w-8",
+                    attrs: {
+                      fill: "none",
+                      "stroke-linecap": "round",
+                      "stroke-linejoin": "round",
+                      "stroke-width": "1.5",
+                      stroke: "currentColor",
+                      viewBox: "0 0 24 24"
+                    }
+                  },
+                  [
+                    _c("path", {
+                      attrs: {
+                        d:
+                          "M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("path", {
+                      attrs: { d: "M15 12a3 3 0 11-6 0 3 3 0 016 0z" }
+                    })
+                  ]
+                )
               ]
             )
-          ]
-        )
+          : _vm._e()
       ]),
       _vm._v(" "),
       _c("ul", { staticClass: "flex justify-content-around items-center" }, [
