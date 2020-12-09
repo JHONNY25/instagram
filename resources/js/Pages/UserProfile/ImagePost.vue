@@ -1,7 +1,7 @@
 <template>
-    <div style="width:300px; height:300px">
+    <div class="cursor-pointer" style="width:300px; height:300px">
         <img :src="url"
-            class="w-full h-full object-cover"
+            class="foto w-full h-full object-cover relative hover:opacity-75"
             :alt="name" />
     </div>
 </template>
@@ -11,3 +11,4 @@
         props:['url','name']
     }
 </script>
+
