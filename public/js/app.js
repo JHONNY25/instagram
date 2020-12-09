@@ -5844,6 +5844,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -5858,7 +5859,7 @@ __webpack_require__.r(__webpack_exports__);
     ImagePost: _ImagePost__WEBPACK_IMPORTED_MODULE_1__["default"],
     UserDetails: _UserDetails__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
-  props: ['user', 'followers', 'posts', 'followed']
+  props: ['user', 'followers', 'postsCount', 'followed']
 });
 
 /***/ }),
@@ -62061,12 +62062,20 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticStyle: { width: "300px", height: "300px" } }, [
-    _c("img", {
-      staticClass: "w-full h-full object-cover",
-      attrs: { src: _vm.url, alt: _vm.name }
-    })
-  ])
+  return _c(
+    "div",
+    {
+      staticClass: "cursor-pointer",
+      staticStyle: { width: "300px", height: "300px" }
+    },
+    [
+      _c("img", {
+        staticClass:
+          "foto w-full h-full object-cover relative hover:opacity-75",
+        attrs: { src: _vm.url, alt: _vm.name }
+      })
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -62100,7 +62109,7 @@ var render = function() {
             staticClass: "flex w-9/12 justify-content-around",
             attrs: {
               followerscount: _vm.followers,
-              postscount: _vm.posts,
+              postscount: _vm.postsCount,
               followedcount: _vm.followed,
               imageurl: _vm.user.profile_photo_url,
               user: _vm.user
@@ -62112,17 +62121,21 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "border-b border-gray-300" }),
       _vm._v(" "),
-      _c(
-        "article",
-        { staticClass: "mt-5 grid grid-cols-3 gap-10" },
-        _vm._l(5, function(index) {
-          return _c("image-post", {
-            key: index,
-            attrs: { url: _vm.url, name: "name de prueba" }
-          })
-        }),
-        1
-      )
+      _vm.user.posts.length > 0
+        ? _c(
+            "article",
+            { staticClass: "mt-5 grid grid-cols-3 gap-10" },
+            _vm._l(_vm.user.posts, function(post, index) {
+              return _c("image-post", {
+                key: index,
+                attrs: { url: _vm.url, name: post.description }
+              })
+            }),
+            1
+          )
+        : _c("div", { staticClass: "w-full text-center text-3xl pt-10" }, [
+            _vm._v("No tiene publicaciones")
+          ])
     ])
   ])
 }
