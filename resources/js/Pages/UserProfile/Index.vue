@@ -2,12 +2,13 @@
     <app-layout>
         <div class="w-10/12">
             <div class="flex justify-center pb-10">
-                    <user-details class="flex w-9/12 justify-content-around" :followerscount="followers" :postscount="posts" :followedcount="followed" :imageurl="user.profile_photo_url" :user="user"></user-details>
+                    <user-details class="flex w-9/12 justify-content-around" :followerscount="followers" :postscount="postsCount" :followedcount="followed" :imageurl="user.profile_photo_url" :user="user"></user-details>
             </div>
             <div class="border-b border-gray-300"></div>
-            <article class="mt-5 grid grid-cols-3 gap-10">
-                <image-post v-for="index in 5" :url="url" name="name de prueba" :key="index"></image-post>
+            <article v-if="user.posts.length > 0" class="mt-5 grid grid-cols-3 gap-10">
+                <image-post v-for="(post,index) in user.posts" :url="url" name="name de prueba" :key="index"></image-post>
             </article>
+            <div v-else class="w-full text-center text-3xl pt-10">No tiene publicaciones</div>
         </div>
     </app-layout>
 </template>
@@ -31,7 +32,7 @@
         props: [
             'user',
             'followers',
-            'posts',
+            'postsCount',
             'followed'
         ],
     }
