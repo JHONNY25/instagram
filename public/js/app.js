@@ -62128,7 +62128,7 @@ var render = function() {
             _vm._l(_vm.user.posts, function(post, index) {
               return _c("image-post", {
                 key: index,
-                attrs: { url: _vm.url, name: "name de prueba" }
+                attrs: { url: _vm.url, name: post.description }
               })
             }),
             1
