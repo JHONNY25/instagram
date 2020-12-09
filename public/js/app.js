@@ -62070,7 +62070,8 @@ var render = function() {
     },
     [
       _c("img", {
-        staticClass: "w-full h-full object-cover",
+        staticClass:
+          "foto w-full h-full object-cover relative hover:opacity-75",
         attrs: { src: _vm.url, alt: _vm.name }
       })
     ]
