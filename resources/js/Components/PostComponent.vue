@@ -13,8 +13,8 @@
             </div>
         </header>
         <img class="w-full max-w-full min-w-full"
-            src="https://images.pexels.com/photos/5286173/pexels-photo-5286173.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
-            alt="Sunset in the mountains">
+            :src="post.image_path"
+            :alt="post.description">
 
         <div class="px-6 pt-4">
             <div class="mb-2">
