@@ -6,7 +6,7 @@
             </div>
             <div class="border-b border-gray-300"></div>
             <article v-if="user.posts.length > 0" class="mt-5 grid grid-cols-3 gap-10">
-                <image-post v-for="(post,index) in user.posts" :url="post.image_path" :name="post.description" :key="index"></image-post>
+                <image-post v-for="(post,index) in user.posts" :post="post" :key="index"></image-post>
             </article>
             <div v-else class="w-full text-center text-3xl pt-10">No tiene publicaciones</div>
         </div>

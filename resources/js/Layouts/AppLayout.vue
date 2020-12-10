@@ -1,6 +1,6 @@
 <template>
     <div class="min-h-screen" style="background-color: #fafafa">
-        <nav class="bg-white border-b border-gray-300 fixed top-0 left-0 right-0">
+        <nav class="bg-white border-b border-gray-300 fixed z-10 top-0 left-0 right-0">
             <!-- Primary Navigation Menu -->
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between h-16">
