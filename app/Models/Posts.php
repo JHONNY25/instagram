@@ -48,12 +48,8 @@ class Posts extends Model
         $name = $file->getClientOriginalName();
         $url = null;
 
-        if(!Storage::disk('public')->exists($name)){
-            Storage::disk('public')->put($name, $file);
-            $url = Storage::url($name);
-        }
-
-        $url = Storage::url($name);
+        $storage = Storage::disk('public')->put($name, $file);
+        $url = asset('storage/'.$storage);
 
         $post = (new static)::create([
             'image_path' => $url,
