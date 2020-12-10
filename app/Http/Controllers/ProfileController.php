@@ -19,7 +19,9 @@ class ProfileController extends Controller
 
     public function index($nick_name){
         $user = $this->user->with([
-            'posts'
+            'posts' => function($query){
+                $query->orderBy('created_at', 'desc');
+            }
         ])->where('nick_name',$nick_name)->first();
 
         $followers = $user->followers()->count();
