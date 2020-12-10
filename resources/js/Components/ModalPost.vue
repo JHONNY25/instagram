@@ -5,8 +5,8 @@
 
                 <div class="col-span-2 max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl">
                     <img class="w-full max-w-full min-w-full"
-                        src="https://images.pexels.com/photos/5286173/pexels-photo-5286173.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
-                        alt="Sunset in the mountains">
+                        :src="post.image_path"
+                        :alt="post.description">
                 </div>
 
                 <div class="col-span-1 relative">
@@ -147,12 +147,12 @@
     }
 
     .scroll::-webkit-scrollbar-track {
-        -webkit-box-shadow: inset 0 0 2px rgba(0,0,0,0.3); 
+        -webkit-box-shadow: inset 0 0 2px rgba(0,0,0,0.3);
         border-radius: 10px;
     }
 
     .scroll::-webkit-scrollbar-thumb {
         border-radius: 10px;
-        -webkit-box-shadow: inset 0 0 2px rgba(0,0,0,0.5); 
+        -webkit-box-shadow: inset 0 0 2px rgba(0,0,0,0.5);
     }
 </style>
