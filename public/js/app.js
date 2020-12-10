@@ -55515,11 +55515,7 @@ var render = function() {
             [
               _c("img", {
                 staticClass: "w-full max-w-full min-w-full",
-                attrs: {
-                  src:
-                    "https://images.pexels.com/photos/5286173/pexels-photo-5286173.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
-                  alt: "Sunset in the mountains"
-                }
+                attrs: { src: _vm.post.image_path, alt: _vm.post.description }
               })
             ]
           ),
@@ -55876,11 +55872,7 @@ var render = function() {
       _vm._v(" "),
       _c("img", {
         staticClass: "w-full max-w-full min-w-full",
-        attrs: {
-          src:
-            "https://images.pexels.com/photos/5286173/pexels-photo-5286173.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
-          alt: "Sunset in the mountains"
-        }
+        attrs: { src: _vm.post.image_path, alt: _vm.post.description }
       }),
       _vm._v(" "),
       _c("div", { staticClass: "px-6 pt-4" }, [
@@ -62128,7 +62120,7 @@ var render = function() {
             _vm._l(_vm.user.posts, function(post, index) {
               return _c("image-post", {
                 key: index,
-                attrs: { url: _vm.url, name: post.description }
+                attrs: { url: post.image_path, name: post.description }
               })
             }),
             1
