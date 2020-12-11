@@ -13,12 +13,12 @@
         </div>
         <div id="chat" class="w-full overflow-y-auto p-10" style="height: 700px;" ref="toolbarChat">
             <ul>
-                <div v-if="messages.lenght <= 0" class="w-full flex text-center">
-                    <div class="w-full px-5 py-2 my-2 text-white text-center text-3xl">
+                <div v-if="messages.length <= 0" class="w-full flex text-center">
+                    <div class="w-full px-5 py-2 my-2 text-gray-500 text-center text-3xl">
                         No existe una conversación, se el primero en conversar!!
                     </div>
                 </div>
-                <li v-for="(message,index) in messages" :key="index" class="clearfix2">
+                <li v-else v-for="(message,index) in messages" :key="index" class="clearfix2">
                     <div class="w-full flex" :class="[message.user_id === usercurrent ? 'justify-end' : 'justify-start']">
                         <div class="bg-gray-100 rounded px-5 py-2 my-2 text-gray-700 relative" style="max-width: 300px;">
                             <span class="block">{{ message.text }}</span>
