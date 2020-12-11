@@ -60,7 +60,7 @@
                         <div class="pt-4 pb-1 pr-3">
                             <div class="flex items-start">
                                 <textarea v-model="textComment" class="w-full resize-none outline-none appearance-none" aria-label="Agrega un comentario..." placeholder="Agrega un comentario..."  autocomplete="off" autocorrect="off" style="height: 36px;"></textarea>
-                                <button @click="postComment($page.user.id)" class="mb-2 focus:outline-none border-none bg-transparent text-blue-600">Publicar</button>
+                                <button v-if="textComment.length > 0" @click="postComment($page.user.id)" class="mb-2 focus:outline-none border-none bg-transparent text-blue-600">Publicar</button>
                             </div>
                         </div>
                     </div>
