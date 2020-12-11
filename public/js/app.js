@@ -2450,17 +2450,21 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    lastmessage: {
-      type: String,
-      required: false
-    },
-    messagedate: {
-      type: String,
+    message: {
+      type: Array,
       required: false
     },
     username: {
       type: String,
       required: true
+    },
+    chatid: {
+      type: Number,
+      required: false
+    },
+    userid: {
+      type: Number,
+      required: false
     },
     userimage: {
       type: String,
@@ -2470,6 +2474,13 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getDifferenceTime: function getDifferenceTime(date) {
       return moment__WEBPACK_IMPORTED_MODULE_0___default()(date).toNow(true);
+    },
+    emmitEvent: function emmitEvent() {
+      if (this.chatid) {
+        this.$emit('getChat', this.chatid);
+      } else {
+        this.$emit('getNewChat', this.userid);
+      }
     }
   }
 });
@@ -4180,7 +4191,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   props: ['chats'],
   methods: {
-    getChat: function getChat(username) {
+    getChat: function getChat(id) {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
@@ -4189,7 +4200,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios.get('/user-chats/' + username).then(function (response) {
+                return axios.get('/user-chats/' + id).then(function (response) {
                   _this.userchat = response.data;
                 })["catch"](function (error) {
                   return console.log(error);
@@ -4203,7 +4214,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }))();
     },
-    searchFriends: function searchFriends() {
+    getNewChat: function getNewChat(id) {
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
@@ -4211,31 +4222,54 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                if (!(_this2.search !== '')) {
-                  _context2.next = 5;
-                  break;
-                }
-
-                _context2.next = 3;
-                return axios.get('/users/chat/' + _this2.search).then(function (response) {
-                  _this2.userssearch = response.data;
+                _context2.next = 2;
+                return axios.get('/new-chat/' + id).then(function (response) {
+                  _this2.userchat = response.data;
                 })["catch"](function (error) {
                   return console.log(error);
                 });
 
-              case 3:
-                _context2.next = 6;
-                break;
-
-              case 5:
-                _this2.userssearch = [];
-
-              case 6:
+              case 2:
               case "end":
                 return _context2.stop();
             }
           }
         }, _callee2);
+      }))();
+    },
+    searchFriends: function searchFriends() {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                if (!(_this3.search !== '')) {
+                  _context3.next = 5;
+                  break;
+                }
+
+                _context3.next = 3;
+                return axios.get('/users/chat/' + _this3.search).then(function (response) {
+                  _this3.userssearch = response.data;
+                })["catch"](function (error) {
+                  return console.log(error);
+                });
+
+              case 3:
+                _context3.next = 6;
+                break;
+
+              case 5:
+                _this3.userssearch = [];
+
+              case 6:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
       }))();
     }
   }
@@ -5938,6 +5972,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -6098,7 +6133,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       show: false,
       showPost: false,
       imagepost: null,
-      textpost: null,
+      textpost: '',
       url: null,
       post: []
     };
@@ -55849,19 +55884,21 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass:
-                        "mb-2 focus:outline-none border-none bg-transparent text-blue-600",
-                      on: {
-                        click: function($event) {
-                          return _vm.postComment(_vm.$page.user.id)
-                        }
-                      }
-                    },
-                    [_vm._v("Publicar")]
-                  )
+                  _vm.textComment.length > 0
+                    ? _c(
+                        "button",
+                        {
+                          staticClass:
+                            "mb-2 focus:outline-none border-none bg-transparent text-blue-600",
+                          on: {
+                            click: function($event) {
+                              return _vm.postComment(_vm.$page.user.id)
+                            }
+                          }
+                        },
+                        [_vm._v("Publicar")]
+                      )
+                    : _vm._e()
                 ])
               ])
             ])
@@ -56112,19 +56149,21 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass:
-                "mb-2 focus:outline-none border-none bg-transparent text-blue-600",
-              on: {
-                click: function($event) {
-                  return _vm.postComment(_vm.$page.user.id)
-                }
-              }
-            },
-            [_vm._v("Publicar")]
-          )
+          _vm.textComment.length > 0
+            ? _c(
+                "button",
+                {
+                  staticClass:
+                    "mb-2 focus:outline-none border-none bg-transparent text-blue-600",
+                  on: {
+                    click: function($event) {
+                      return _vm.postComment(_vm.$page.user.id)
+                    }
+                  }
+                },
+                [_vm._v("Publicar")]
+              )
+            : _vm._e()
         ])
       ])
     ]
@@ -56157,11 +56196,7 @@ var render = function() {
     {
       staticClass:
         "hover:bg-gray-100 border-b border-gray-300 px-3 py-2 cursor-pointer flex items-center text-sm focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out",
-      on: {
-        click: function($event) {
-          return _vm.$emit("getchat", _vm.username)
-        }
-      }
+      on: { click: _vm.emmitEvent }
     },
     [
       _c("img", {
@@ -56179,21 +56214,23 @@ var render = function() {
             [_vm._v(_vm._s(_vm.username))]
           ),
           _vm._v(" "),
-          _c("span", { staticClass: "block ml-2 text-sm text-gray-600" }, [
-            _vm._v(
-              " " +
-                _vm._s(
-                  _vm.messagedate
-                    ? "Hace " + _vm.getDifferenceTime(_vm.messagedate)
-                    : ""
+          _vm.message.length > 0
+            ? _c("span", { staticClass: "block ml-2 text-sm text-gray-600" }, [
+                _vm._v(
+                  " " +
+                    _vm._s(
+                      "Hace " + _vm.getDifferenceTime(_vm.message[0].send_date)
+                    )
                 )
-            )
-          ])
+              ])
+            : _vm._e()
         ]),
         _vm._v(" "),
-        _c("span", { staticClass: "block ml-2 text-sm text-gray-600" }, [
-          _vm._v(_vm._s(_vm.lastmessage))
-        ])
+        _vm.message.length > 0
+          ? _c("span", { staticClass: "block ml-2 text-sm text-gray-600" }, [
+              _vm._v(_vm._s(_vm.message[0].text))
+            ])
+          : _vm._e()
       ])
     ]
   )
@@ -59004,13 +59041,13 @@ var render = function() {
         _c(
           "ul",
           [
-            _vm.messages.lenght <= 0
+            _vm.messages.length <= 0
               ? _c("div", { staticClass: "w-full flex text-center" }, [
                   _c(
                     "div",
                     {
                       staticClass:
-                        "w-full px-5 py-2 my-2 text-white text-center text-3xl"
+                        "w-full px-5 py-2 my-2 text-gray-500 text-center text-3xl"
                     },
                     [
                       _vm._v(
@@ -59019,64 +59056,62 @@ var render = function() {
                     ]
                   )
                 ])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm._l(_vm.messages, function(message, index) {
-              return _c("li", { key: index, staticClass: "clearfix2" }, [
-                _c(
-                  "div",
-                  {
-                    staticClass: "w-full flex",
-                    class: [
-                      message.user_id === _vm.usercurrent
-                        ? "justify-end"
-                        : "justify-start"
-                    ]
-                  },
-                  [
+              : _vm._l(_vm.messages, function(message, index) {
+                  return _c("li", { key: index, staticClass: "clearfix2" }, [
                     _c(
                       "div",
                       {
-                        staticClass:
-                          "bg-gray-100 rounded px-5 py-2 my-2 text-gray-700 relative",
-                        staticStyle: { "max-width": "300px" }
+                        staticClass: "w-full flex",
+                        class: [
+                          message.user_id === _vm.usercurrent
+                            ? "justify-end"
+                            : "justify-start"
+                        ]
                       },
                       [
-                        _c("span", { staticClass: "block" }, [
-                          _vm._v(_vm._s(message.text))
-                        ]),
-                        _vm._v(" "),
                         _c(
-                          "span",
+                          "div",
                           {
-                            staticClass: "block text-xs",
-                            class: [
-                              message.user_id === _vm.usercurrent
-                                ? "text-right"
-                                : "text-left"
-                            ]
+                            staticClass:
+                              "bg-gray-100 rounded px-5 py-2 my-2 text-gray-700 relative",
+                            staticStyle: { "max-width": "300px" }
                           },
                           [
-                            _vm._v(
-                              _vm._s(_vm.getHoursByDate(message.send_date))
-                            )
+                            _c("span", { staticClass: "block" }, [
+                              _vm._v(_vm._s(message.text))
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              {
+                                staticClass: "block text-xs",
+                                class: [
+                                  message.user_id === _vm.usercurrent
+                                    ? "text-right"
+                                    : "text-left"
+                                ]
+                              },
+                              [
+                                _vm._v(
+                                  _vm._s(_vm.getHoursByDate(message.send_date))
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("div", {
+                              staticClass: "absolute w-0 h-0",
+                              staticStyle: {
+                                "border-bottom": "15px solid transparent",
+                                top: "0"
+                              },
+                              style: _vm.getStylesMessage(message)
+                            })
                           ]
-                        ),
-                        _vm._v(" "),
-                        _c("div", {
-                          staticClass: "absolute w-0 h-0",
-                          staticStyle: {
-                            "border-bottom": "15px solid transparent",
-                            top: "0"
-                          },
-                          style: _vm.getStylesMessage(message)
-                        })
+                        )
                       ]
                     )
-                  ]
-                )
-              ])
-            })
+                  ])
+                })
           ],
           2
         ),
@@ -59352,9 +59387,11 @@ var render = function() {
                                   _c("users-chats", {
                                     attrs: {
                                       username: user.nick_name,
+                                      userid: user.id,
+                                      message: [],
                                       userimage: user.profile_photo_url
                                     },
-                                    on: { getchat: _vm.getChat }
+                                    on: { getNewChat: _vm.getNewChat }
                                   })
                                 ],
                                 1
@@ -59395,8 +59432,8 @@ var render = function() {
                           [
                             _c("users-chats", {
                               attrs: {
-                                lastmessage: chat.messages[0].text,
-                                messagedate: chat.messages[0].send_date,
+                                message: chat.messages,
+                                chatid: chat.id,
                                 username:
                                   chat.userrecive.id === _vm.$page.user.id
                                     ? chat.usersent.nick_name
@@ -59406,7 +59443,7 @@ var render = function() {
                                     ? chat.usersent.profile_photo_url
                                     : chat.userrecive.profile_photo_url
                               },
-                              on: { getchat: _vm.getChat }
+                              on: { getChat: _vm.getChat }
                             })
                           ],
                           1
@@ -62298,6 +62335,18 @@ var render = function() {
           [_vm._v(" " + _vm._s(_vm.user.nick_name))]
         ),
         _vm._v(" "),
+        _vm.userLoggedIn.id !== _vm.user.id
+          ? _c(
+              "a",
+              {
+                staticClass:
+                  "cursor-pointer h-7 px-3 ml-3 outline-none border-transparent text-center rounded border bg-blue-500 hover:bg-blue-600 text-white bg-transparent font-semibold",
+                attrs: { href: "user/profile" }
+              },
+              [_vm._v("Enviar mensaje")]
+            )
+          : _vm._e(),
+        _vm._v(" "),
         _vm.userLoggedIn.id === _vm.user.id
           ? _c(
               "a",
@@ -62600,16 +62649,18 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass:
-                  "flex justify-center w-full outline-none focus:outline-none my-3 text-center bg-blue-500  hover:bg-blue-600 rounded text-white py-2",
-                attrs: { type: "submit" },
-                on: { click: _vm.createPost }
-              },
-              [_vm._v("Publicar")]
-            )
+            _vm.textpost.length > 0 && _vm.imagepost !== null
+              ? _c(
+                  "button",
+                  {
+                    staticClass:
+                      "flex justify-center w-full outline-none focus:outline-none my-3 text-center bg-blue-500  hover:bg-blue-600 rounded text-white py-2",
+                    attrs: { type: "submit" },
+                    on: { click: _vm.createPost }
+                  },
+                  [_vm._v("Publicar")]
+                )
+              : _vm._e()
           ])
         ]
       )

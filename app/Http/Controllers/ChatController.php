@@ -35,20 +35,24 @@ class ChatController extends Controller
         ]);
     }
 
-    public function getChat($nick_name){
-        if($this->user->where('nick_name',$nick_name)->exists()){
-            $user = $this->user->where('nick_name',$nick_name)->first();
+    public function getChat($id){
 
-            return $this->chat->with([
-                'userrecive:id,name,nick_name,profile_photo_path,status',
-                'usersent:id,name,nick_name,profile_photo_path,status',
-                'messages'
-            ])->where('user_recive',$user->id)
-            ->orWhere('user_sent',$user->id)
-            ->first();
-        }else{
-            return response()->json(['error' => 'No se encontro el usuario']);
-        }
+        return $this->chat->with([
+                    'userrecive:id,name,nick_name,profile_photo_path,status',
+                    'usersent:id,name,nick_name,profile_photo_path,status',
+                    'messages'
+                ])->where('id',$id)
+                ->first();
+    }
+    
+    public function getNewChat($id){
+
+        $chat = $this->chat->create([
+            'user_recive' => $id,
+            'user_sent' => auth()->user()->id,
+        ]);
+
+        return $this->getChat($chat->id);
     }
 
     public function sendMessage(Request $request){

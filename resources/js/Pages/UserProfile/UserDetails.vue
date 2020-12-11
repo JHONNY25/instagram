@@ -6,6 +6,7 @@
         <div class="ml-10">
             <div class="flex items-center">
                 <h2 class="block leading-relaxed font-light text-gray-700 text-3xl"> {{ user.nick_name }}</h2>
+                <a v-if="userLoggedIn.id !== user.id" href="user/profile" class="cursor-pointer h-7 px-3 ml-3 outline-none border-transparent text-center rounded border bg-blue-500 hover:bg-blue-600 text-white bg-transparent font-semibold">Enviar mensaje</a>
                 <a v-if="userLoggedIn.id === user.id" href="user/profile" class="cursor-pointer h-7 px-3 ml-3 focus:outline-none hover:border-transparent text-center rounded border border-gray-400 hover:bg-blue-500 hover:text-white bg-transparent text-gray-500 font-semibold">Editar perfil</a>
                 <div v-else>
                     <a v-if="followState" @click="unFollow" class="cursor-pointer h-7 px-3 ml-3 focus:outline-none hover:border-transparent text-center rounded border border-gray-400 hover:bg-blue-500 hover:text-white bg-transparent text-gray-500 font-semibold">Dejar de Seguir</a>

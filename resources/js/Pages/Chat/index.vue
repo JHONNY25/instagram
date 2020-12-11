@@ -18,8 +18,8 @@
                             <ul class="overflow-auto" style="max-height: 400px;">
                                 <span v-if="userssearch.length === 0" class="block text-center my-2 mx-2 text-sm text-gray-600">No se encontro el usuario.</span>
                                 <li v-else v-for="(user,index) in userssearch" :key="index">
-                                    <users-chats :username="user.nick_name"
-                                    :userimage="user.profile_photo_url" @getchat="getChat"></users-chats>
+                                    <users-chats :username="user.nick_name" :userid="user.id" :message="[]"
+                                    :userimage="user.profile_photo_url" @getNewChat="getNewChat"></users-chats>
                                 </li>
                             </ul>
                         </div>
@@ -28,9 +28,9 @@
                             <h2 class="ml-2 mb-2 text-gray-600 text-lg my-2">Chats</h2>
                             <span v-if="chats.length === 0" class="block text-center my-2 mx-2 text-sm text-gray-600">No tienes conversaciones.</span>
                             <li v-else v-for="(chat,index) in chats" :key="index">
-                                <users-chats :lastmessage="chat.messages[0].text"
-                                :messagedate="chat.messages[0].send_date" :username="chat.userrecive.id === $page.user.id ? chat.usersent.nick_name : chat.userrecive.nick_name"
-                                :userimage="chat.userrecive.id === $page.user.id ? chat.usersent.profile_photo_url : chat.userrecive.profile_photo_url " @getchat="getChat"></users-chats>
+                                <users-chats :message="chat.messages" :chatid="chat.id"
+                                :username="chat.userrecive.id === $page.user.id ? chat.usersent.nick_name : chat.userrecive.nick_name"
+                                :userimage="chat.userrecive.id === $page.user.id ? chat.usersent.profile_photo_url : chat.userrecive.profile_photo_url " @getChat="getChat"></users-chats>
                             </li>
                         </ul>
                     </div>
@@ -78,8 +78,15 @@
             'chats',
         ],
         methods:{
-            async getChat(username){
-                await axios.get('/user-chats/'+username)
+            async getChat(id){
+                await axios.get('/user-chats/'+id)
+                .then(response => {
+                    this.userchat = response.data
+                })
+                .catch(error => console.log(error))
+            },
+            async getNewChat(id){
+                await axios.get('/new-chat/'+id)
                 .then(response => {
                     this.userchat = response.data
                 })
