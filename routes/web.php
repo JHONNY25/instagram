@@ -45,7 +45,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('/post-comment', [PostController::class,'comment'])->name('post-comment');
 
     Route::get('/user-chats', [ChatController::class,'index'])->name('get-chats');
-    Route::get('/user-chats/{nick_name}', [ChatController::class,'getChat'])->name('get-chat-user');
+    Route::get('/user-chats/{id}', [ChatController::class,'getChat'])->name('get-chat-user');
+    Route::get('/new-chat/{id}', [ChatController::class,'getNewChat'])->name('get-chat-new-user');
     Route::post('/chat/send-message', [ChatController::class,'sendMessage'])->name('create-message');
 
     Route::post('/user/{userid}/online', OnlineController::class)->name('user-online');
