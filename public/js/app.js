@@ -5938,6 +5938,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -6098,7 +6099,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       show: false,
       showPost: false,
       imagepost: null,
-      textpost: null,
+      textpost: '',
       url: null,
       post: []
     };
@@ -55849,19 +55850,21 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass:
-                        "mb-2 focus:outline-none border-none bg-transparent text-blue-600",
-                      on: {
-                        click: function($event) {
-                          return _vm.postComment(_vm.$page.user.id)
-                        }
-                      }
-                    },
-                    [_vm._v("Publicar")]
-                  )
+                  _vm.textComment.length > 0
+                    ? _c(
+                        "button",
+                        {
+                          staticClass:
+                            "mb-2 focus:outline-none border-none bg-transparent text-blue-600",
+                          on: {
+                            click: function($event) {
+                              return _vm.postComment(_vm.$page.user.id)
+                            }
+                          }
+                        },
+                        [_vm._v("Publicar")]
+                      )
+                    : _vm._e()
                 ])
               ])
             ])
@@ -56112,19 +56115,21 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass:
-                "mb-2 focus:outline-none border-none bg-transparent text-blue-600",
-              on: {
-                click: function($event) {
-                  return _vm.postComment(_vm.$page.user.id)
-                }
-              }
-            },
-            [_vm._v("Publicar")]
-          )
+          _vm.textComment.length > 0
+            ? _c(
+                "button",
+                {
+                  staticClass:
+                    "mb-2 focus:outline-none border-none bg-transparent text-blue-600",
+                  on: {
+                    click: function($event) {
+                      return _vm.postComment(_vm.$page.user.id)
+                    }
+                  }
+                },
+                [_vm._v("Publicar")]
+              )
+            : _vm._e()
         ])
       ])
     ]
@@ -62298,6 +62303,18 @@ var render = function() {
           [_vm._v(" " + _vm._s(_vm.user.nick_name))]
         ),
         _vm._v(" "),
+        _vm.userLoggedIn.id !== _vm.user.id
+          ? _c(
+              "a",
+              {
+                staticClass:
+                  "cursor-pointer h-7 px-3 ml-3 outline-none border-transparent text-center rounded border bg-blue-500 hover:bg-blue-600 text-white bg-transparent font-semibold",
+                attrs: { href: "user/profile" }
+              },
+              [_vm._v("Enviar mensaje")]
+            )
+          : _vm._e(),
+        _vm._v(" "),
         _vm.userLoggedIn.id === _vm.user.id
           ? _c(
               "a",
@@ -62600,16 +62617,18 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass:
-                  "flex justify-center w-full outline-none focus:outline-none my-3 text-center bg-blue-500  hover:bg-blue-600 rounded text-white py-2",
-                attrs: { type: "submit" },
-                on: { click: _vm.createPost }
-              },
-              [_vm._v("Publicar")]
-            )
+            _vm.textpost.length > 0 && _vm.imagepost !== null
+              ? _c(
+                  "button",
+                  {
+                    staticClass:
+                      "flex justify-center w-full outline-none focus:outline-none my-3 text-center bg-blue-500  hover:bg-blue-600 rounded text-white py-2",
+                    attrs: { type: "submit" },
+                    on: { click: _vm.createPost }
+                  },
+                  [_vm._v("Publicar")]
+                )
+              : _vm._e()
           ])
         ]
       )
