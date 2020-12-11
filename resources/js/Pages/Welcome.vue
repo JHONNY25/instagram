@@ -25,7 +25,7 @@
                         <input @change="fileChange" id="image" type="file" name="image" accept="image/gif,image/jpeg,image/jpg,image/png" style="display: none"/>
                     </div>
                 </div>
-                <button type="submit" class="flex justify-center w-full outline-none focus:outline-none my-3 text-center bg-blue-500  hover:bg-blue-600 rounded text-white py-2" @click="createPost">Publicar</button>
+                <button v-if="textpost.length > 0 && imagepost !== null" type="submit" class="flex justify-center w-full outline-none focus:outline-none my-3 text-center bg-blue-500  hover:bg-blue-600 rounded text-white py-2" @click="createPost">Publicar</button>
             </div>
         </modal>
     </div>
@@ -44,7 +44,7 @@
                 show: false,
                 showPost: false,
                 imagepost: null,
-                textpost: null,
+                textpost: '',
                 url: null,
                 post: [],
             }
