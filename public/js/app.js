@@ -60791,7 +60791,7 @@ var render = function() {
               { staticClass: "col-span-6 sm:col-span-4" },
               [
                 _c("jet-label", {
-                  attrs: { for: "nick_name", value: "nick_name" }
+                  attrs: { for: "nick_name", value: "Nick name" }
                 }),
                 _vm._v(" "),
                 _c("jet-input", {
@@ -60819,7 +60819,7 @@ var render = function() {
               { staticClass: "col-span-6 sm:col-span-4" },
               [
                 _c("jet-label", {
-                  attrs: { for: "web_site", value: "web_site" }
+                  attrs: { for: "web_site", value: "Web site" }
                 }),
                 _vm._v(" "),
                 _c("jet-input", {
@@ -60851,7 +60851,7 @@ var render = function() {
               { staticClass: "col-span-6 sm:col-span-4" },
               [
                 _c("jet-label", {
-                  attrs: { for: "presentation", value: "presentation" }
+                  attrs: { for: "presentation", value: "Presentation" }
                 }),
                 _vm._v(" "),
                 _c("jet-input", {
