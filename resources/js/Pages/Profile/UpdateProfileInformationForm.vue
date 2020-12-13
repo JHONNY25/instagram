@@ -50,21 +50,21 @@
 
             <!-- Nick name -->
             <div class="col-span-6 sm:col-span-4">
-                <jet-label for="nick_name" value="nick_name" />
+                <jet-label for="nick_name" value="Nick name" />
                 <jet-input id="nick_name" type="text" class="mt-1 block w-full" v-model="form.nick_name"/>
                 <jet-input-error :message="form.error('nick_name')" class="mt-2" />
             </div>
 
             <!-- Web site -->
             <div class="col-span-6 sm:col-span-4">
-                <jet-label for="web_site" value="web_site" />
+                <jet-label for="web_site" value="Web site" />
                 <jet-input id="web_site" type="text" class="mt-1 block w-full" v-model="form.web_site" autocomplete="web_site" />
                 <jet-input-error :message="form.error('web_site')" class="mt-2" />
             </div>
 
             <!-- Presentation -->
             <div class="col-span-6 sm:col-span-4">
-                <jet-label for="presentation" value="presentation" />
+                <jet-label for="presentation" value="Presentation" />
                 <jet-input id="presentation" type="text" class="mt-1 block w-full" v-model="form.presentation" />
                 <jet-input-error :message="form.error('presentation')" class="mt-2" />
             </div>
