@@ -4641,6 +4641,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -5024,6 +5028,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -5041,13 +5066,16 @@ __webpack_require__.r(__webpack_exports__);
     JetLabel: _Jetstream_Label__WEBPACK_IMPORTED_MODULE_4__["default"],
     JetSecondaryButton: _Jetstream_SecondaryButton__WEBPACK_IMPORTED_MODULE_6__["default"]
   },
-  props: ['name', 'email'],
+  props: ['name', 'email', 'nick_name', 'web_site', 'presentation'],
   data: function data() {
     return {
       form: this.$inertia.form({
         '_method': 'PUT',
         name: this.name,
         email: this.email,
+        nick_name: this.nick_name,
+        web_site: this.web_site,
+        presentation: this.presentation,
         photo: null
       }, {
         bag: 'updateProfileInformation',
@@ -60119,7 +60147,13 @@ var render = function() {
           { staticClass: "max-w-7xl mx-auto py-10 sm:px-6 lg:px-8" },
           [
             _c("update-profile-information-form", {
-              attrs: { name: _vm.$page.user.name, email: _vm.$page.user.email }
+              attrs: {
+                name: _vm.$page.user.name,
+                email: _vm.$page.user.email,
+                nick_name: _vm.$page.user.nick_name,
+                web_site: _vm.$page.user.web_site,
+                presentation: _vm.$page.user.presentation
+              }
             }),
             _vm._v(" "),
             _c("jet-section-border"),
@@ -60747,6 +60781,94 @@ var render = function() {
                 _c("jet-input-error", {
                   staticClass: "mt-2",
                   attrs: { message: _vm.form.error("name") }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "col-span-6 sm:col-span-4" },
+              [
+                _c("jet-label", {
+                  attrs: { for: "nick_name", value: "nick_name" }
+                }),
+                _vm._v(" "),
+                _c("jet-input", {
+                  staticClass: "mt-1 block w-full",
+                  attrs: { id: "nick_name", type: "text" },
+                  model: {
+                    value: _vm.form.nick_name,
+                    callback: function($$v) {
+                      _vm.$set(_vm.form, "nick_name", $$v)
+                    },
+                    expression: "form.nick_name"
+                  }
+                }),
+                _vm._v(" "),
+                _c("jet-input-error", {
+                  staticClass: "mt-2",
+                  attrs: { message: _vm.form.error("nick_name") }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "col-span-6 sm:col-span-4" },
+              [
+                _c("jet-label", {
+                  attrs: { for: "web_site", value: "web_site" }
+                }),
+                _vm._v(" "),
+                _c("jet-input", {
+                  staticClass: "mt-1 block w-full",
+                  attrs: {
+                    id: "web_site",
+                    type: "text",
+                    autocomplete: "web_site"
+                  },
+                  model: {
+                    value: _vm.form.web_site,
+                    callback: function($$v) {
+                      _vm.$set(_vm.form, "web_site", $$v)
+                    },
+                    expression: "form.web_site"
+                  }
+                }),
+                _vm._v(" "),
+                _c("jet-input-error", {
+                  staticClass: "mt-2",
+                  attrs: { message: _vm.form.error("web_site") }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "col-span-6 sm:col-span-4" },
+              [
+                _c("jet-label", {
+                  attrs: { for: "presentation", value: "presentation" }
+                }),
+                _vm._v(" "),
+                _c("jet-input", {
+                  staticClass: "mt-1 block w-full",
+                  attrs: { id: "presentation", type: "text" },
+                  model: {
+                    value: _vm.form.presentation,
+                    callback: function($$v) {
+                      _vm.$set(_vm.form, "presentation", $$v)
+                    },
+                    expression: "form.presentation"
+                  }
+                }),
+                _vm._v(" "),
+                _c("jet-input-error", {
+                  staticClass: "mt-2",
+                  attrs: { message: _vm.form.error("presentation") }
                 })
               ],
               1
