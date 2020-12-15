@@ -35,6 +35,27 @@ class ChatController extends Controller
         ]);
     }
 
+    public function directInbox($id){
+        $chatQuery = null;
+        $chat = null;
+
+        if(!$this->chat->where('user_sent',Auth::id())->where('user_recive',$id)->exists()){
+            if($this->chat->where('user_sent',$id)->where('user_recive',Auth::id())->exists()){
+                $chatQuery = $this->chat->select('id')->where('user_sent',$id)->where('user_recive',Auth::id())->first();
+                $chat = $this->getChat($chatQuery->id);
+            }else{
+                $chat = $this->getNewChat($id);
+            }
+        }else{
+            $chatQuery = $this->chat->select('id')->where('user_sent',Auth::id())->where('user_recive',$id)->first();
+            $chat = $this->getChat($chatQuery->id);
+        }
+
+        return Inertia::render('Chat/DirectInbox',[
+            'chat' => $chat
+        ]);
+    }
+
     public function getChat($id){
 
         return $this->chat->with([
@@ -44,20 +65,17 @@ class ChatController extends Controller
                 ])->where('id',$id)
                 ->first();
     }
-    
+
     public function getNewChat($id){
 
-        $chat = $this->chat->create([
-            'user_recive' => $id,
-            'user_sent' => auth()->user()->id,
-        ]);
+        $chat = $this->chat->createChat($id);
 
         return $this->getChat($chat->id);
     }
 
     public function sendMessage(Request $request){
         try{
-            
+
             $message = $this->message->sendMessage($request);
 
             event(new SendMessageEvent($message));
