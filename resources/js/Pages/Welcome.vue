@@ -2,8 +2,10 @@
     <div class="max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl w-full">
         <button class="flex justify-center w-full mb-5 text-center bg-blue-500 rounded text-white py-2 outline-none focus:outline-none hover:bg-blue-600" @click="changeStateShowCreatePost">Agregar publicación</button>
 
-        <post-component v-if="posts.length > 0" v-for="(post,index) in posts" :key="index"
-        @show="changeStateShowAndSetPost" :post="post"></post-component>
+        <div v-if="posts.length > 0">
+            <post-component v-for="(post,index) in posts" :key="index"
+            @show="changeStateShowAndSetPost" :post="post"></post-component>
+        </div>
 
         <div v-else class="text-3xl">No hay publicaciones</div>
 
@@ -84,7 +86,7 @@
             resetData(){
                 this.showPost = false
                 this.imagepost = null
-                this.textpost = null
+                this.textpost = ''
                 this.url = null
             },
             async createPost(){
