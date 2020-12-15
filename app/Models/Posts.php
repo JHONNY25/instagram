@@ -72,6 +72,10 @@ class Posts extends Model
             'comments' => function($query){
                 $query->with('user:id,name,nick_name,profile_photo_path');
             }
-        ])->orderBy('created_at', 'desc')->get();
+        ])
+        ->where('user_id',Auth::id())
+        ->orWhereIn('user_id',Followers::select('user_id')->where('follower_id',Auth::id())->get())
+        ->orderBy('created_at', 'desc')
+        ->get();
     }
 }
