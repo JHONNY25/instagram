@@ -26,4 +26,11 @@ class Chat extends Model
     public function messages(){
         return $this->hasMany(Messages::class,'chat_id');
     }
+
+    public static function createChat($id){
+        return (new static)::create([
+            'user_recive' => $id,
+            'user_sent' => auth()->user()->id,
+        ]);
+    }
 }
