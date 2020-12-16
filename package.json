@@ -26,9 +26,11 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "@inertiajs/progress": "^0.2.3",
         "laravel-echo": "^1.9.0",
         "moment": "^2.29.1",
         "moment-timezone": "^0.5.31",
+        "nprogress": "^0.2.0",
         "pusher-js": "^7.0.0",
         "vue-axios": "^3.0.1",
         "vue-moment": "^4.1.0",
