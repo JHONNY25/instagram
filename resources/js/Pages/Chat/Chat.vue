@@ -38,11 +38,14 @@
         </div>
 
         <div class="w-full py-3 px-3 flex items-center justify-between border-t border-gray-300">
-            <button class="outline-none focus:outline-none">
+            <button @click="dispatchInputFile" class="outline-none focus:outline-none">
                 <svg class="text-gray-400 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
                 </svg>
             </button>
+            
+            <input @change="fileChange" id="chatfiles" type="file" name="file" style="display: none"/>
+
             <input v-model="message" @keydown="isTyping" @keyup.enter="sendMessage" aria-placeholder="Escribe un mensaje aquí" placeholder="Escribe un mensaje aquí"
                 class="py-2 mx-3 pl-5 block w-full rounded-full bg-gray-100 outline-none focus:text-gray-700" type="text" name="message" required/>
 
@@ -65,6 +68,8 @@
                 typing: false,
                 usertyping: '',
                 user: this.userprop,
+                file: null,
+                url: null,
             }
         },
         props:{
@@ -80,8 +85,16 @@
             chatid: Number
         },
         methods:{
+            dispatchInputFile(){
+                document.getElementById('chatfiles').click()
+            },
+            fileChange(e){
+                const file = e.target.files[0]
+                this.file = file
+                this.url = URL.createObjectURL(file)
+            },
             getHoursByDate(date){
-                return moment(date).format('h:m A');
+                return moment(date).format('h:m A')
             },
             getStylesMessage(message){
                 return message.user_id === this.usercurrent ? 'right: -25px; border-left: 15px solid #f4f5f7; border-right: 15px solid transparent;'
