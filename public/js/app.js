@@ -3977,6 +3977,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -3984,7 +3987,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       message: '',
       typing: false,
       usertyping: '',
-      user: this.userprop
+      user: this.userprop,
+      file: null,
+      url: null
     };
   },
   props: {
@@ -4000,6 +4005,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     chatid: Number
   },
   methods: {
+    dispatchInputFile: function dispatchInputFile() {
+      document.getElementById('chatfiles').click();
+    },
+    fileChange: function fileChange(e) {
+      var file = e.target.files[0];
+      this.file = file;
+      this.url = URL.createObjectURL(file);
+    },
     getHoursByDate: function getHoursByDate(date) {
       return moment__WEBPACK_IMPORTED_MODULE_1___default()(date).format('h:m A');
     },
@@ -59225,31 +59238,44 @@ var render = function() {
           "w-full py-3 px-3 flex items-center justify-between border-t border-gray-300"
       },
       [
-        _c("button", { staticClass: "outline-none focus:outline-none" }, [
-          _c(
-            "svg",
-            {
-              staticClass: "text-gray-400 h-6 w-6",
-              attrs: {
-                xmlns: "http://www.w3.org/2000/svg",
-                fill: "none",
-                viewBox: "0 0 24 24",
-                stroke: "currentColor"
-              }
-            },
-            [
-              _c("path", {
+        _c(
+          "button",
+          {
+            staticClass: "outline-none focus:outline-none",
+            on: { click: _vm.dispatchInputFile }
+          },
+          [
+            _c(
+              "svg",
+              {
+                staticClass: "text-gray-400 h-6 w-6",
                 attrs: {
-                  "stroke-linecap": "round",
-                  "stroke-linejoin": "round",
-                  "stroke-width": "2",
-                  d:
-                    "M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"
+                  xmlns: "http://www.w3.org/2000/svg",
+                  fill: "none",
+                  viewBox: "0 0 24 24",
+                  stroke: "currentColor"
                 }
-              })
-            ]
-          )
-        ]),
+              },
+              [
+                _c("path", {
+                  attrs: {
+                    "stroke-linecap": "round",
+                    "stroke-linejoin": "round",
+                    "stroke-width": "2",
+                    d:
+                      "M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"
+                  }
+                })
+              ]
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c("input", {
+          staticStyle: { display: "none" },
+          attrs: { id: "chatfiles", type: "file", name: "file" },
+          on: { change: _vm.fileChange }
+        }),
         _vm._v(" "),
         _c("input", {
           directives: [
@@ -83317,7 +83343,7 @@ _inertiajs_progress__WEBPACK_IMPORTED_MODULE_6__["InertiaProgress"].init({
   // Whether to include the default NProgress styles.
   includeCSS: true,
   // Whether the NProgress spinner will be shown.
-  showSpinner: true
+  showSpinner: false
 });
 new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   render: function render(h) {
