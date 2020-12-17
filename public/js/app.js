@@ -3980,6 +3980,39 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -59204,7 +59237,130 @@ var render = function() {
                       ]
                     )
                   ])
-                })
+                }),
+            _vm._v(" "),
+            _vm.url
+              ? _c("li", { staticClass: "clearfix2" }, [
+                  _c("div", { staticClass: "w-full flex justify-end" }, [
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "bg-gray-100 rounded px-5 py-2 my-2 text-gray-700"
+                      },
+                      [
+                        _c(
+                          "div",
+                          { staticStyle: { width: "300px", height: "200px" } },
+                          [
+                            _c("img", {
+                              staticClass:
+                                "w-full max-w-full min-w-full min-h-full",
+                              attrs: { src: _vm.url }
+                            })
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "span",
+                          { staticClass: "block text-xs text-right" },
+                          [_vm._v("10:33 am")]
+                        )
+                      ]
+                    )
+                  ])
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.url
+              ? _c("li", { staticClass: "clearfix2" }, [
+                  _c("div", { staticClass: "w-full flex justify-end" }, [
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "bg-gray-100 rounded px-5 py-2 my-2 text-gray-700"
+                      },
+                      [
+                        _c("div", [
+                          _c(
+                            "div",
+                            {
+                              staticClass: "rounded-t-lg",
+                              staticStyle: { width: "300px", height: "200px" }
+                            },
+                            [
+                              _c("iframe", {
+                                staticClass:
+                                  "rounded-t-lg w-full max-w-full min-w-full min-h-full",
+                                attrs: {
+                                  src: _vm.url,
+                                  frameborder: "0",
+                                  border: "0",
+                                  cellspacing: "0",
+                                  scrolling: "no"
+                                }
+                              })
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "rounded-b-lg bg-gray-800 flex items-center p-4 justify-between",
+                              staticStyle: { width: "300px" }
+                            },
+                            [
+                              _c("btn", { staticClass: "cursor-pointer" }, [
+                                _c(
+                                  "svg",
+                                  {
+                                    staticClass: "h-5 w-5 text-white",
+                                    attrs: {
+                                      xmlns: "http://www.w3.org/2000/svg",
+                                      fill: "none",
+                                      viewBox: "0 0 24 24",
+                                      stroke: "currentColor"
+                                    }
+                                  },
+                                  [
+                                    _c("path", {
+                                      attrs: {
+                                        "stroke-linecap": "round",
+                                        "stroke-linejoin": "round",
+                                        "stroke-width": "2",
+                                        d:
+                                          "M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                                      }
+                                    })
+                                  ]
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "text-white block",
+                                  attrs: { href: "" }
+                                },
+                                [_vm._v("Documento js")]
+                              )
+                            ],
+                            1
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "span",
+                          { staticClass: "block text-xs text-right" },
+                          [_vm._v("10:33 am")]
+                        )
+                      ]
+                    )
+                  ])
+                ])
+              : _vm._e()
           ],
           2
         ),
