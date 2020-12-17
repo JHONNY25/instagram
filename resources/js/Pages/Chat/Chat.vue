@@ -42,7 +42,27 @@
                     </div>
                 </li>
 
-                
+                <li v-if="url" class="clearfix2">
+                    <div class="w-full flex justify-end">
+                        <div class="bg-gray-100 rounded px-5 py-2 my-2 text-gray-700">
+                            <div>
+                                <div class="rounded-t-lg" style="width: 300px; height: 200px;">
+                                    <iframe class="rounded-t-lg w-full max-w-full min-w-full min-h-full" :src="url" 
+                                    frameborder="0" border="0" cellspacing="0" scrolling="no"></iframe>
+                                </div>
+                                <div class="rounded-b-lg bg-gray-800 flex items-center p-4 justify-between" style="width: 300px;">
+                                    <btn class="cursor-pointer">
+                                        <svg class="h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                        </svg>
+                                    </btn>
+                                    <a href="" class="text-white block">Documento js</a>
+                                </div>
+                            </div>
+                            <span class="block text-xs text-right">10:33 am</span>
+                        </div>
+                    </div>
+                </li>
             </ul>
 
             <div v-show="typing" class="w-full flex justify-start">
