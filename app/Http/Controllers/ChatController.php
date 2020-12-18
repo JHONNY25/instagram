@@ -8,6 +8,7 @@ use App\Models\Messages;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 
 class ChatController extends Controller
@@ -77,6 +78,30 @@ class ChatController extends Controller
         try{
 
             $message = $this->message->sendMessage($request);
+
+            event(new SendMessageEvent($message));
+
+        }catch(\Exception $e){
+            return response()->json($e->getMessage(),500);
+        }
+
+    }
+
+    public function sendImage(Request $request){
+        try{
+
+            $validator = Validator::make($request->all(), [
+                'image' => 'required|mimes:jpg,png,jpeg',
+            ],[
+                'required' => 'La imagen es requerida',
+                'mimes' => 'Debe de ser un formato de imagen',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()], 422);
+            }
+
+            $message = $this->message->sendImage($request);
 
             event(new SendMessageEvent($message));
 
