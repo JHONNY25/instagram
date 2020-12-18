@@ -4013,6 +4013,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -4022,7 +4033,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       usertyping: '',
       user: this.userprop,
       file: null,
-      url: null
+      url: null,
+      image: null,
+      urlImage: null,
+      error: null
     };
   },
   props: {
@@ -4039,12 +4053,58 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   methods: {
     dispatchInputFile: function dispatchInputFile() {
-      document.getElementById('chatfiles').click();
+      document.getElementById('chatfile').click();
     },
     fileChange: function fileChange(e) {
       var file = e.target.files[0];
+      console.log(file);
       this.file = file;
       this.url = URL.createObjectURL(file);
+    },
+    dispatchInputImage: function dispatchInputImage() {
+      document.getElementById('chatImage').click();
+    },
+    imageChange: function imageChange(e) {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var thiscomponent, file, formData;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                thiscomponent = _this;
+                file = e.target.files[0];
+                _this.image = file;
+                formData = new FormData();
+                formData.append("chat_id", _this.chatid);
+                formData.append("user_id", _this.usercurrent);
+                formData.append('image', _this.image);
+                _context.next = 9;
+                return axios.post('/send-image', formData, {
+                  headers: {
+                    'Content-Type': 'multipart/form-data'
+                  }
+                }).then(function (response) {
+                  _this.image = null;
+                })["catch"](function (error) {
+                  if (error.response.status === 422) {
+                    _this.error = error.response.data.error.image[0];
+                  }
+                });
+
+              case 9:
+                setTimeout(function () {
+                  thiscomponent.error = null;
+                }, 2000);
+
+              case 10:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
     },
     getHoursByDate: function getHoursByDate(date) {
       return moment__WEBPACK_IMPORTED_MODULE_1___default()(date).format('h:m A');
@@ -4053,35 +4113,35 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return message.user_id === this.usercurrent ? 'right: -25px; border-left: 15px solid #f4f5f7; border-right: 15px solid transparent;' : 'left: -25px; border-left: 15px solid transparent; border-right: 15px solid #f4f5f7;';
     },
     sendMessage: function sendMessage() {
-      var _this = this;
+      var _this2 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
         var formData;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
-            switch (_context.prev = _context.next) {
+            switch (_context2.prev = _context2.next) {
               case 0:
                 formData = new FormData();
-                formData.append("chat_id", _this.chatid);
-                formData.append("user_id", _this.usercurrent);
-                formData.append('message', _this.message);
-                _context.next = 6;
+                formData.append("chat_id", _this2.chatid);
+                formData.append("user_id", _this2.usercurrent);
+                formData.append('message', _this2.message);
+                _context2.next = 6;
                 return axios.post('/chat/send-message', formData, {
                   headers: {
                     'Content-Type': 'multipart/form-data'
                   }
                 }).then(function (response) {
-                  _this.message = '';
+                  _this2.message = '';
                 })["catch"](function (error) {
                   return console.log(error);
                 });
 
               case 6:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee);
+        }, _callee2);
       }))();
     },
     newMessage: function newMessage(message) {
@@ -4099,10 +4159,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }, 300);
     },
     scollToBottom: function scollToBottom() {
-      var _this2 = this;
+      var _this3 = this;
 
       setTimeout(function () {
-        _this2.$refs.toolbarChat.scrollTop = _this2.$refs.toolbarChat.scrollHeight - _this2.$refs.toolbarChat.clientHeight;
+        _this3.$refs.toolbarChat.scrollTop = _this3.$refs.toolbarChat.scrollHeight - _this3.$refs.toolbarChat.clientHeight;
       }, 50);
     },
     reset: function reset() {
@@ -59159,7 +59219,7 @@ var render = function() {
       "div",
       {
         ref: "toolbarChat",
-        staticClass: "w-full overflow-y-auto p-10",
+        staticClass: "w-full overflow-y-auto p-10 relative",
         staticStyle: { height: "700px" },
         attrs: { id: "chat" }
       },
@@ -59203,9 +59263,30 @@ var render = function() {
                             staticStyle: { "max-width": "300px" }
                           },
                           [
-                            _c("span", { staticClass: "block" }, [
-                              _vm._v(_vm._s(message.text))
-                            ]),
+                            message.type === "text"
+                              ? _c("span", { staticClass: "block" }, [
+                                  _vm._v(_vm._s(message.text))
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            message.type === "image"
+                              ? _c(
+                                  "div",
+                                  {
+                                    staticStyle: {
+                                      width: "250px",
+                                      height: "200px"
+                                    }
+                                  },
+                                  [
+                                    _c("img", {
+                                      staticClass:
+                                        "w-full max-w-full min-w-full min-h-full",
+                                      attrs: { src: message.file_path }
+                                    })
+                                  ]
+                                )
+                              : _vm._e(),
                             _vm._v(" "),
                             _c(
                               "span",
@@ -59249,60 +59330,8 @@ var render = function() {
                           "bg-gray-100 rounded px-5 py-2 my-2 text-gray-700"
                       },
                       [
-                        _c(
-                          "div",
-                          { staticStyle: { width: "300px", height: "200px" } },
-                          [
-                            _c("img", {
-                              staticClass:
-                                "w-full max-w-full min-w-full min-h-full",
-                              attrs: { src: _vm.url }
-                            })
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "span",
-                          { staticClass: "block text-xs text-right" },
-                          [_vm._v("10:33 am")]
-                        )
-                      ]
-                    )
-                  ])
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.url
-              ? _c("li", { staticClass: "clearfix2" }, [
-                  _c("div", { staticClass: "w-full flex justify-end" }, [
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "bg-gray-100 rounded px-5 py-2 my-2 text-gray-700"
-                      },
-                      [
                         _c("div", [
-                          _c(
-                            "div",
-                            {
-                              staticClass: "rounded-t-lg",
-                              staticStyle: { width: "300px", height: "200px" }
-                            },
-                            [
-                              _c("iframe", {
-                                staticClass:
-                                  "rounded-t-lg w-full max-w-full min-w-full min-h-full",
-                                attrs: {
-                                  src: _vm.url,
-                                  frameborder: "0",
-                                  border: "0",
-                                  cellspacing: "0",
-                                  scrolling: "no"
-                                }
-                              })
-                            ]
-                          ),
+                          _vm._m(0),
                           _vm._v(" "),
                           _c(
                             "div",
@@ -59312,7 +59341,7 @@ var render = function() {
                               staticStyle: { width: "300px" }
                             },
                             [
-                              _c("btn", { staticClass: "cursor-pointer" }, [
+                              _c("button", { staticClass: "cursor-pointer" }, [
                                 _c(
                                   "svg",
                                   {
@@ -59346,8 +59375,7 @@ var render = function() {
                                 },
                                 [_vm._v("Documento js")]
                               )
-                            ],
-                            1
+                            ]
                           )
                         ]),
                         _vm._v(" "),
@@ -59383,7 +59411,19 @@ var render = function() {
               _vm._v(_vm._s(_vm.usertyping.nick_name + " esta escribiendo ..."))
             ])
           ]
-        )
+        ),
+        _vm._v(" "),
+        _vm.error
+          ? _c(
+              "div",
+              {
+                staticClass:
+                  "absolute z-50 bg-red-400 text-white text-xs rounded py-2 px-4",
+                staticStyle: { bottom: "10px", left: "7px", right: "7px" }
+              },
+              [_vm._v("\n            " + _vm._s(_vm.error) + "\n        ")]
+            )
+          : _vm._e()
       ]
     ),
     _vm._v(" "),
@@ -59398,6 +59438,39 @@ var render = function() {
           "button",
           {
             staticClass: "outline-none focus:outline-none",
+            on: { click: _vm.dispatchInputImage }
+          },
+          [
+            _c(
+              "svg",
+              {
+                staticClass: "text-gray-400 h-6 w-6",
+                attrs: {
+                  xmlns: "http://www.w3.org/2000/svg",
+                  fill: "none",
+                  viewBox: "0 0 24 24",
+                  stroke: "currentColor"
+                }
+              },
+              [
+                _c("path", {
+                  attrs: {
+                    "stroke-linecap": "round",
+                    "stroke-linejoin": "round",
+                    "stroke-width": "2",
+                    d:
+                      "M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                  }
+                })
+              ]
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "outline-none focus:outline-none ml-1",
             on: { click: _vm.dispatchInputFile }
           },
           [
@@ -59429,8 +59502,24 @@ var render = function() {
         _vm._v(" "),
         _c("input", {
           staticStyle: { display: "none" },
-          attrs: { id: "chatfiles", type: "file", name: "file" },
+          attrs: {
+            id: "chatfile",
+            type: "file",
+            name: "file",
+            accept: ".pdf,.txt,.doc,.docx"
+          },
           on: { change: _vm.fileChange }
+        }),
+        _vm._v(" "),
+        _c("input", {
+          staticStyle: { display: "none" },
+          attrs: {
+            id: "chatImage",
+            type: "file",
+            name: "image",
+            accept: "image/gif,image/jpeg,image/jpg,image/png"
+          },
+          on: { change: _vm.imageChange }
         }),
         _vm._v(" "),
         _c("input", {
@@ -59508,7 +59597,38 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "rounded-t-lg",
+        staticStyle: { width: "300px", height: "200px" }
+      },
+      [
+        _c("div", {
+          staticClass: "rounded-t-lg w-full max-w-full min-w-full min-h-full",
+          staticStyle: {
+            width: "300px",
+            height: "200px",
+            "max-width": "100%",
+            "margin-top": "12px",
+            "--saf-0": "rgba(var(--sk_foreground_low_solid,221,221,221),1)",
+            border: "1px solid var(--saf-0)",
+            "background-repeat": "no-repeat",
+            "background-position": "top",
+            "background-size": "cover",
+            "background-image":
+              "url('https://files.slack.com/files-tmb/TJA5RL19S-F014VH0T3C7-13dc94bb96/carta_terminacion_de_residencias_profesionales_thumb_pdf.png')"
+          }
+        })
+      ]
+    )
+  }
+]
 render._withStripped = true
 
 
@@ -82053,14 +82173,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!******************************************!*\
   !*** ./resources/js/Pages/Chat/Chat.vue ***!
   \******************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Chat_vue_vue_type_template_id_3e05bcf6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Chat.vue?vue&type=template&id=3e05bcf6& */ "./resources/js/Pages/Chat/Chat.vue?vue&type=template&id=3e05bcf6&");
 /* harmony import */ var _Chat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Chat.vue?vue&type=script&lang=js& */ "./resources/js/Pages/Chat/Chat.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Chat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Chat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -82090,7 +82211,7 @@ component.options.__file = "resources/js/Pages/Chat/Chat.vue"
 /*!*******************************************************************!*\
   !*** ./resources/js/Pages/Chat/Chat.vue?vue&type=script&lang=js& ***!
   \*******************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
