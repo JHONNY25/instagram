@@ -91,10 +91,11 @@ class ChatController extends Controller
         try{
 
             $validator = Validator::make($request->all(), [
-                'image' => 'required|mimes:jpg,png,jpeg',
+                'image' => 'required|mimes:jpg,png,jpeg|max:2000',
             ],[
                 'required' => 'La imagen es requerida',
                 'mimes' => 'Debe de ser un formato de imagen',
+                'max' => 'La imagen no debe exceder los 2MB',
             ]);
 
             if ($validator->fails()) {
@@ -115,10 +116,11 @@ class ChatController extends Controller
         try{
 
             $validator = Validator::make($request->all(), [
-                'file' => 'required|mimes:pdf,doc,docx,txt',
+                'file' => 'required|mimes:pdf,doc,docx,txt|max:5000',
             ],[
                 'required' => 'La imagen es requerida',
                 'mimes' => 'Debe de ser un documento tipo .pdf, .doc, .docx, .txt',
+                'max' => 'La archivo no debe exceder los 5MB',
             ]);
 
             if ($validator->fails()) {
