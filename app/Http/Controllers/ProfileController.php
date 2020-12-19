@@ -18,6 +18,10 @@ class ProfileController extends Controller
     }
 
     public function index($nick_name){
+        if(!$this->user->where('nick_name',$nick_name)->exists()){
+            return Inertia::render('404');
+        }
+
         $user = $this->user->with([
             'posts' => function($query){
                 $query->orderBy('created_at', 'desc');

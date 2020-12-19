@@ -40,6 +40,10 @@ class ChatController extends Controller
         $chatQuery = null;
         $chat = null;
 
+        if(!$this->user->where('id',$id)->exists()){
+            return Inertia::render('404');
+        }
+
         if(!$this->chat->where('user_sent',Auth::id())->where('user_recive',$id)->exists()){
             if($this->chat->where('user_sent',$id)->where('user_recive',Auth::id())->exists()){
                 $chatQuery = $this->chat->select('id')->where('user_sent',$id)->where('user_recive',Auth::id())->first();
