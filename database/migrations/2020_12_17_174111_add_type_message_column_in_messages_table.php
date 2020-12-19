@@ -14,7 +14,7 @@ class AddTypeMessageColumnInMessagesTable extends Migration
     public function up()
     {
         Schema::table('messages', function (Blueprint $table) {
-            $table->enum('type',['text','image','document'])->default('text')->after('file_path');
+            $table->enum('type',['text','image','document'])->default('text')->nullable()->after('file_path');
         });
     }
 
