@@ -8,7 +8,7 @@
                 <span class="block ml-2 font-semibold text-base text-gray-600 ">{{ username }}</span>
                 <span v-if="message.length > 0" class="block ml-2 text-sm text-gray-600"> {{ 'Hace '+getDifferenceTime(message[0].send_date) }}</span>
             </div>
-            <span v-if="message.length > 0" class="block ml-2 text-sm text-gray-600">{{ message[0].text }}</span>
+            <span v-if="message.length > 0" class="block ml-2 text-sm text-gray-600">{{ message[0].text ? message[0].text : message[0].file_name }}</span>
         </div>
     </a>
 </template>
