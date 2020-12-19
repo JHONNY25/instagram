@@ -23,7 +23,24 @@
                         <div class="bg-gray-100 rounded px-5 py-2 my-2 text-gray-700 relative" style="max-width: 300px;">
                             <span v-if="message.type === 'text'" class="block">{{ message.text }}</span>
                             <div v-if="message.type === 'image'" style="width: 250px; height: 200px;">
-                                <img :src="message.file_path" class="w-full max-w-full min-w-full min-h-full"/>
+                                <a id="file-message" download :href="message.file_path" class="block relative">
+                                    <img :src="message.file_path" class="w-full max-w-full min-w-full min-h-full"/>
+                                    <button id="hover-image" class="absolute w-full top-0 left-0 bottom-0 right-0 cursor-pointer flex justify-center items-center" style="background-color: rgba(0,0,0,0.6);">
+                                        <svg class="h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                        </svg>
+                                    </button>
+                                </a>
+                            </div>
+                            <div v-if="message.type === 'document'" class="w-full rounded-lg bg-gray-700 flex items-center p-2 justify-between">
+                                <a download :href="message.file_path" class="flex justify-between">
+                                    <div class="text-white">{{ message.file_name }}</div>
+                                    <button class="ml-3 cursor-pointer">
+                                        <svg class="h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                        </svg>
+                                    </button>
+                                </a>
                             </div>
                             <span class="block text-xs" :class="[message.user_id === usercurrent ? 'text-right' : 'text-left']">{{ getHoursByDate(message.send_date) }}</span>
                             <div class="absolute w-0 h-0"
@@ -33,46 +50,19 @@
                         </div>
                     </div>
                 </li>
-
-                <li v-if="url" class="clearfix2">
-                    <div class="w-full flex justify-end">
-                        <div class="bg-gray-100 rounded px-5 py-2 my-2 text-gray-700">
-                            <div>
-                                <div class="rounded-t-lg" style="width: 300px; height: 200px;">
-                                    <div class="rounded-t-lg w-full max-w-full min-w-full min-h-full"
-                                    style="width: 300px; height: 200px;     max-width: 100%;
-    margin-top: 12px;
-    --saf-0: rgba(var(--sk_foreground_low_solid,221,221,221),1);
-    border: 1px solid var(--saf-0);background-repeat: no-repeat;
-                                    background-position: top;
-                                    background-size: cover;
-                                    background-image: url('https://files.slack.com/files-tmb/TJA5RL19S-F014VH0T3C7-13dc94bb96/carta_terminacion_de_residencias_profesionales_thumb_pdf.png');"></div>
-                                </div>
-                                <div class="rounded-b-lg bg-gray-800 flex items-center p-4 justify-between" style="width: 300px;">
-                                    <button class="cursor-pointer">
-                                        <svg class="h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                                        </svg>
-                                    </button>
-                                    <a href="" class="text-white block">Documento js</a>
-                                </div>
-                            </div>
-                            <span class="block text-xs text-right">10:33 am</span>
-                        </div>
-                    </div>
-                </li>
             </ul>
 
             <div v-show="typing" class="w-full flex justify-start">
                 <div class="px-5 py-2 my-2 text-gray-700">{{ usertyping.nick_name + ' esta escribiendo ...' }}</div>
             </div>
 
-            <div v-if="error" class="absolute z-50 bg-red-400 text-white text-xs rounded py-2 px-4" 
-                style="bottom: 10px;
-                left: 7px;
-                right: 7px;">
+            <div v-if="error" class="absolute z-50 bg-red-400 text-white text-xs rounded py-2 px-4 bottom-5 left-8 right-8">
                 {{ error }}
             </div>
+        </div>
+
+        <div v-if="visible">
+            <loading-message :visible="visible"></loading-message>
         </div>
 
         <div class="w-full py-3 px-3 flex items-center justify-between border-t border-gray-300">
@@ -104,6 +94,7 @@
 
 <script>
     import moment from 'moment'
+    import LoadingMessage from './../../Components/LoadingMessage'
 
     export default {
         data(){
@@ -116,8 +107,12 @@
                 url: null,
                 image: null,
                 urlImage: null,
-                error: null
+                error: null,
+                visible: false,
             }
+        },
+        components:{
+            LoadingMessage
         },
         props:{
             userprop: {
@@ -135,11 +130,36 @@
             dispatchInputFile(){
                 document.getElementById('chatfile').click()
             },
-            fileChange(e){
+            async fileChange(e){
+                const thiscomponent = this;
                 const file = e.target.files[0]
-                console.log(file)
                 this.file = file
-                this.url = URL.createObjectURL(file)
+
+                const formData = new FormData()
+                formData.append("chat_id", this.chatid)
+                formData.append("user_id", this.usercurrent)
+                formData.append('file', this.file)
+
+                this.visible = true
+                await axios.post('/send-file', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }).then(response => {
+                    this.file = null
+                })
+                .catch(error => {
+                    if(error.response.status === 422){
+                        this.error = error.response.data.error.file[0]
+                    }
+                })
+                .finally(() => {
+                    this.visible = false
+                })
+
+                setTimeout(function() {
+                    thiscomponent.error = null
+                }, 2000);
             },
             dispatchInputImage(){
                 document.getElementById('chatImage').click()
@@ -154,6 +174,7 @@
                 formData.append("user_id", this.usercurrent)
                 formData.append('image', this.image)
 
+                this.visible = true
                 await axios.post('/send-image', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
@@ -165,6 +186,9 @@
                     if(error.response.status === 422){
                         this.error = error.response.data.error.image[0]
                     }
+                })
+                .finally(() => {
+                    this.visible = false
                 })
 
                 setTimeout(function() {
@@ -184,6 +208,7 @@
                 formData.append("user_id", this.usercurrent)
                 formData.append('message', this.message)
 
+                this.visible = true
                 await axios.post('/chat/send-message',formData,{
                     headers: {
                         'Content-Type': 'multipart/form-data'
@@ -193,6 +218,9 @@
                     this.message = ''
                 })
                 .catch(error => console.log(error))
+                .finally(() => {
+                    this.visible = false
+                })
 
             },
             newMessage(message){
@@ -270,4 +298,14 @@
         }
     }
 </script>
+
+<style>
+    #hover-image{
+        display: none;
+    }
+
+    #file-message:hover #hover-image{
+        display: flex;
+    }
+</style>
 

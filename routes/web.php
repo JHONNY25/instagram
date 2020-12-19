@@ -50,6 +50,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/direct/inbox/{id}', [ChatController::class,'directInbox'])->name('direct-Inbox');
     Route::post('/chat/send-message', [ChatController::class,'sendMessage'])->name('create-message');
     Route::post('/send-image', [ChatController::class,'sendImage'])->name('send-image');
+    Route::post('/send-file', [ChatController::class,'sendFile'])->name('send-file');
 
     Route::post('/user/{userid}/online', OnlineController::class)->name('user-online');
     Route::post('/user/{userid}/offline', OfflineController::class)->name('user-offline');

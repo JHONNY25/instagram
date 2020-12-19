@@ -101,7 +101,31 @@ class ChatController extends Controller
                 return response()->json(['error' => $validator->errors()], 422);
             }
 
-            $message = $this->message->sendImage($request);
+            $message = $this->message->sendFile($request);
+
+            event(new SendMessageEvent($message));
+
+        }catch(\Exception $e){
+            return response()->json($e->getMessage(),500);
+        }
+
+    }
+
+    public function sendFile(Request $request){
+        try{
+
+            $validator = Validator::make($request->all(), [
+                'file' => 'required|mimes:pdf,doc,docx,txt',
+            ],[
+                'required' => 'La imagen es requerida',
+                'mimes' => 'Debe de ser un documento tipo .pdf, .doc, .docx, .txt',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()], 422);
+            }
+
+            $message = $this->message->sendFile($request);
 
             event(new SendMessageEvent($message));
 

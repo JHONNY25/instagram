@@ -16,8 +16,9 @@ class Messages extends Model
         'user_id',
         'text',
         'file_path',
-        'type',
         'send_date',
+        'type',
+        'file_name',
     ];
 
     public function chat(){
@@ -38,7 +39,7 @@ class Messages extends Model
     }
 
     public static function returnUrlFile(Request $request){
-        $file = $request->file('image');
+        $file = $request->file('file') ? $request->file('file') : $request->file('image');
         $name = $file->getClientOriginalName();
         $url = null;
 
@@ -46,13 +47,17 @@ class Messages extends Model
         return asset('storage/'.$storage);
     }
 
-    public static function sendImage(Request $request){
+    public static function sendFile(Request $request){
+        $file = $request->file('file') ? $request->file('file') : $request->file('image');
+
         return (new static)::create([
             'chat_id' => $request->chat_id,
             'user_id' => $request->user_id,
             'file_path' => self::returnUrlFile($request),
-            'type' => 'image',
+            'file_name' => $file->getClientOriginalName(),
+            'type' => $request->file('file') ? 'document' : 'image',
             'send_date' => Carbon::now()
         ]);
     }
+
 }
