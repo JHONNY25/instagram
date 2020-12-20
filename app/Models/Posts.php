@@ -65,7 +65,7 @@ class Posts extends Model
         ])->find($post->id);
     }
 
-    public static function getPosts(){
+    public static function getPosts($id){
         return (new static)::with([
             'user',
             'likes',
@@ -73,8 +73,8 @@ class Posts extends Model
                 $query->with('user:id,name,nick_name,profile_photo_path');
             }
         ])
-        ->where('user_id',Auth::id())
-        ->orWhereIn('user_id',Followers::select('user_id')->where('follower_id',Auth::id())->get())
+        ->where('user_id',$id)
+        ->orWhereIn('user_id',Followers::select('user_id')->where('follower_id',$id)->get())
         ->orderBy('created_at', 'desc')
         ->get();
     }
