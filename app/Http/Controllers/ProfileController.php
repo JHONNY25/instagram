@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Followers;
 use App\Models\User;
+use App\Models\Posts;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -22,21 +23,28 @@ class ProfileController extends Controller
             return Inertia::render('404');
         }
 
-        $user = $this->user->with([
-            'posts' => function($query){
-                $query->orderBy('created_at', 'desc');
-            }
-        ])->where('nick_name',$nick_name)->first();
+        $user = $this->user->where('nick_name',$nick_name)->first();
 
         $followers = $user->followers()->count();
         $followed = $this->followers->where('follower_id',$user->id)->count();
         $postsCount = $user->posts()->count();
+        $posts = Posts::with([
+            'user',
+            'likes',
+            'comments' => function($query){
+                $query->with('user:id,name,nick_name,profile_photo_path');
+            }
+        ])
+        ->where('user_id',$user->id)
+        ->orderBy('created_at', 'desc')
+        ->get();
 
         return Inertia::render('UserProfile/Index', [
             'user' => $user,
             'followers' => $followers,
             'followed' => $followed,
-            'postsCount' => $postsCount
+            'postsCount' => $postsCount,
+            'posts' => $posts
         ]);
     }
 
