@@ -23,7 +23,7 @@ class PostController extends Controller
     }
 
     public function all(){
-        return $this->post->getPosts();
+        return $this->post->getPosts(Auth::id());
     }
 
     public function create(ImageFileRequest $request){
