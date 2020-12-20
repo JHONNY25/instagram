@@ -184,7 +184,7 @@
                 })
                 .catch(error => {
                     if(error.response.status === 422){
-                        this.error = error.response.data.error.image[0]
+                        this.error = error.response.data.errors.image[0]
 
                         setTimeout(function() {
                             thiscomponent.error = null
