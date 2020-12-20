@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ImageFileRequest;
+use App\Models\Comments;
 use App\Models\Likes;
 use App\Models\Posts;
-use App\Models\Comments;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -25,7 +26,7 @@ class PostController extends Controller
         return $this->post->getPosts();
     }
 
-    public function create(Request $request){
+    public function create(ImageFileRequest $request){
         try {
             DB::beginTransaction();
 
@@ -54,7 +55,7 @@ class PostController extends Controller
                 return response()->json(['like' => true,'likes' => $this->like->where('post_id',$request->postId)->get()],200);
             }else{
                 $this->like->deleteLike((int)$request->postId,(int)auth()->user()->id);
-                
+
                 return response()->json(['like' => false,'likes' => $this->like->where('post_id',$request->postId)->get()],200);
             }
 
