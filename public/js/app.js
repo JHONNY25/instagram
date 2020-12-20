@@ -2195,12 +2195,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 
 
@@ -56049,67 +56043,29 @@ var render = function() {
           ),
           _vm._v(" "),
           _c("div", { staticClass: "col-span-1 relative" }, [
-            _c(
-              "header",
-              { staticClass: "flex items-center border-b border-grey-400" },
-              [
-                _c(
-                  "a",
-                  {
-                    staticClass:
-                      "block cursor-pointer py-4 flex items-center text-sm outline-none focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out",
-                    attrs: { href: "/profile/" + _vm.post.user.nick_name }
-                  },
-                  [
-                    _c("img", {
-                      staticClass: "h-9 w-9 rounded-full object-cover",
-                      attrs: {
-                        src: _vm.post.user.profile_photo_url,
-                        alt: _vm.post.user.nick_name
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("p", { staticClass: "block ml-2 font-bold" }, [
-                      _vm._v(_vm._s(_vm.post.user.nick_name))
-                    ])
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass:
-                      "flex items-center ml-3 border border-blue-600 rounded outline-none focus:outline-none bg-transparent text-blue-600 text-sm py-1 px-2"
-                  },
-                  [
-                    _c("span", { staticClass: "block" }, [_vm._v("Siguiendo")]),
-                    _vm._v(" "),
-                    _c(
-                      "svg",
-                      {
-                        staticClass: "block h-5 w-5 pl-1",
-                        attrs: {
-                          xmlns: "http://www.w3.org/2000/svg",
-                          fill: "none",
-                          viewBox: "0 0 24 24",
-                          stroke: "currentColor"
-                        }
-                      },
-                      [
-                        _c("path", {
-                          attrs: {
-                            "stroke-linecap": "round",
-                            "stroke-linejoin": "round",
-                            "stroke-width": "2",
-                            d: "M5 13l4 4L19 7"
-                          }
-                        })
-                      ]
-                    )
-                  ]
-                )
-              ]
-            ),
+            _c("header", { staticClass: "border-b border-grey-400" }, [
+              _c(
+                "a",
+                {
+                  staticClass:
+                    "block cursor-pointer py-4 flex items-center text-sm outline-none focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out",
+                  attrs: { href: "/profile/" + _vm.post.user.nick_name }
+                },
+                [
+                  _c("img", {
+                    staticClass: "h-9 w-9 rounded-full object-cover",
+                    attrs: {
+                      src: _vm.post.user.profile_photo_url,
+                      alt: _vm.post.user.nick_name
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "block ml-2 font-bold" }, [
+                    _vm._v(_vm._s(_vm.post.user.nick_name))
+                  ])
+                ]
+              )
+            ]),
             _vm._v(" "),
             _c(
               "div",
