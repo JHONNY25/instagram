@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\SendMessageEvent;
+use App\Http\Requests\ImageFileRequest;
 use App\Models\Chat;
 use App\Models\Messages;
 use App\Models\User;
@@ -91,20 +92,8 @@ class ChatController extends Controller
 
     }
 
-    public function sendImage(Request $request){
+    public function sendImage(ImageFileRequest $request){
         try{
-
-            $validator = Validator::make($request->all(), [
-                'image' => 'required|mimes:jpg,png,jpeg|max:2000',
-            ],[
-                'required' => 'La imagen es requerida',
-                'mimes' => 'Debe de ser un formato de imagen',
-                'max' => 'La imagen no debe exceder los 2MB',
-            ]);
-
-            if ($validator->fails()) {
-                return response()->json(['error' => $validator->errors()], 422);
-            }
 
             $message = $this->message->sendFile($request);
 
