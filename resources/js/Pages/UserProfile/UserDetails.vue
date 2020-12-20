@@ -9,8 +9,18 @@
                 <a v-if="userLoggedIn.id !== user.id" :href="'/direct/inbox/'+user.id" class="cursor-pointer h-7 px-3 ml-3 outline-none border-transparent text-center rounded border bg-blue-500 hover:bg-blue-600 text-white bg-transparent font-semibold">Enviar mensaje</a>
                 <a v-if="userLoggedIn.id === user.id" href="/user/profile" class="cursor-pointer h-7 px-3 ml-3 focus:outline-none hover:border-transparent text-center rounded border border-gray-400 hover:bg-blue-500 hover:text-white bg-transparent text-gray-500 font-semibold">Editar perfil</a>
                 <div v-else>
-                    <a v-if="followState" @click="unFollow" class="cursor-pointer h-7 px-3 ml-3 focus:outline-none hover:border-transparent text-center rounded border border-gray-400 hover:bg-blue-500 hover:text-white bg-transparent text-gray-500 font-semibold">Dejar de Seguir</a>
-                    <a v-else @click="follow" class="cursor-pointer h-7 px-3 ml-3 focus:outline-none hover:border-transparent text-center rounded border border-gray-400 hover:bg-blue-500 hover:text-white bg-transparent text-gray-500 font-semibold">Seguir</a>
+                    <button v-if="followState" @click="unFollow" class="flex items-center ml-3 border border-blue-600 rounded outline-none focus:outline-none bg-transparent text-blue-600 text-sm py-1 px-2">
+                        <span class="block">Dejar de seguir</span>
+                        <svg class="block h-5 w-5 pl-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                    </button>
+                    <button v-else @click="follow" class="flex items-center ml-3 border border-blue-600 hover:bg-blue-600 hover:text-white rounded outline-none focus:outline-none bg-transparent text-blue-600 text-sm py-1 px-2">
+                        <span class="block">Seguir</span>
+                        <svg class="block h-5 w-5 pl-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                    </button>
                 </div>
                 <a v-if="userLoggedIn.id === user.id" href="/user/profile" class="cursor-pointer ml-2 p-1 border-transparent text-gray-700 rounded-full hover:text-blue-600 focus:outline-none focus:text-gray-600"
                 aria-label="Notifications">

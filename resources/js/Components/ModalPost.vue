@@ -10,18 +10,12 @@
                 </div>
 
                 <div class="col-span-1 relative">
-                    <header class="flex items-center border-b border-grey-400">
+                    <header class="border-b border-grey-400">
                         <a :href="'/profile/'+post.user.nick_name" class="block cursor-pointer py-4 flex items-center text-sm outline-none focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out">
                             <img :src="post.user.profile_photo_url" class="h-9 w-9 rounded-full object-cover"
                             :alt="post.user.nick_name" />
                             <p class="block ml-2 font-bold">{{ post.user.nick_name }}</p>
                         </a>
-                        <button class="flex items-center ml-3 border border-blue-600 rounded outline-none focus:outline-none bg-transparent text-blue-600 text-sm py-1 px-2">
-                            <span class="block">Siguiendo</span>
-                            <svg class="block h-5 w-5 pl-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                            </svg>
-                        </button>
                     </header>
 
                     <div class="scroll" ref="scrollMessagePost">

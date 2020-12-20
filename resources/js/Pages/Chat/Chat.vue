@@ -151,15 +151,15 @@
                 .catch(error => {
                     if(error.response.status === 422){
                         this.error = error.response.data.error.file[0]
+
+                        setTimeout(function() {
+                            thiscomponent.error = null
+                        }, 2000);
                     }
                 })
                 .finally(() => {
                     this.visible = false
                 })
-
-                setTimeout(function() {
-                    thiscomponent.error = null
-                }, 2000);
             },
             dispatchInputImage(){
                 document.getElementById('chatImage').click()
@@ -184,16 +184,16 @@
                 })
                 .catch(error => {
                     if(error.response.status === 422){
-                        this.error = error.response.data.error.image[0]
+                        this.error = error.response.data.errors.image[0]
+
+                        setTimeout(function() {
+                            thiscomponent.error = null
+                        }, 2000);
                     }
                 })
                 .finally(() => {
                     this.visible = false
                 })
-
-                setTimeout(function() {
-                    thiscomponent.error = null
-                }, 2000);
             },
             getHoursByDate(date){
                 return moment(date).format('h:m A')
@@ -217,7 +217,15 @@
                 .then(response => {
                     this.message = ''
                 })
-                .catch(error => console.log(error))
+                .catch(error => {
+                    if(error.response.status === 422){
+                        this.error = error.response.data.error.image[0]
+
+                        setTimeout(function() {
+                            thiscomponent.error = null
+                        }, 2000);
+                    }
+                })
                 .finally(() => {
                     this.visible = false
                 })

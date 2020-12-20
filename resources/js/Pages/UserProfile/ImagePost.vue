@@ -1,5 +1,5 @@
 <template>
-    <div id="post-profile" class="cursor-pointer relative" style="width:300px; height:300px">
+    <div @click="showModal" id="post-profile" class="cursor-pointer relative" style="width:300px; height:300px">
         <img :src="post.image_path"
             class="foto w-full h-full object-cover"
             :alt="post.description" />
@@ -23,7 +23,12 @@
 
 <script>
     export default{
-        props:['post']
+        props:['post'],
+        methods:{
+            showModal(){
+                this.$emit('show',this.post)
+            },
+        }
     }
 </script>
 

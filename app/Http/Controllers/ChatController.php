@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\SendMessageEvent;
+use App\Http\Requests\ImageFileRequest;
 use App\Models\Chat;
 use App\Models\Messages;
 use App\Models\User;
@@ -39,6 +40,10 @@ class ChatController extends Controller
     public function directInbox($id){
         $chatQuery = null;
         $chat = null;
+
+        if(!$this->user->where('id',$id)->exists()){
+            return Inertia::render('404');
+        }
 
         if(!$this->chat->where('user_sent',Auth::id())->where('user_recive',$id)->exists()){
             if($this->chat->where('user_sent',$id)->where('user_recive',Auth::id())->exists()){
@@ -87,19 +92,8 @@ class ChatController extends Controller
 
     }
 
-    public function sendImage(Request $request){
+    public function sendImage(ImageFileRequest $request){
         try{
-
-            $validator = Validator::make($request->all(), [
-                'image' => 'required|mimes:jpg,png,jpeg',
-            ],[
-                'required' => 'La imagen es requerida',
-                'mimes' => 'Debe de ser un formato de imagen',
-            ]);
-
-            if ($validator->fails()) {
-                return response()->json(['error' => $validator->errors()], 422);
-            }
 
             $message = $this->message->sendFile($request);
 
@@ -115,10 +109,11 @@ class ChatController extends Controller
         try{
 
             $validator = Validator::make($request->all(), [
-                'file' => 'required|mimes:pdf,doc,docx,txt',
+                'file' => 'required|mimes:pdf,doc,docx,txt|max:5000',
             ],[
                 'required' => 'La imagen es requerida',
                 'mimes' => 'Debe de ser un documento tipo .pdf, .doc, .docx, .txt',
+                'max' => 'La archivo no debe exceder los 5MB',
             ]);
 
             if ($validator->fails()) {

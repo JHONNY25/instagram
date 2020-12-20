@@ -26,6 +26,9 @@
                         </button>
                         <input @change="fileChange" id="image" type="file" name="image" accept="image/gif,image/jpeg,image/jpg,image/png" style="display: none"/>
                     </div>
+                    <div class="text-red-500 p-2 mt-5">
+                        {{ error }}
+                    </div>
                 </div>
                 <button v-if="textpost.length > 0 && imagepost !== null" type="submit" class="flex justify-center w-full outline-none focus:outline-none my-3 text-center bg-blue-500  hover:bg-blue-600 rounded text-white py-2" @click="createPost">Publicar</button>
             </div>
@@ -49,6 +52,7 @@
                 textpost: '',
                 url: null,
                 post: [],
+                error: null
             }
         },
         components: {
@@ -88,8 +92,10 @@
                 this.imagepost = null
                 this.textpost = ''
                 this.url = null
+                this.error = null
             },
             async createPost(){
+                const thiscomponent = this
                 const formData = new FormData()
                 formData.append("image", this.imagepost)
                 formData.append('textpost', this.textpost)
@@ -100,8 +106,18 @@
                     }
                 }).then(response => {
                     this.posts.unshift(response.data)
+
+                    this.resetData()
                 })
-                .catch(error => console.log(error))
+                .catch(error => {
+                    if(error.response.status === 422){
+                        this.error = error.response.data.errors.image[0]
+
+                        setTimeout(function() {
+                            thiscomponent.error = null
+                        }, 5000);
+                    }
+                })
                 .finally(() => {
                     this.resetData()
                 })
