@@ -7,7 +7,7 @@
                     <div class="flex">
                         <!-- Logo -->
                         <div class="flex-shrink-0 flex items-center">
-                            <a href="/home">
+                            <a href="/dashboard">
                                 <img src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" class="h-7 w-auto"/>
                             </a>
                         </div>
@@ -15,7 +15,7 @@
                     </div>
 
                     <div class="flex items-center relative">
-                    <dropdown align="center" width="100" overflow="overflow-y-auto" maxheight="300">
+                        <dropdown align="center" width="100" overflow="overflow-y-auto" maxheight="300">
                             <template #trigger>
                                 <div class="relative rounded border border-gray-300">
                                     <span class="absolute inset-y-0 left-0 flex items-center pl-1">
@@ -51,17 +51,13 @@
                     <!-- Settings Dropdown -->
                     <div class="hidden sm:flex sm:items-center sm:ml-6">
                         <div class="mr-3">
-                            <a href="/home">
+                            <a href="/dashboard">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6 cursor-pointer">
                                     <path class="text-gray-600" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                                 </svg>
                             </a>
                         </div>
-                        <div class="mr-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6 cursor-pointer">
-                                <path class="text-gray-600" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                            </svg>
-                        </div>
+                        <notification :unreads="notifications" :userId="user.id"></notification>
                         <div class="mr-3">
                             <a href="/user-chats">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6 cursor-pointer">
@@ -256,6 +252,7 @@
     import JetDropdownLink from './../Jetstream/DropdownLink'
     import JetNavLink from './../Jetstream/NavLink'
     import JetResponsiveNavLink from './../Jetstream/ResponsiveNavLink'
+    import Notification from './../Components/Notification'
 
     export default {
         components: {
@@ -265,6 +262,7 @@
             JetDropdownLink,
             JetNavLink,
             JetResponsiveNavLink,
+            Notification
         },
 
         data() {
@@ -275,7 +273,8 @@
                 user:'',
                 loading: true,
                 errored: false,
-                accountexists: true
+                accountexists: true,
+                notifications: []
             }
         },
 
@@ -324,6 +323,16 @@
                     this.accountexists = true
                     this.users = []
                 }
+            },
+            async getNotifications(){
+                await axios.get('/notifications')
+                    .then(response => {
+                        console.log(response.data)
+                        this.notifications = response.data
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
             }
         },
         computed: {
@@ -343,6 +352,9 @@
             const channel = pusher.subscribe('instagram-chat');
 
             this.listen()
+        },
+        created(){
+            this.getNotifications()
         }
     }
 </script>
