@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Models\Posts;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\NotifyFollowLike;
 
 class ProfileController extends Controller
 {
@@ -50,6 +52,10 @@ class ProfileController extends Controller
 
     public function followUser(Request $request){
         try {
+            $user = User::find($request->user_id);
+
+            Notification::send($user, new NotifyFollowLike(auth()->user()));
+            
             return $this->followers->follow((int)$request->user_id);
         } catch (\Exception $e) {
             return response()->json($e->getMessage(),500);
