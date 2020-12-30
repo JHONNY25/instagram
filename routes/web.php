@@ -7,6 +7,7 @@ use App\Http\Controllers\OnlineController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\NotificationsController;
 use App\Models\Chat;
 use Illuminate\Support\Facades\Route;
 
@@ -27,7 +28,7 @@ Route::get('/', function(){
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
-    Route::get('/home', function(){
+    Route::get('/dashboard', function(){
         return Inertia\Inertia::render('Dashboard');
     });
 
@@ -54,4 +55,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::post('/user/{userid}/online', OnlineController::class)->name('user-online');
     Route::post('/user/{userid}/offline', OfflineController::class)->name('user-offline');
+
+    Route::get('/notifications', [NotificationsController::class,'getUnreadNotification'])->name('notifications');
 });
