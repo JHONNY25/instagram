@@ -52,7 +52,7 @@
                     <div class="hidden sm:flex sm:items-center sm:ml-6">
                         <div class="mr-3">
                             <a href="/dashboard">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6 cursor-pointer">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-7 h-7 cursor-pointer">
                                     <path class="text-gray-600" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                                 </svg>
                             </a>
@@ -60,7 +60,7 @@
                         <notification :unreads="notifications" :userId="user.id"></notification>
                         <div class="mr-3">
                             <a href="/user-chats">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6 cursor-pointer">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-7 h-7 cursor-pointer">
                                     <path class="text-gray-600" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                                 </svg>
                             </a>
@@ -333,6 +333,18 @@
                     .catch(error => {
                         console.log(error)
                     })
+            },
+            notification(){
+                Echo.private('App.Models.User.' + this.user.id)
+                .notification((notification) => {
+                    this.notifications.push({data: {
+                        user: notification.user,
+                        message: notification.message,
+                    },
+                    created_at: notification.date
+                    })
+                    this.$page.unreadNotificationsCount++
+                })
             }
         },
         computed: {
@@ -352,6 +364,7 @@
             const channel = pusher.subscribe('instagram-chat');
 
             this.listen()
+            this.notification()
         },
         created(){
             this.getNotifications()
