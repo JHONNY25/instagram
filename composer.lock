@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2188124aacab403e31933071bc65962a",
+    "content-hash": "2d38b5c7fa60a529b2fc703ede424bd6",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -993,16 +993,16 @@
         },
         {
             "name": "inertiajs/inertia-laravel",
-            "version": "v0.2.11",
+            "version": "v0.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/inertiajs/inertia-laravel.git",
-                "reference": "0a9af997c0a2e141984d9c8fc3b2a9911512f63f"
+                "reference": "f802df267eb26ae8d20ccb2614072146b8a10d99"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inertiajs/inertia-laravel/zipball/0a9af997c0a2e141984d9c8fc3b2a9911512f63f",
-                "reference": "0a9af997c0a2e141984d9c8fc3b2a9911512f63f",
+                "url": "https://api.github.com/repos/inertiajs/inertia-laravel/zipball/f802df267eb26ae8d20ccb2614072146b8a10d99",
+                "reference": "f802df267eb26ae8d20ccb2614072146b8a10d99",
                 "shasum": ""
             },
             "require": {
@@ -1049,7 +1049,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-09-09T02:38:18+00:00"
+            "time": "2020-12-23T11:56:53+00:00"
         },
         {
             "name": "jaybizzle/crawler-detect",
