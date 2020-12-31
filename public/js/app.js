@@ -2303,9 +2303,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Dropdown__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Dropdown */ "./resources/js/Components/Dropdown.vue");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Dropdown__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Dropdown */ "./resources/js/Components/Dropdown.vue");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_2__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
 //
 //
 //
@@ -2340,24 +2351,37 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      notifications: this.unreads
-    };
-  },
   props: ['unreads', 'userId'],
   components: {
-    Dropdown: _Dropdown__WEBPACK_IMPORTED_MODULE_0__["default"]
+    Dropdown: _Dropdown__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   methods: {
     getDifferenceTime: function getDifferenceTime(date) {
-      return moment__WEBPACK_IMPORTED_MODULE_1___default()(date).toNow(true);
+      return moment__WEBPACK_IMPORTED_MODULE_2___default()(date).toNow(true);
+    },
+    markAsReadNotification: function markAsReadNotification() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return axios.post('/mark-as-read-notifications').then(function (response) {
+                  _this.$page.unreadNotificationsCount = 0;
+                })["catch"](function (error) {
+                  return console.log(error);
+                });
+
+              case 2:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
     }
-  },
-  mounted: function mounted() {
-    Echo["private"]('App.Models.User.' + this.userId).notification(function (notification) {
-      console.log(notification);
-    });
   }
 });
 
@@ -3670,6 +3694,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee2);
       }))();
+    },
+    notification: function notification() {
+      var _this3 = this;
+
+      Echo["private"]('App.Models.User.' + this.user.id).notification(function (notification) {
+        _this3.notifications.push({
+          data: {
+            user: notification.user,
+            message: notification.message
+          },
+          created_at: notification.date
+        });
+
+        _this3.$page.unreadNotificationsCount++;
+      });
     }
   },
   computed: {
@@ -3687,6 +3726,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     });
     var channel = pusher.subscribe('instagram-chat');
     this.listen();
+    this.notification();
   },
   created: function created() {
     this.getNotifications();
@@ -6406,6 +6446,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   user_id: _this.user.id
                 }).then(function (response) {
                   _this.followState = !_this.followState;
+                  $page.unreadNotificationsCount++;
                 })["catch"](function (error) {
                   return console.log(error);
                 });
@@ -56428,37 +56469,60 @@ var render = function() {
             key: "trigger",
             fn: function() {
               return [
-                _c("div", { staticClass: "mr-3 relative" }, [
-                  _c("div", {
-                    staticClass:
-                      "bg-red-500 w-2 h-2 text-xs absolute top-0 right-0 rounded-full"
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "svg",
-                    {
-                      staticClass: "w-6 h-6 cursor-pointer",
-                      attrs: {
-                        xmlns: "http://www.w3.org/2000/svg",
-                        fill: "none",
-                        viewBox: "0 0 24 24",
-                        stroke: "currentColor"
-                      }
-                    },
-                    [
-                      _c("path", {
-                        staticClass: "text-gray-600",
+                _c(
+                  "div",
+                  {
+                    staticClass: "mr-3 relative",
+                    on: { click: _vm.markAsReadNotification }
+                  },
+                  [
+                    _vm.$page.unreadNotificationsCount > 0
+                      ? _c(
+                          "div",
+                          {
+                            staticClass:
+                              "cursor-pointer flex items-center justify-center bg-red-500 w-4 h-4 absolute top-0 right-0 rounded-full"
+                          },
+                          [
+                            _c("span", { staticClass: "text-xs text-white" }, [
+                              _vm._v(
+                                _vm._s(
+                                  _vm.$page.unreadNotificationsCount > 9
+                                    ? "9+"
+                                    : _vm.$page.unreadNotificationsCount
+                                )
+                              )
+                            ])
+                          ]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c(
+                      "svg",
+                      {
+                        staticClass: "w-7 h-7 cursor-pointer",
                         attrs: {
-                          "stroke-linecap": "round",
-                          "stroke-linejoin": "round",
-                          "stroke-width": "2",
-                          d:
-                            "M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+                          xmlns: "http://www.w3.org/2000/svg",
+                          fill: "none",
+                          viewBox: "0 0 24 24",
+                          stroke: "currentColor"
                         }
-                      })
-                    ]
-                  )
-                ])
+                      },
+                      [
+                        _c("path", {
+                          staticClass: "text-gray-600",
+                          attrs: {
+                            "stroke-linecap": "round",
+                            "stroke-linejoin": "round",
+                            "stroke-width": "2",
+                            d:
+                              "M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+                          }
+                        })
+                      ]
+                    )
+                  ]
+                )
               ]
             },
             proxy: true
@@ -56466,63 +56530,74 @@ var render = function() {
           {
             key: "content",
             fn: function() {
-              return _vm._l(_vm.unreads, function(unread, index) {
-                return _vm.unreads.length > 0
-                  ? _c(
-                      "a",
-                      {
-                        key: index,
-                        staticClass:
-                          "block hover:bg-gray-100 text-xs text-gray-400 flex items-center py-2 px-3",
-                        attrs: {
-                          href: "/profile/" + unread.data.user.nick_name
-                        }
-                      },
-                      [
-                        _c("img", {
-                          staticClass: "w-9 h-9 object-cover rounded-full",
+              return [
+                _vm._l(_vm.unreads, function(unread, index) {
+                  return _vm.unreads.length > 0
+                    ? _c(
+                        "a",
+                        {
+                          key: index,
+                          staticClass:
+                            "block hover:bg-gray-100 text-xs text-gray-400 flex items-center py-2 px-3",
                           attrs: {
-                            src: unread.data.user.profile_photo_url,
-                            alt: unread.data.user.name
+                            href: "/profile/" + unread.data.user.nick_name
                           }
-                        }),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "ml-2" }, [
-                          _c(
-                            "h1",
-                            {
-                              staticClass:
-                                "block leading-relaxed font-bold text-gray-700 text-sm"
-                            },
-                            [_vm._v(" " + _vm._s(unread.data.user.nick_name))]
-                          ),
+                        },
+                        [
+                          _c("img", {
+                            staticClass: "w-9 h-9 object-cover rounded-full",
+                            attrs: {
+                              src: unread.data.user.profile_photo_url,
+                              alt: unread.data.user.name
+                            }
+                          }),
                           _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "text-sm font-light text-gray-600" },
-                            [
-                              _vm._v(
-                                _vm._s(
-                                  unread.data.message +
-                                    " " +
-                                    _vm.getDifferenceTime(
-                                      unread.data.created_at
+                          _c("div", { staticClass: "ml-2 w-full" }, [
+                            _c(
+                              "h1",
+                              {
+                                staticClass:
+                                  "block leading-relaxed font-bold text-gray-700 text-sm"
+                              },
+                              [_vm._v(" " + _vm._s(unread.data.user.nick_name))]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "text-sm font-light text-gray-600 flex justify-between"
+                              },
+                              [
+                                _c("div", [
+                                  _vm._v(_vm._s(unread.data.message))
+                                ]),
+                                _vm._v(" "),
+                                _c("div", [
+                                  _vm._v(
+                                    _vm._s(
+                                      _vm.getDifferenceTime(unread.created_at)
                                     )
-                                )
-                              )
-                            ]
-                          )
-                        ])
-                      ]
-                    )
-                  : _c("div", { staticClass: "flex items-center py-2 px-3" }, [
+                                  )
+                                ])
+                              ]
+                            )
+                          ])
+                        ]
+                      )
+                    : _vm._e()
+                }),
+                _vm._v(" "),
+                _vm.unreads.length === 0
+                  ? _c("div", { staticClass: "flex items-center py-2 px-3" }, [
                       _c(
                         "h2",
                         { staticClass: "text-sm font-light text-gray-400" },
                         [_vm._v("No tienes notificaciones")]
                       )
                     ])
-              })
+                  : _vm._e()
+              ]
             },
             proxy: true
           }
@@ -58226,7 +58301,7 @@ var render = function() {
                       _c(
                         "svg",
                         {
-                          staticClass: "w-6 h-6 cursor-pointer",
+                          staticClass: "w-7 h-7 cursor-pointer",
                           attrs: {
                             xmlns: "http://www.w3.org/2000/svg",
                             fill: "none",
@@ -58259,7 +58334,7 @@ var render = function() {
                       _c(
                         "svg",
                         {
-                          staticClass: "w-6 h-6 cursor-pointer",
+                          staticClass: "w-7 h-7 cursor-pointer",
                           attrs: {
                             xmlns: "http://www.w3.org/2000/svg",
                             fill: "none",
