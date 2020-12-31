@@ -8,6 +8,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 use App\Models\User;
+use Carbon\Carbon;
 
 class NotifyFollowLike extends Notification
 {
@@ -33,7 +34,7 @@ class NotifyFollowLike extends Notification
     */
     public function via($notifiable)
     {
-        return ['database'];
+        return ['database','broadcast'];
     }
 
     /**
@@ -59,6 +60,7 @@ class NotifyFollowLike extends Notification
     public function toBroadcast($notifiable)
     {
         return new BroadcastMessage([
+            'date' => Carbon::now(),
             'message' => 'Comenzo a seguirte!',
             'user' => $this->user,
         ]);

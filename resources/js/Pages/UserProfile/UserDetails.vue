@@ -65,6 +65,7 @@
                 await axios.post('/follow-user',{user_id: this.user.id})
                     .then(response => {
                         this.followState = !this.followState
+                        $page.unreadNotificationsCount++
                     })
                     .catch(error => console.log(error))
             },

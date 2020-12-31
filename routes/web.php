@@ -57,4 +57,5 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('/user/{userid}/offline', OfflineController::class)->name('user-offline');
 
     Route::get('/notifications', [NotificationsController::class,'getUnreadNotification'])->name('notifications');
+    Route::post('/mark-as-read-notifications', [NotificationsController::class,'markAsRead'])->name('markAsReadNotifications');
 });

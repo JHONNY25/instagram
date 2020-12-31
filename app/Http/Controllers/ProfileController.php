@@ -54,7 +54,7 @@ class ProfileController extends Controller
         try {
             $user = User::find($request->user_id);
 
-            Notification::send($user, new NotifyFollowLike(auth()->user()));
+            $user->notify(new NotifyFollowLike(auth()->user()));
             
             return $this->followers->follow((int)$request->user_id);
         } catch (\Exception $e) {

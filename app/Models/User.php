@@ -63,6 +63,16 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
+     /**
+     * The channels the user receives notification broadcasts on.
+     *
+     * @return string
+     */
+     public function receivesBroadcastNotificationsOn()
+     {
+         return 'App.Models.User.'.$this->id;
+     }
+
     public function posts(){
         return $this->hasMany(Posts::class);
     }
